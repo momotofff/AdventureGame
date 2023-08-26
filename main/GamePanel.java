@@ -44,23 +44,21 @@ public class GamePanel extends JPanel implements Runnable
         while (gameThread != null)
         {
             update();
-            repaint( );
+            repaint();
+
+            long remainingTime = nextDrawTime - System.currentTimeMillis();
 
             try
             {
-                long remainingTime = nextDrawTime - System.currentTimeMillis();
-
-                if (remainingTime < 0)
-                    remainingTime = 0;
-
-                Thread.sleep( remainingTime);
-
-                nextDrawTime += drawInterval;
+                if (remainingTime > 0)
+                    Thread.sleep( remainingTime);
             }
             catch (InterruptedException e)
             {
                 throw new RuntimeException(e);
             }
+
+            nextDrawTime += drawInterval;
         }
     }
 

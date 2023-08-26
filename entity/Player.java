@@ -21,7 +21,7 @@ public class Player extends Entity
         speed = 4;
         position = new Point(100, 100);
         getImage();
-        direction = "down";
+        direction = Direction.Down;
     }
 
     public void update()
@@ -30,89 +30,48 @@ public class Player extends Entity
         {
             if (keyHandler.upPressed)
             {
-                direction = "up";
+                direction = Direction.Up;
                 position.y -= speed;
             }
             if (keyHandler.leftPressed)
             {
-                direction = "left";
+                direction = Direction.Left;
                 position.x -= speed;
             }
             if (keyHandler.rightPressed)
             {
-                direction = "right";
+                direction = Direction.Right;
                 position.x += speed;
             }
             if (keyHandler.downPressed)
             {
-                direction = "down";
+                direction = Direction.Down;
                 position.y += speed;
             }
 
-            ++spriteCounter;
-
-            if (spriteCounter > 10)
+            if (++spriteCounter > 10)
             {
-                if (spriteNumber == 1)
-                    spriteNumber = 2;
-                else if (spriteNumber == 2)
-                    spriteNumber = 1;
-
+                ++spriteNumber;
                 spriteCounter = 0;
             }
         }
-
-
-
     }
 
     public void drawing(Graphics2D g2)
     {
-        BufferedImage image = null;
-
-        switch (direction)
-        {
-            case "up" :     if (spriteNumber == 1)
-                                image = up1 ;
-                            else
-                                image = up2; break;
-
-            case "left" :   if (spriteNumber == 1)
-                                image = left1;
-                            else
-                                image = left2; break;
-
-            case "right" :  if (spriteNumber == 1)
-                                image = right1;
-                            else
-                                image = right2; break;
-
-            case "down" :   if (spriteNumber == 1)
-                                image = down1;
-                            else
-                                image = down2; break;
-        }
-
+        BufferedImage image = GetAnimationFrame(direction, spriteNumber);
         g2.drawImage(image, position.x, position.y, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 
     public void getImage()
     {
-        try
-        {
-            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/up1.png")));
-            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/up2.png")));
-            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/left1.png")));
-            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/left2.png")));
-            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/right1.png")));
-            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/right2.png")));
-            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/down1.png")));
-            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/down2.png")));
-        }
-
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        LoadAnimation(Direction.Up, "/assets/up1.png");
+        LoadAnimation(Direction.Up, "/assets/up2.png");
+        LoadAnimation(Direction.Left, "/assets/left1.png");
+        LoadAnimation(Direction.Left, "/assets/left2.png");
+        LoadAnimation(Direction.Down, "/assets/down1.png");
+        LoadAnimation(Direction.Down, "/assets/down2.png");
+        LoadAnimation(Direction.Right, "/assets/right1.png");
+        LoadAnimation(Direction.Right, "/assets/right2.png");
     }
 }
