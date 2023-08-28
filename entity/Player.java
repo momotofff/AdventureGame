@@ -3,11 +3,8 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 
 public class Player extends Entity
 {
@@ -65,13 +62,13 @@ public class Player extends Entity
 
     public void getImage()
     {
-        LoadAnimation(Direction.Up, "/assets/up1.png");
-        LoadAnimation(Direction.Up, "/assets/up2.png");
-        LoadAnimation(Direction.Left, "/assets/left1.png");
-        LoadAnimation(Direction.Left, "/assets/left2.png");
-        LoadAnimation(Direction.Down, "/assets/down1.png");
-        LoadAnimation(Direction.Down, "/assets/down2.png");
-        LoadAnimation(Direction.Right, "/assets/right1.png");
-        LoadAnimation(Direction.Right, "/assets/right2.png");
+        LoadAnimation(Direction.Up, "/assets/player/up1.png");
+        LoadAnimation(Direction.Up, "/assets/player/up2.png");
+        LoadAnimation(Direction.Left, "/assets/player/left1.png");
+        LoadAnimation(Direction.Left, "/assets/player/left2.png");
+        LoadAnimation(Direction.Down, "/assets/player/down1.png");
+        LoadAnimation(Direction.Down, "/assets/player/down2.png");
+        LoadAnimation(Direction.Right, "/assets/player/right1.png");
+        LoadAnimation(Direction.Right, "/assets/player/right2.png");
     }
 }
