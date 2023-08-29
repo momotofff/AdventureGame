@@ -6,7 +6,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class TileManager
@@ -38,11 +37,11 @@ public class TileManager
                 {
                     world[x][y] = new Tile("/assets/world/grass.png", false);
                 }
-                if (color.equals(Color.black))
+                else if (color.equals(Color.black))
                 {
                     world[x][y] = new Tile("/assets/world/wall.png", true);
                 }
-                if (color.equals(Color.GRAY))
+                else if (color.equals(Color.GRAY))
                 {
                     world[x][y] = new Tile("/assets/world/water.png", true);
                 }
@@ -67,11 +66,11 @@ public class TileManager
 
     public void drawing(Graphics2D g2)
     {
-        for (int x = 0; x < world[0].length; ++x)
+        for (int x = 0; x < world.length; ++x)
         {
-            for (int y = 0; y < world.length; ++y)
+            for (int y = 0; y < world[0].length; ++y)
             {
-                BufferedImage image = world[y][x].image;
+                BufferedImage image = world[x][y].image;
                 g2.drawImage(image, image.getHeight() * x * gamePanel.scale, image.getWidth() * y * gamePanel.scale, gamePanel.tileSize, gamePanel.tileSize, null);
             }
         }
