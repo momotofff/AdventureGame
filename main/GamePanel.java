@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 public class GamePanel extends JPanel implements Runnable
 {
     final int originalTileSize = 16;
-    final int scale = 3;
+    final public int scale = 3;
 
     public final int tileSize = originalTileSize * scale;
     final Point maxBlocksScreen = new Point(16, 12);
@@ -20,6 +21,8 @@ public class GamePanel extends JPanel implements Runnable
     Thread gameThread;
     Player player = new Player(this, keyHandler);
 
+    TileManager tileManager;
+
     public GamePanel()
     {
         this.setPreferredSize(new Dimension(screenSize.x, screenSize.y));
@@ -27,6 +30,7 @@ public class GamePanel extends JPanel implements Runnable
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+        tileManager = new TileManager(this);
     }
 
     public void startGameThread()
@@ -73,8 +77,9 @@ public class GamePanel extends JPanel implements Runnable
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
-
+        tileManager.drawing(g2);
         player.drawing(g2);
+
         g2.dispose();
     }
 }
