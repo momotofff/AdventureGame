@@ -2,27 +2,78 @@ package tile;
 
 import main.GamePanel;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class TileManager
 {
     GamePanel gamePanel;
-    Tile[] tile;
+    Tile[][] world;
 
     public TileManager(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
-        tile = new Tile[10];
-        getTileImage();
+        world = new Tile[16][12];
+        getWorld("/assets/world/worldMap.png");
     }
 
-    public void getTileImage()
+    private void getWorld(String map)
     {
+        BufferedImage image = getTileImage(map);
 
+        for (int x = 0; x < image.getWidth(); ++x)
+        {
+            for (int y = 0; y < image.getHeight(); ++y)
+            {
+                int t = image.getHeight();
+                int v = image.getWidth();
+
+                Color color = new Color(image.getRGB(x, y));
+
+                if (color.equals(Color.white))
+                {
+                    world[x][y] = new Tile("/assets/world/grass.png", false);
+                }
+                if (color.equals(Color.black))
+                {
+                    world[x][y] = new Tile("/assets/world/wall.png", true);
+                }
+                if (color.equals(Color.GRAY))
+                {
+                    world[x][y] = new Tile("/assets/world/water.png", true);
+                }
+            }
+        }
+    }
+
+    public BufferedImage getTileImage(String path)
+    {
+        BufferedImage image = null;
+        try
+        {
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path)));
+        }
+        catch (IOException e)
+        {
+
+        }
+
+        return image;
     }
 
     public void drawing(Graphics2D g2)
     {
-        g2.drawImage(tile[0].image, 0, 0, gamePanel.tileSize, gamePanel.tileSize, null);
+        for (int x = 0; x < world[0].length; ++x)
+        {
+            for (int y = 0; y < world.length; ++y)
+            {
+                BufferedImage image = world[y][x].image;
+                g2.drawImage(image, image.getHeight() * x * gamePanel.scale, image.getWidth() * y * gamePanel.scale, gamePanel.tileSize, gamePanel.tileSize, null);
+            }
+        }
     }
 }
