@@ -10,13 +10,19 @@ public class Player extends Entity
 {
     GamePanel gamePanel;
     KeyHandler keyHandler;
+    public final int screenX;
+    public final int screenY;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler)
     {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
+
+        screenX = gamePanel.screenSize.x / 2;
+        screenY = gamePanel.screenSize.y / 2;
+
         speed = 4;
-        position = new Point(100, 100);
+        position = new Point(gamePanel.tileSize * gamePanel.worldSize.x, gamePanel.tileSize * gamePanel.worldSize.y);
         getImage();
         direction = Direction.Down;
     }
@@ -57,7 +63,7 @@ public class Player extends Entity
     public void drawing(Graphics2D g2)
     {
         BufferedImage image = GetAnimationFrame(direction, spriteNumber);
-        g2.drawImage(image, position.x, position.y, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 
     public void getImage()
