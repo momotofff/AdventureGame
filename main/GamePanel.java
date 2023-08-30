@@ -10,16 +10,19 @@ public class GamePanel extends JPanel implements Runnable
 {
     final int originalTileSize = 16;
     final public int scale = 3;
+    final public Point worldSize = new Point(50, 50);
 
     public final int tileSize = originalTileSize * scale;
-    final Point maxBlocksScreen = new Point(16, 12);
-    final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
+    final public Point maxBlocksScreen = new Point(16, 12);
+    public final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
+
+    public final Point worldInScreenSize = new Point(worldSize.x * tileSize, worldSize.y * tileSize);
 
     final int FPS = 60;
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this, keyHandler);
+    public Player player = new Player(this, keyHandler);
 
     TileManager tileManager;
 
