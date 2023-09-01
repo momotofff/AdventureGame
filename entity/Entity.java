@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Entity
 {
     public int speed;
-    public Point position;
+    public Point world_X_Y;
     public Direction direction;
 
     public int spriteCounter = 0;
