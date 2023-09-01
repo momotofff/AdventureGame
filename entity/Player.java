@@ -10,19 +10,17 @@ public class Player extends Entity
 {
     GamePanel gamePanel;
     KeyHandler keyHandler;
-    public final int screenX;
-    public final int screenY;
+    public final Point screenCoordinates;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler)
     {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
 
-        screenX = gamePanel.screenSize.x / 2;
-        screenY = gamePanel.screenSize.y / 2;
+        screenCoordinates = new Point(gamePanel.screenSize.x / 2 - (gamePanel.tileSize / 2), gamePanel.screenSize.y / 2 - (gamePanel.tileSize / 2));
 
         speed = 4;
-        position = new Point(gamePanel.tileSize * gamePanel.worldSize.x, gamePanel.tileSize * gamePanel.worldSize.y);
+        world_X_Y = new Point(gamePanel.tileSize * 23, gamePanel.tileSize * 21);
         getImage();
         direction = Direction.Down;
     }
@@ -34,22 +32,22 @@ public class Player extends Entity
             if (keyHandler.upPressed)
             {
                 direction = Direction.Up;
-                position.y -= speed;
+                world_X_Y.y -= speed;
             }
             if (keyHandler.leftPressed)
             {
                 direction = Direction.Left;
-                position.x -= speed;
+                world_X_Y.x -= speed;
             }
             if (keyHandler.rightPressed)
             {
                 direction = Direction.Right;
-                position.x += speed;
+                world_X_Y.x += speed;
             }
             if (keyHandler.downPressed)
             {
                 direction = Direction.Down;
-                position.y += speed;
+                world_X_Y.y += speed;
             }
 
             if (++spriteCounter > 10)
@@ -63,7 +61,7 @@ public class Player extends Entity
     public void drawing(Graphics2D g2)
     {
         BufferedImage image = GetAnimationFrame(direction, spriteNumber);
-        g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 
     public void getImage()

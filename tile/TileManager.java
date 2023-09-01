@@ -17,7 +17,7 @@ public class TileManager
     {
         this.gamePanel = gamePanel;
 
-        world = new Tile[gamePanel.worldSize.x][gamePanel.worldSize.y];
+        world = new Tile[gamePanel.maxWorldCountTile.x][gamePanel.maxWorldCountTile.y];
         getWorld("/assets/world/worldMap.png");
     }
 
@@ -79,13 +79,17 @@ public class TileManager
 
     public void drawing(Graphics2D g2)
     {
-        Point camera = new Point(1, 1);
-        for (int x = camera.x; x < world.length - x; ++x)
+        for (int x = 0; x < world.length; ++x)
         {
-            for (int y = camera.y; y < world[0].length - y; ++y)
+            for (int y = 0; y < world[0].length; ++y)
             {
                 BufferedImage image = world[x][y].image;
-                g2.drawImage(image, image.getHeight() * x * gamePanel.scale, image.getWidth() * y * gamePanel.scale, gamePanel.tileSize, gamePanel.tileSize, null);
+
+                Point worldPosition = new Point(x * gamePanel.tileSize, y * gamePanel.tileSize);
+                Point screenPosition = new Point(worldPosition.x - gamePanel.player.world_X_Y.x + gamePanel.player.screenCoordinates.x,
+                                                 worldPosition.y - gamePanel.player.world_X_Y.y + gamePanel.player.screenCoordinates.y);
+
+                g2.drawImage(image, screenPosition.x, screenPosition.y, gamePanel.tileSize, gamePanel.tileSize, null);
             }
         }
     }
