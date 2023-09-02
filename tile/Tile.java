@@ -10,13 +10,13 @@ public class Tile
     public BufferedImage image;
     public boolean collision = false;
 
-    public Tile(String path, boolean bool)
+    public Tile(String path, boolean collision)
     {
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        collision = bool;
+        this.collision = collision;
     }
 }

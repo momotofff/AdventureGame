@@ -12,15 +12,15 @@ public class Player extends Entity
     KeyHandler keyHandler;
     public final Point screenCoordinates;
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler)
+    public Player(GamePanel gamePanel, KeyHandler keyHandler, Point initialPosition)
     {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
 
-        screenCoordinates = new Point(gamePanel.screenSize.x / 2 - (gamePanel.tileSize / 2), gamePanel.screenSize.y / 2 - (gamePanel.tileSize / 2));
+        screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
 
         speed = 4;
-        world_X_Y = new Point(gamePanel.tileSize * 23, gamePanel.tileSize * 21);
+        worldPosition = initialPosition;
         getImage();
         direction = Direction.Down;
     }
@@ -32,22 +32,22 @@ public class Player extends Entity
             if (keyHandler.upPressed)
             {
                 direction = Direction.Up;
-                world_X_Y.y -= speed;
+                worldPosition.y -= speed;
             }
             if (keyHandler.leftPressed)
             {
                 direction = Direction.Left;
-                world_X_Y.x -= speed;
+                worldPosition.x -= speed;
             }
             if (keyHandler.rightPressed)
             {
                 direction = Direction.Right;
-                world_X_Y.x += speed;
+                worldPosition.x += speed;
             }
             if (keyHandler.downPressed)
             {
                 direction = Direction.Down;
-                world_X_Y.y += speed;
+                worldPosition.y += speed;
             }
 
             if (++spriteCounter > 10)

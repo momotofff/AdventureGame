@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable
 
     KeyHandler keyHandler = new KeyHandler();
     Thread gameThread;
-    public Player player = new Player(this, keyHandler);
+    public Player player;
 
     TileManager tileManager;
 
@@ -34,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
         tileManager = new TileManager(this);
+        player = new Player(this, keyHandler, tileManager.initialPlayerPosition);
     }
 
     public void startGameThread()
