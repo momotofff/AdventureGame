@@ -18,7 +18,7 @@ public class Player extends Entity
         this.keyHandler = keyHandler;
 
         screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
-
+        solidArea = new Rectangle(12, 12, 24, 24);
         speed = 4;
         worldPosition = initialPosition;
         getImage();
@@ -30,24 +30,30 @@ public class Player extends Entity
         if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed)
         {
             if (keyHandler.upPressed)
-            {
                 direction = Direction.Up;
-                worldPosition.y -= speed;
-            }
+
             if (keyHandler.leftPressed)
-            {
                 direction = Direction.Left;
-                worldPosition.x -= speed;
-            }
+
             if (keyHandler.rightPressed)
-            {
                 direction = Direction.Right;
-                worldPosition.x += speed;
-            }
+
             if (keyHandler.downPressed)
-            {
                 direction = Direction.Down;
-                worldPosition.y += speed;
+
+
+            collision = false;
+            gamePanel.collisionDetector.detect(this);
+
+            if (collision == false)
+            {
+                switch (direction)
+                {
+                    case Up : worldPosition.y -= speed; break;
+                    case Left: worldPosition.x -= speed; break;
+                    case Right: worldPosition.x += speed; break;
+                    case Down: worldPosition.y += speed; break;
+                }
             }
 
             if (++spriteCounter > 10)

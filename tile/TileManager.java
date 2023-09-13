@@ -15,10 +15,10 @@ public class TileManager
     GamePanel gamePanel;
 
     // TODO: move world, its loading and player pos to separate class
-    Tile[][] world;
+    public Tile[][] world;
     final public Point initialPlayerPosition;
 
-    private final Map<Color, Tile> tiles;
+    public final Map<Color, Tile> tiles;
 
     public TileManager(GamePanel gamePanel)
     {
@@ -28,8 +28,8 @@ public class TileManager
         tiles.put(Color.WHITE, new Tile("/assets/world/grass.png", false));
         tiles.put(Color.BLACK, new Tile("/assets/world/wall.png", true));
         tiles.put(Color.GRAY, new Tile("/assets/world/water.png", true));
-        tiles.put(Color.YELLOW, new Tile("/assets/world/sand.png", true));
-        tiles.put(Color.ORANGE, new Tile("/assets/world/earth.png", true));
+        tiles.put(Color.YELLOW, new Tile("/assets/world/sand.png", false));
+        tiles.put(Color.ORANGE, new Tile("/assets/world/earth.png", false));
         tiles.put(Color.RED, new Tile("/assets/world/tree.png", true));
 
         world = new Tile[gamePanel.maxWorldCountTile.x][gamePanel.maxWorldCountTile.y];
