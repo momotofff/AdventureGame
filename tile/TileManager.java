@@ -68,7 +68,7 @@ public class TileManager
         return image;
     }
 
-    public void drawing(Graphics2D g2)
+    public void drawing(Graphics2D graphics2D)
     {
         for (int x = 0; x < world.length; ++x)
         {
@@ -80,7 +80,7 @@ public class TileManager
                 Point screenPosition = new Point(worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
                                                  worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y);
 
-                g2.drawImage(image, screenPosition.x, screenPosition.y, gamePanel.tileSize, gamePanel.tileSize, null);
+                graphics2D.drawImage(image, screenPosition.x, screenPosition.y, gamePanel.tileSize, gamePanel.tileSize, null);
             }
         }
     }
