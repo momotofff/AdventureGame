@@ -3,18 +3,16 @@ package main;
 import entity.Entity;
 import tile.Tile;
 
-import java.awt.*;
-
-public class CollisionDetector
+public class CollisionChecker
 {
     GamePanel gamePanel;
 
-    public CollisionDetector(GamePanel gamePanel)
+    public CollisionChecker(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
     }
 
-    public void detect(Entity entity)
+    public void checkTile(Entity entity)
     {
         int entityLeftWorldX = entity.worldPosition.x + entity.solidArea.x;
         int entityRightWorldX = entity.worldPosition.x + entity.solidArea.x + entity.solidArea.width;
@@ -66,5 +64,34 @@ public class CollisionDetector
 
                         break;
         }
+    }
+
+    public int checkObject(Entity entity, boolean player)
+    {
+        int result = -1;
+
+        for (int i = 0; i < gamePanel.obj.length; ++i)
+        {
+            if(gamePanel.obj[i] != null)
+            {
+                entity.solidArea.x = entity.worldPosition.x + entity.solidArea.x;
+                gamePanel.obj[i].solidArea.x = gamePanel.obj[i].worldPosition.x + gamePanel.obj[i].solidArea.x;
+                gamePanel.obj[i].solidArea.y = gamePanel.obj[i].worldPosition.y + gamePanel.obj[i].solidArea.y;
+
+                switch (entity.direction)
+                {
+                    case Up : entity.solidArea.y -= entity.speed;
+                        if(entity.solidArea.intersects(gamePanel.obj[i].solidArea))
+                        {
+
+                        }
+                            break;
+                    case Down : entity.solidArea.y += entity.speed; break;
+                    case Left : entity.solidArea.x -= entity.speed; break;
+                    case Right : entity.solidArea.x += entity.speed; break;
+                }
+            }
+        }
+        return result;
     }
 }

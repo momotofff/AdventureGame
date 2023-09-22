@@ -19,6 +19,7 @@ public class Player extends Entity
 
         screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
         solidArea = new Rectangle(12, 12, 24, 24);
+        solidAreaDefaultPosition = new Point(solidArea.x, solidArea.y);
         speed = 4;
         worldPosition = initialPosition;
         getImage();
@@ -43,7 +44,7 @@ public class Player extends Entity
 
 
             collision = false;
-            gamePanel.collisionDetector.detect(this);
+            gamePanel.collisionChecker.checkTile(this);
 
             if (collision == false)
             {
