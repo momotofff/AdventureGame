@@ -18,6 +18,7 @@ public class Entity
     public int spriteCounter = 0;
     public int spriteNumber = 1;
     public Rectangle solidArea;
+    public Point solidAreaDefaultPosition;
     public boolean collision = false;
 
     private final Map<Direction, ArrayList<BufferedImage>> animations;

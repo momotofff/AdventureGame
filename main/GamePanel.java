@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements Runnable
     public Player player;
 
     TileManager tileManager;
-    public CollisionDetector collisionDetector = new CollisionDetector(this);
+    public CollisionChecker collisionChecker = new CollisionChecker(this);
     public SuperObject obj[] = new SuperObject[10];
     public AssetSetter assetSetter;
 
