@@ -1,17 +1,18 @@
 package main;
 
 import entity.Player;
-import objects.SuperObject;
+import objects.BaseObject;
 import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class GamePanel extends JPanel implements Runnable
 {
     final int originalTileSize = 16;
     final public int scale = 3;
-
 
     public final int tileSize = originalTileSize * scale;
     final public Point maxBlocksScreen = new Point(16, 12);
@@ -27,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable
 
     TileManager tileManager;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    public SuperObject obj[] = new SuperObject[10];
+    public HashSet<BaseObject> items = new HashSet<>();
     public AssetSetter assetSetter;
 
     public GamePanel()
@@ -69,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable
             try
             {
                 if (remainingTime > 0)
-                    Thread.sleep( remainingTime);
+                    Thread.sleep(remainingTime);
             }
             catch (InterruptedException e)
             {
@@ -93,10 +94,10 @@ public class GamePanel extends JPanel implements Runnable
         Graphics2D graphics2D = (Graphics2D) graphics;
         tileManager.drawing(graphics2D);
 
-        for (int i = 0; i < obj.length; ++i)
+        for (BaseObject item: items)
         {
-            if (obj[i] != null)
-                obj[i].drawing(graphics2D, this);
+            if (item != null)
+                item.drawing(graphics2D, this);
         }
 
         player.drawing(graphics2D);
