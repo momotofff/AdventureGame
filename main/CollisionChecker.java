@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import objects.BaseObject;
 import tile.Tile;
 
 public class CollisionChecker
@@ -70,26 +71,26 @@ public class CollisionChecker
     {
         int result = -1;
 
-        for (int i = 0; i < gamePanel.obj.length; ++i)
+        for (BaseObject item: gamePanel.items)
         {
-            if(gamePanel.obj[i] != null)
+            if (item == null)
+                continue;
+
+            entity.solidArea.x = entity.worldPosition.x + entity.solidArea.x;
+            item.solidArea.x = item.worldPosition.x + item.solidArea.x;
+            item.solidArea.y = item.worldPosition.y + item.solidArea.y;
+
+            switch (entity.direction)
             {
-                entity.solidArea.x = entity.worldPosition.x + entity.solidArea.x;
-                gamePanel.obj[i].solidArea.x = gamePanel.obj[i].worldPosition.x + gamePanel.obj[i].solidArea.x;
-                gamePanel.obj[i].solidArea.y = gamePanel.obj[i].worldPosition.y + gamePanel.obj[i].solidArea.y;
+                case Up : entity.solidArea.y -= entity.speed;
+                    if (entity.solidArea.intersects(item.solidArea))
+                    {
 
-                switch (entity.direction)
-                {
-                    case Up : entity.solidArea.y -= entity.speed;
-                        if(entity.solidArea.intersects(gamePanel.obj[i].solidArea))
-                        {
-
-                        }
-                            break;
-                    case Down : entity.solidArea.y += entity.speed; break;
-                    case Left : entity.solidArea.x -= entity.speed; break;
-                    case Right : entity.solidArea.x += entity.speed; break;
-                }
+                    }
+                        break;
+                case Down : entity.solidArea.y += entity.speed; break;
+                case Left : entity.solidArea.x -= entity.speed; break;
+                case Right : entity.solidArea.x += entity.speed; break;
             }
         }
         return result;

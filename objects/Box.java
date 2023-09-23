@@ -1,22 +1,11 @@
 package objects;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.util.Objects;
+import java.awt.*;
 
-public class Box extends SuperObject
+public class Box extends BaseObject
 {
-    public Box()
+    public Box(Point worldPosition)
     {
-        name = "Box";
-
-        try
-        {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/gameElements/box.png")));
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        super("/assets/gameElements/box.png", worldPosition);
     }
 }

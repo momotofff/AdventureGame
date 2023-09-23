@@ -1,22 +1,11 @@
 package objects;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.util.Objects;
+import java.awt.*;
 
-public class Key extends SuperObject
+public class Key extends BaseObject
 {
-    public Key()
+    public Key(Point worldPosition)
     {
-        name = "Key";
-
-        try
-        {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/gameElements/key.png")));
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        super("/assets/gameElements/key.png", worldPosition);
     }
 }

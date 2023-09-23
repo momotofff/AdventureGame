@@ -1,24 +1,12 @@
 package objects;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-import java.util.Objects;
+import java.awt.*;
 
-public class Door extends SuperObject
+public class Door extends BaseObject
 {
-    public Door()
+    public Door(Point worldPosition)
     {
-        name = "Door";
-
-        try
-        {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/gameElements/door.png")));
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-
+        super("/assets/gameElements/door.png", worldPosition);
         collision = true;
     }
 }
