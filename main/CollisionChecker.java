@@ -77,6 +77,8 @@ public class CollisionChecker
                 continue;
 
             entity.solidArea.x = entity.worldPosition.x + entity.solidArea.x;
+            entity.solidArea.y = entity.worldPosition.y + entity.solidArea.y;
+
             item.solidArea.x = item.worldPosition.x + item.solidArea.x;
             item.solidArea.y = item.worldPosition.y + item.solidArea.y;
 
@@ -85,13 +87,37 @@ public class CollisionChecker
                 case Up : entity.solidArea.y -= entity.speed;
                     if (entity.solidArea.intersects(item.solidArea))
                     {
-
+                        System.out.println("Up");
                     }
-                        break;
-                case Down : entity.solidArea.y += entity.speed; break;
-                case Left : entity.solidArea.x -= entity.speed; break;
-                case Right : entity.solidArea.x += entity.speed; break;
+                    break;
+
+                case Down : entity.solidArea.y += entity.speed;
+                    if (entity.solidArea.intersects(item.solidArea))
+                    {
+                        System.out.println("Down");
+                    }
+                    break;
+
+                case Left : entity.solidArea.x -= entity.speed;
+                    if (entity.solidArea.intersects(item.solidArea))
+                    {
+                        System.out.println("Left");
+                    }
+                    break;
+
+                case Right : entity.solidArea.x += entity.speed;
+                    if (entity.solidArea.intersects(item.solidArea))
+                    {
+                        System.out.println("Right");
+                    }
+                    break;
             }
+
+            entity.solidArea.x = entity.solidAreaDefaultPosition.x;
+            entity.solidArea.y = entity.solidAreaDefaultPosition.y;
+
+            item.solidArea.x = item.solidAreaDefaultPosition.x;
+            item.solidArea.y = item.solidAreaDefaultPosition.y;
         }
         return result;
     }
