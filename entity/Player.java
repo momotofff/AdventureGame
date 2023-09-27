@@ -45,6 +45,7 @@ public class Player extends Entity
 
             collision = false;
             gamePanel.collisionChecker.checkTile(this);
+            int itemIndex = gamePanel.collisionChecker.checkObject(this, true);
 
             if (collision == false)
             {

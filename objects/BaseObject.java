@@ -14,6 +14,7 @@ public abstract class BaseObject
     public boolean collision = false;
     public Point worldPosition;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
+    public Point solidAreaDefaultPosition = new Point(0,0);
 
     public BaseObject(String tile, Point worldPosition)
     {
