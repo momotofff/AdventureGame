@@ -11,7 +11,7 @@ import java.util.Objects;
 public abstract class BaseObject
 {
     public BufferedImage image;
-    public boolean collision = false;
+    public boolean collision = true;
     public Point worldPosition;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
     public Point solidAreaDefaultPosition = new Point(0,0);

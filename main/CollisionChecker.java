@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import entity.Player;
 import objects.BaseObject;
 import tile.Tile;
 
@@ -67,58 +68,64 @@ public class CollisionChecker
         }
     }
 
-    public int checkObject(Entity entity, boolean player)
+    public BaseObject checkObject(Player player, boolean flag)
     {
-        int result = -1;
+        BaseObject result = null;
 
         for (BaseObject item: gamePanel.items)
         {
             if (item == null)
                 continue;
 
-            entity.solidArea.x = entity.worldPosition.x + entity.solidArea.x;
-            entity.solidArea.y = entity.worldPosition.y + entity.solidArea.y;
+            player.solidArea.x = player.worldPosition.x + player.solidArea.x;
+            player.solidArea.y = player.worldPosition.y + player.solidArea.y;
 
             item.solidArea.x = item.worldPosition.x + item.solidArea.x;
             item.solidArea.y = item.worldPosition.y + item.solidArea.y;
 
-            switch (entity.direction)
+            switch (player.direction)
             {
-                case Up : entity.solidArea.y -= entity.speed;
-                    if (entity.solidArea.intersects(item.solidArea))
-                    {
-                        System.out.println("Up");
-                    }
+                case Up : player.solidArea.y -= player.speed;
+                    result = helper(player, item, flag);
                     break;
 
-                case Down : entity.solidArea.y += entity.speed;
-                    if (entity.solidArea.intersects(item.solidArea))
-                    {
-                        System.out.println("Down");
-                    }
+                case Down : player.solidArea.y += player.speed;
+                    result = helper(player, item, flag);
                     break;
 
-                case Left : entity.solidArea.x -= entity.speed;
-                    if (entity.solidArea.intersects(item.solidArea))
-                    {
-                        System.out.println("Left");
-                    }
+                case Left : player.solidArea.x -= player.speed;
+                    result = helper(player, item, flag);
                     break;
 
-                case Right : entity.solidArea.x += entity.speed;
-                    if (entity.solidArea.intersects(item.solidArea))
-                    {
-                        System.out.println("Right");
-                    }
+                case Right : player.solidArea.x += player.speed;
+                    result = helper(player, item, flag);
                     break;
             }
 
-            entity.solidArea.x = entity.solidAreaDefaultPosition.x;
-            entity.solidArea.y = entity.solidAreaDefaultPosition.y;
+            player.solidArea.x = player.solidAreaDefaultPosition.x;
+            player.solidArea.y = player.solidAreaDefaultPosition.y;
 
             item.solidArea.x = item.solidAreaDefaultPosition.x;
             item.solidArea.y = item.solidAreaDefaultPosition.y;
         }
+        return result;
+    }
+    private BaseObject helper(Player player, BaseObject item, boolean flag )
+    {
+        BaseObject result = null;
+
+        if (player.solidArea.intersects(item.solidArea))
+        {
+            if (player.solidArea.intersects(item.solidArea))
+            {
+                if (item.collision)
+                    player.collision = true;
+
+                if (flag)
+                    result = item;
+            }
+        }
+
         return result;
     }
 }

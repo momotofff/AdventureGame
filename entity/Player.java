@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import objects.BaseObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -45,9 +46,10 @@ public class Player extends Entity
 
             collision = false;
             gamePanel.collisionChecker.checkTile(this);
-            int itemIndex = gamePanel.collisionChecker.checkObject(this, true);
+            BaseObject itemIndex = gamePanel.collisionChecker.checkObject(this, true);
+            pickUpObject(itemIndex);
 
-            if (collision == false)
+            if (!collision)
             {
                 switch (direction)
                 {
@@ -63,6 +65,14 @@ public class Player extends Entity
                 ++spriteNumber;
                 spriteCounter = 0;
             }
+        }
+    }
+
+    public void pickUpObject (BaseObject item)
+    {
+        if (item != null)
+        {
+            gamePanel.items.remove(item);
         }
     }
 
