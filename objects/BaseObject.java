@@ -16,6 +16,7 @@ public abstract class BaseObject
     public Rectangle solidArea = new Rectangle(0,0,48,48);
     public Point solidAreaDefaultPosition = new Point(0,0);
 
+
     public BaseObject(String tile, Point worldPosition)
     {
         this.worldPosition = worldPosition;

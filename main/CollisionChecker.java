@@ -108,6 +108,7 @@ public class CollisionChecker
             item.solidArea.x = item.solidAreaDefaultPosition.x;
             item.solidArea.y = item.solidAreaDefaultPosition.y;
         }
+
         return result;
     }
     private BaseObject helper(Player player, BaseObject item, boolean flag )
