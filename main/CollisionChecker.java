@@ -68,7 +68,7 @@ public class CollisionChecker
         }
     }
 
-    public BaseObject checkObject(Player player, boolean flag)
+    public BaseObject checkObject(Player player)
     {
         BaseObject result = null;
 
@@ -85,46 +85,36 @@ public class CollisionChecker
 
             switch (player.direction)
             {
-                case Up : player.solidArea.y -= player.speed;
-                    result = helper(player, item, flag);
-                    break;
-
-                case Down : player.solidArea.y += player.speed;
-                    result = helper(player, item, flag);
-                    break;
-
-                case Left : player.solidArea.x -= player.speed;
-                    result = helper(player, item, flag);
-                    break;
-
-                case Right : player.solidArea.x += player.speed;
-                    result = helper(player, item, flag);
-                    break;
+                case Up : player.solidArea.y -= player.speed; break;
+                case Down : player.solidArea.y += player.speed; break;
+                case Left : player.solidArea.x -= player.speed; break;
+                case Right : player.solidArea.x += player.speed; break;
             }
+
+            result = helper(player, item);
 
             player.solidArea.x = player.solidAreaDefaultPosition.x;
             player.solidArea.y = player.solidAreaDefaultPosition.y;
 
             item.solidArea.x = item.solidAreaDefaultPosition.x;
             item.solidArea.y = item.solidAreaDefaultPosition.y;
+
+            if (result != null)
+                break;
         }
 
         return result;
     }
-    private BaseObject helper(Player player, BaseObject item, boolean flag )
+    private BaseObject helper(Player player, BaseObject item)
     {
         BaseObject result = null;
 
         if (player.solidArea.intersects(item.solidArea))
         {
-            if (player.solidArea.intersects(item.solidArea))
-            {
-                if (item.collision)
-                    player.collision = true;
+            if (item.collision)
+                player.collision = true;
 
-                if (flag)
-                    result = item;
-            }
+            result = item;
         }
 
         return result;
