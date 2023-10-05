@@ -48,8 +48,8 @@ public class Player extends Entity
 
             collision = false;
             gamePanel.collisionChecker.checkTile(this);
-            BaseObject itemIndex = gamePanel.collisionChecker.checkObject(this, true);
-            pickUpObject(itemIndex);
+            BaseObject item = gamePanel.collisionChecker.checkObject(this);
+            pickUpObject(item);
 
             if (!collision)
             {
@@ -70,7 +70,7 @@ public class Player extends Entity
         }
     }
 
-    public void pickUpObject (BaseObject item)
+    public void pickUpObject(BaseObject item)
     {
         if (item != null)
         {
