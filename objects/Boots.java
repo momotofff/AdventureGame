@@ -7,6 +7,6 @@ public class Boots extends BaseObject
 
     public Boots(Point worldPosition)
     {
-        super("/assets/gameElements/boots.png", worldPosition, "Boots");
+        super("/assets/gameElements/boots.png", worldPosition);
     }
 }

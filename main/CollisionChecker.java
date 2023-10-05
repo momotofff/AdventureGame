@@ -83,14 +83,6 @@ public class CollisionChecker
             item.solidArea.x = item.worldPosition.x + item.solidArea.x;
             item.solidArea.y = item.worldPosition.y + item.solidArea.y;
 
-            switch (player.direction)
-            {
-                case Up : player.solidArea.y -= player.speed; break;
-                case Down : player.solidArea.y += player.speed; break;
-                case Left : player.solidArea.x -= player.speed; break;
-                case Right : player.solidArea.x += player.speed; break;
-            }
-
             result = helper(player, item);
 
             player.solidArea.x = player.solidAreaDefaultPosition.x;
