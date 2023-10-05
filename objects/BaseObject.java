@@ -15,12 +15,13 @@ public abstract class BaseObject
     public Point worldPosition;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
     public Point solidAreaDefaultPosition = new Point(0,0);
+    public String name;
 
 
-    public BaseObject(String tile, Point worldPosition)
+    public BaseObject(String tile, Point worldPosition, String name)
     {
         this.worldPosition = worldPosition;
-
+        this.name = name;
         try
         {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(tile)));

@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 public class GamePanel extends JPanel implements Runnable
 {
@@ -28,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable
 
     TileManager tileManager;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    public HashSet<BaseObject> items = new HashSet<>();
+    public Set<BaseObject> items = new HashSet<>();
     public AssetSetter assetSetter;
 
     public GamePanel()

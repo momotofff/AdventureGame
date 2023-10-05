@@ -6,6 +6,6 @@ public class Door extends BaseObject
 {
     public Door(Point worldPosition)
     {
-        super("/assets/gameElements/door.png", worldPosition);
+        super("/assets/gameElements/door.png", worldPosition, "Door");
     }
 }

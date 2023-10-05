@@ -3,7 +3,6 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import objects.BaseObject;
-import objects.EnumObjects;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,7 +13,7 @@ public class Player extends Entity
     KeyHandler keyHandler;
     public final Point screenCoordinates;
     int hasKey = 0;
-    public EnumObjects enumObjects;
+    int speedAnimation = 10;
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler, Point initialPosition)
     {
@@ -63,7 +62,7 @@ public class Player extends Entity
                 }
             }
 
-            if (++spriteCounter > 10)
+            if (++spriteCounter > speedAnimation)
             {
                 ++spriteNumber;
                 spriteCounter = 0;
@@ -75,16 +74,18 @@ public class Player extends Entity
     {
         if (item != null)
         {
-            switch (enumObjects)
+            switch (item.name)
             {
-                case Box : break;
-                case Key:  break;
-                case Door:  break;
-                case Boots: speed += 2; break;
+                case "Key" : ++hasKey; break;
+                case "Box" :
+                    System.out.println("Open inventory"); break;
+                case "Door" :
+                    System.out.println("Check yes or no Key"); break;
+                case "Boots" : speed += 2; speedAnimation /= 2; break;
+
             }
 
             gamePanel.items.remove(item);
-            ++hasKey;
         }
     }
 
