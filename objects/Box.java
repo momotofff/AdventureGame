@@ -1,11 +1,13 @@
 package objects;
 
+import main.GamePanel;
+
 import java.awt.*;
 
 public class Box extends BaseObject
 {
-    public Box(Point worldPosition)
+    public Box(Point worldPosition, GamePanel gamePanel)
     {
-        super("/assets/gameElements/box.png", worldPosition);
+        super("/assets/gameElements/box.png", worldPosition, gamePanel);
     }
 }

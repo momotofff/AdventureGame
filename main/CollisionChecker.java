@@ -77,11 +77,9 @@ public class CollisionChecker
             if (item == null)
                 continue;
 
+
             player.solidArea.x = player.worldPosition.x + player.solidArea.x;
             player.solidArea.y = player.worldPosition.y + player.solidArea.y;
-
-            item.solidArea.x = item.worldPosition.x + item.solidArea.x;
-            item.solidArea.y = item.worldPosition.y + item.solidArea.y;
 
             result = helper(player, item);
 
@@ -97,6 +95,7 @@ public class CollisionChecker
 
         return result;
     }
+
     private BaseObject helper(Player player, BaseObject item)
     {
         BaseObject result = null;

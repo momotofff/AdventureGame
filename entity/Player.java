@@ -68,6 +68,8 @@ public class Player extends Entity
                 spriteCounter = 0;
             }
         }
+
+
     }
 
     public void pickUpObject(BaseObject item)
