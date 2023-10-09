@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable
 
     TileManager tileManager;
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    public Set<BaseObject> items = new HashSet<>();
+    public HashSet<BaseObject> items = new HashSet<>();
     public AssetSetter assetSetter;
 
     public GamePanel()
@@ -85,6 +85,11 @@ public class GamePanel extends JPanel implements Runnable
     public void update()
     {
         player.update();
+
+        for (BaseObject item : items)
+        {
+            item.update();
+        }
     }
 
     @Override

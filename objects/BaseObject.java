@@ -13,13 +13,16 @@ public abstract class BaseObject
     public BufferedImage image;
     public boolean collision = true;
     public Point worldPosition;
+    public Point screenPosition;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
-    public Point solidAreaDefaultPosition = new Point(0,0);
 
-    public BaseObject(String tile, Point worldPosition)
+
+    public Point solidAreaDefaultPosition = new Point(0,0);
+    GamePanel gamePanel;
+    public BaseObject(String tile, Point worldPosition, GamePanel gamePanel)
     {
         this.worldPosition = worldPosition;
-
+        this.gamePanel = gamePanel;
         try
         {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(tile)));
@@ -31,13 +34,19 @@ public abstract class BaseObject
         }
     }
 
-    public void drawing(Graphics2D graphics2D, GamePanel gamePanel)
+    public void update()
     {
-        Point screenPosition = new Point(
-        worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
-        worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
+        screenPosition = new Point(
+                worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
+                worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
         );
 
+        solidArea.x = worldPosition.x + solidArea.x;
+        solidArea.y = worldPosition.y + solidArea.y;
+    }
+
+    public void drawing(Graphics2D graphics2D, GamePanel gamePanel)
+    {
         graphics2D.drawImage(image, screenPosition.x, screenPosition.y, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 }
