@@ -2,7 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-import objects.BaseObject;
+import objects.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -72,21 +72,22 @@ public class Player extends Entity
 
     public void pickUpObject(BaseObject item)
     {
-        if (item != null)
+        if (item == null)
+            return;
+
+        if (item instanceof Key)
+            ++hasKey;
+        else if (item instanceof Box)
+            System.out.println("Open inventory");
+        else if (item instanceof Door)
+            System.out.println("Check yes or no Key");
+        else if (item instanceof Boots)
         {
-            switch (item.name)
-            {
-                case "Key" : ++hasKey; break;
-                case "Box" :
-                    System.out.println("Open inventory"); break;
-                case "Door" :
-                    System.out.println("Check yes or no Key"); break;
-                case "Boots" : speed += 2; speedAnimation /= 2; break;
-
-            }
-
-            gamePanel.items.remove(item);
+            speed += 2;
+            speedAnimation /= 2;
         }
+
+        gamePanel.items.remove(item);
     }
 
     public void drawing(Graphics2D g2)

@@ -15,13 +15,11 @@ public abstract class BaseObject
     public Point worldPosition;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
     public Point solidAreaDefaultPosition = new Point(0,0);
-    public String name;
 
-
-    public BaseObject(String tile, Point worldPosition, String name)
+    public BaseObject(String tile, Point worldPosition)
     {
         this.worldPosition = worldPosition;
-        this.name = name;
+
         try
         {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(tile)));
@@ -35,8 +33,10 @@ public abstract class BaseObject
 
     public void drawing(Graphics2D graphics2D, GamePanel gamePanel)
     {
-        Point screenPosition = new Point(worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
-                worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y);
+        Point screenPosition = new Point(
+        worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
+        worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
+        );
 
         graphics2D.drawImage(image, screenPosition.x, screenPosition.y, gamePanel.tileSize, gamePanel.tileSize, null);
     }
