@@ -16,7 +16,7 @@ public class TileManager
 
     // TODO: move world, its loading and player pos to separate class
     public Tile[][] world;
-    final public Point initialPlayerPosition;
+    final public Point defaultWorldPosition;
 
     public final Map<Color, Tile> tiles;
 
@@ -35,7 +35,7 @@ public class TileManager
         world = new Tile[gamePanel.maxWorldCountTile.x][gamePanel.maxWorldCountTile.y];
         getWorld("/assets/world/worldMap.png");
 
-        initialPlayerPosition = new Point(23 * gamePanel.tileSize, 21 * gamePanel.tileSize);
+        defaultWorldPosition = new Point(23 * gamePanel.tileSize, 21 * gamePanel.tileSize);
     }
 
     // TODO: Move to World class too, maybe as constructor?

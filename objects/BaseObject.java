@@ -14,15 +14,14 @@ public abstract class BaseObject
     public boolean collision = true;
     public Point worldPosition;
     public Point screenPosition;
-    public Rectangle solidArea = new Rectangle(0,0,48,48);
-
-
-    public Point solidAreaDefaultPosition = new Point(0,0);
+    public Rectangle areaCollision;
     GamePanel gamePanel;
+
     public BaseObject(String tile, Point worldPosition, GamePanel gamePanel)
     {
         this.worldPosition = worldPosition;
         this.gamePanel = gamePanel;
+        areaCollision = new Rectangle(worldPosition.x + 12, worldPosition.y + 12, 24, 24);
         try
         {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(tile)));
@@ -40,9 +39,6 @@ public abstract class BaseObject
                 worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
                 worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
         );
-
-        solidArea.x = worldPosition.x + solidArea.x;
-        solidArea.y = worldPosition.y + solidArea.y;
     }
 
     public void drawing(Graphics2D graphics2D, GamePanel gamePanel)
