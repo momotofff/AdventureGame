@@ -6,9 +6,7 @@ import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 public class GamePanel extends JPanel implements Runnable
 {
@@ -40,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
         tileManager = new TileManager(this);
-        player = new Player(this, keyHandler, tileManager.initialPlayerPosition);
+        player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
         assetSetter = new AssetSetter(this);
     }
 

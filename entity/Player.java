@@ -14,17 +14,17 @@ public class Player extends Entity
     public final Point screenCoordinates;
     int hasKey = 0;
     int speedAnimation = 10;
+    int coolDownBoost;
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler, Point initialPosition)
+    public Player(GamePanel gamePanel, KeyHandler keyHandler, Point defaultWorldPosition)
     {
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
 
         screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
-        solidArea = new Rectangle(12, 12, 24, 24);
-        solidAreaDefaultPosition = new Point(solidArea.x, solidArea.y);
+        areaCollision = new Rectangle(defaultWorldPosition.x + 12, defaultWorldPosition. y + 12, 24, 24);
         speed = 4;
-        worldPosition = initialPosition;
+        worldPosition = defaultWorldPosition;
         getImage();
         direction = Direction.Down;
     }
@@ -33,6 +33,8 @@ public class Player extends Entity
     {
         if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed)
         {
+            collision = false;
+
             if (keyHandler.upPressed)
                 direction = Direction.Up;
 
@@ -45,8 +47,6 @@ public class Player extends Entity
             if (keyHandler.downPressed)
                 direction = Direction.Down;
 
-
-            collision = false;
             gamePanel.collisionChecker.checkTile(this);
             BaseObject item = gamePanel.collisionChecker.checkObject(this);
             pickUpObject(item);
@@ -55,10 +55,25 @@ public class Player extends Entity
             {
                 switch (direction)
                 {
-                    case Up : worldPosition.y -= speed; break;
-                    case Left: worldPosition.x -= speed; break;
-                    case Right: worldPosition.x += speed; break;
-                    case Down: worldPosition.y += speed; break;
+                    case Up :
+                        worldPosition.y -= speed;
+                        areaCollision.y -= speed;
+                        break;
+
+                    case Left:
+                        worldPosition.x -= speed;
+                        areaCollision.x -= speed;
+                        break;
+
+                    case Right:
+                        worldPosition.x += speed;
+                        areaCollision.x += speed;
+                        break;
+
+                    case Down:
+                        worldPosition.y += speed;
+                        areaCollision.y += speed;
+                        break;
                 }
             }
 
@@ -69,7 +84,11 @@ public class Player extends Entity
             }
         }
 
-
+        if (--coolDownBoost < 0)
+        {
+            speed = 4;
+            speedAnimation = 10;
+        }
     }
 
     public void pickUpObject(BaseObject item)
@@ -87,6 +106,7 @@ public class Player extends Entity
         {
             speed += 2;
             speedAnimation /= 2;
+            coolDownBoost = 240;
         }
 
         gamePanel.items.remove(item);
