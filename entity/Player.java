@@ -22,7 +22,7 @@ public class Player extends Entity
         this.keyHandler = keyHandler;
 
         screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
-        areaCollision = new Rectangle(defaultWorldPosition.x + 12, defaultWorldPosition. y + 12, 24, 24);
+        collisionArea = new Rectangle(defaultWorldPosition.x + 12, defaultWorldPosition. y + 12, 24, 24);
         speed = 4;
         worldPosition = defaultWorldPosition;
         getImage();
@@ -31,48 +31,35 @@ public class Player extends Entity
 
     public void update()
     {
-        if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed)
+        keyHandler.getPressedDirection().ifPresent(value ->
         {
-            collision = false;
+            this.direction = value;
 
-            if (keyHandler.upPressed)
-                direction = Direction.Up;
-
-            if (keyHandler.leftPressed)
-                direction = Direction.Left;
-
-            if (keyHandler.rightPressed)
-                direction = Direction.Right;
-
-            if (keyHandler.downPressed)
-                direction = Direction.Down;
-
-            gamePanel.collisionChecker.checkTile(this);
             BaseObject item = gamePanel.collisionChecker.checkObject(this);
             pickUpObject(item);
 
-            if (!collision)
+            if (!gamePanel.collisionChecker.checkTile(this))
             {
                 switch (direction)
                 {
-                    case Up :
+                    case Up:
                         worldPosition.y -= speed;
-                        areaCollision.y -= speed;
+                        collisionArea.y -= speed;
                         break;
 
                     case Left:
                         worldPosition.x -= speed;
-                        areaCollision.x -= speed;
+                        collisionArea.x -= speed;
                         break;
 
                     case Right:
                         worldPosition.x += speed;
-                        areaCollision.x += speed;
+                        collisionArea.x += speed;
                         break;
 
                     case Down:
                         worldPosition.y += speed;
-                        areaCollision.y += speed;
+                        collisionArea.y += speed;
                         break;
                 }
             }
@@ -82,7 +69,7 @@ public class Player extends Entity
                 ++spriteNumber;
                 spriteCounter = 0;
             }
-        }
+        });
 
         if (--coolDownBoost < 0)
         {
