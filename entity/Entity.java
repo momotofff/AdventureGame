@@ -16,8 +16,7 @@ public class Entity
     public Direction direction;
     public int spriteCounter = 0;
     public int spriteNumber = 1;
-    public Rectangle areaCollision;
-    public boolean collision = false;
+    public Rectangle collisionArea;
 
     private final Map<Direction, ArrayList<BufferedImage>> animations;
 
