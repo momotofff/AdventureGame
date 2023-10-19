@@ -68,6 +68,7 @@ public class Player extends Entity
             {
                 ++spriteNumber;
                 spriteCounter = 0;
+                gamePanel.playSE(3);
             }
         });
 
@@ -84,9 +85,15 @@ public class Player extends Entity
             return;
 
         if (item instanceof Key)
+        {
             ++hasKey;
+            gamePanel.playSE(1);
+        }
         else if (item instanceof Box)
+        {
             System.out.println("Open inventory");
+
+        }
         else if (item instanceof Door)
             System.out.println("Check yes or no Key");
         else if (item instanceof Boots)
@@ -94,6 +101,7 @@ public class Player extends Entity
             speed += 2;
             speedAnimation /= 2;
             coolDownBoost = 240;
+            gamePanel.playSE(2);
         }
 
         gamePanel.items.remove(item);

@@ -18,17 +18,18 @@ public class GamePanel extends JPanel implements Runnable
     public final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
 
     final public Point maxWorldCountTile = new Point(50, 50);
-    final public Point worldSize = new Point(maxWorldCountTile.x * tileSize, maxWorldCountTile.y * tileSize);
+
     final int FPS = 60;
 
-    KeyHandler keyHandler = new KeyHandler();
-    Thread gameThread;
-    public Player player;
-
     TileManager tileManager;
+    KeyHandler keyHandler = new KeyHandler();
+    Sound sound = new Sound();
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    public HashSet<BaseObject> items = new HashSet<>();
     public AssetSetter assetSetter;
+    Thread gameThread;
+
+    public Player player;
+    public HashSet<BaseObject> items = new HashSet<>();
 
     public GamePanel()
     {
@@ -40,17 +41,20 @@ public class GamePanel extends JPanel implements Runnable
         tileManager = new TileManager(this);
         player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
         assetSetter = new AssetSetter(this);
+
     }
 
     public void setupGame()
     {
         assetSetter.setObject();
+        playMusic(0);
     }
 
     public void startGameThread()
     {
         gameThread = new Thread(this);
         gameThread.start();
+
     }
 
     @Override
@@ -107,5 +111,23 @@ public class GamePanel extends JPanel implements Runnable
         player.drawing(graphics2D);
 
         graphics2D.dispose();
+    }
+
+    public void playMusic(int i)
+    {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic()
+    {
+        sound.stop();
+    }
+
+    public void playSE(int i)
+    {
+        sound.setFile(i);
+        sound.play();
     }
 }
