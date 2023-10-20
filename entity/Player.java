@@ -12,7 +12,7 @@ public class Player extends Entity
     GamePanel gamePanel;
     KeyHandler keyHandler;
     public final Point screenCoordinates;
-    int hasKey = 0;
+    public int hasKey = 0;
     int speedAnimation = 10;
     int coolDownBoost;
 

@@ -22,15 +22,11 @@ public abstract class BaseObject
         this.worldPosition = worldPosition;
         this.gamePanel = gamePanel;
         areaCollision = new Rectangle(worldPosition.x + 12, worldPosition.y + 12, 24, 24);
-        try
-        {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(tile)));
-        }
-        catch (IOException e)
-        {
-            System.out.println("Failed to load resource: " + tile);
-            System.exit(1);
-        }
+        helper(tile);
+    }
+    public BaseObject(String tile)
+    {
+        helper(tile);
     }
 
     public void update()
@@ -44,5 +40,18 @@ public abstract class BaseObject
     public void drawing(Graphics2D graphics2D, GamePanel gamePanel)
     {
         graphics2D.drawImage(image, screenPosition.x, screenPosition.y, gamePanel.tileSize, gamePanel.tileSize, null);
+    }
+
+    private void helper(String tile)
+    {
+        try
+        {
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(tile)));
+        }
+        catch (IOException e)
+        {
+            System.out.println("Failed to load resource: " + tile);
+            System.exit(1);
+        }
     }
 }
