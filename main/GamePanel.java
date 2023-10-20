@@ -26,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable
     Sound sound = new Sound();
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter;
+    public UI ui = new UI(this);
     Thread gameThread;
 
     public Player player;
@@ -109,6 +110,7 @@ public class GamePanel extends JPanel implements Runnable
         }
 
         player.drawing(graphics2D);
+        ui.draw(graphics2D);
 
         graphics2D.dispose();
     }
