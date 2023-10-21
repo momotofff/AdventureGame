@@ -8,6 +8,6 @@ public class Box extends BaseObject
 {
     public Box(Point worldPosition, GamePanel gamePanel)
     {
-        super("/assets/gameElements/box.png", worldPosition, gamePanel);
+        super("/assets/gameElements/box.png", null, worldPosition, gamePanel);
     }
 }

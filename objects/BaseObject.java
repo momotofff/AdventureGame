@@ -1,6 +1,7 @@
 package objects;
 
 import main.GamePanel;
+import main.Sounds;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,22 +12,34 @@ import java.util.Objects;
 public abstract class BaseObject
 {
     public BufferedImage image;
-    public boolean collision = true;
     public Point worldPosition;
     public Point screenPosition;
     public Rectangle areaCollision;
+    public Sounds soundEffect = Sounds.None;
+
     GamePanel gamePanel;
 
-    public BaseObject(String tile, Point worldPosition, GamePanel gamePanel)
+    public BaseObject(String tile, Sounds audio, Point worldPosition, GamePanel gamePanel)
     {
+        this(tile, audio);
         this.worldPosition = worldPosition;
         this.gamePanel = gamePanel;
         areaCollision = new Rectangle(worldPosition.x + 12, worldPosition.y + 12, 24, 24);
-        helper(tile);
     }
-    public BaseObject(String tile)
+
+    public BaseObject(String tile, Sounds sound)
     {
-        helper(tile);
+        this.soundEffect = sound;
+
+        try
+        {
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(tile)));
+        }
+        catch (IOException e)
+        {
+            System.out.println("Failed to load resource: " + tile);
+            System.exit(1);
+        }
     }
 
     public void update()
@@ -40,18 +53,5 @@ public abstract class BaseObject
     public void drawing(Graphics2D graphics2D, GamePanel gamePanel)
     {
         graphics2D.drawImage(image, screenPosition.x, screenPosition.y, gamePanel.tileSize, gamePanel.tileSize, null);
-    }
-
-    private void helper(String tile)
-    {
-        try
-        {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(tile)));
-        }
-        catch (IOException e)
-        {
-            System.out.println("Failed to load resource: " + tile);
-            System.exit(1);
-        }
     }
 }

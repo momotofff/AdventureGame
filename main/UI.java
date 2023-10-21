@@ -1,6 +1,5 @@
 package main;
 
-import objects.BaseObject;
 import objects.Key;
 
 import java.awt.*;
@@ -12,7 +11,7 @@ public class UI
     Font font;
     BufferedImage bufferedImage;
 
-    public  UI(GamePanel gamePanel)
+    public UI(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
         font = new Font("Arial", Font.PLAIN, 30);
