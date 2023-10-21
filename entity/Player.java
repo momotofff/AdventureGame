@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.Sounds;
 import objects.*;
 
 import java.awt.*;
@@ -68,7 +69,7 @@ public class Player extends Entity
             {
                 ++spriteNumber;
                 spriteCounter = 0;
-                gamePanel.playSE(3);
+                gamePanel.sound.play(Sounds.Step);
             }
         });
 
@@ -84,15 +85,15 @@ public class Player extends Entity
         if (item == null)
             return;
 
+        gamePanel.sound.play(item.soundEffect);
+
         if (item instanceof Key)
         {
             ++hasKey;
-            gamePanel.playSE(1);
         }
         else if (item instanceof Box)
         {
             System.out.println("Open inventory");
-
         }
         else if (item instanceof Door)
             System.out.println("Check yes or no Key");
@@ -101,7 +102,6 @@ public class Player extends Entity
             speed += 2;
             speedAnimation /= 2;
             coolDownBoost = 240;
-            gamePanel.playSE(2);
         }
 
         gamePanel.items.remove(item);
