@@ -24,7 +24,7 @@ public class Player extends Entity
 
         screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
         collisionArea = new Rectangle(defaultWorldPosition.x + 12, defaultWorldPosition. y + 12, 24, 24);
-        speed = 4;
+        speed = 3;
         worldPosition = defaultWorldPosition;
         getImage();
         direction = Direction.Down;
@@ -75,7 +75,7 @@ public class Player extends Entity
 
         if (--coolDownBoost < 0)
         {
-            speed = 4;
+            speed = 3;
             speedAnimation = 10;
         }
     }
@@ -90,6 +90,7 @@ public class Player extends Entity
         if (item instanceof Key)
         {
             ++hasKey;
+            gamePanel.ui.showMessage("У вас есть ключ");
         }
         else if (item instanceof Box)
         {
@@ -101,7 +102,8 @@ public class Player extends Entity
         {
             speed += 2;
             speedAnimation /= 2;
-            coolDownBoost = 240;
+            coolDownBoost = 100;
+            gamePanel.ui.showMessage("Ля какие шикарные бархатные тяги");
         }
 
         gamePanel.items.remove(item);
