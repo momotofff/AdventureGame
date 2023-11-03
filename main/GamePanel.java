@@ -14,12 +14,12 @@ public class GamePanel extends JPanel implements Runnable
     final public int scale = 3;
 
     public final int tileSize = originalTileSize * scale;
-    final public Point maxBlocksScreen = new Point(16, 12);
+    final public Point maxBlocksScreen = new Point(16, 9);
     public final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
 
-    final public Point maxWorldCountTile = new Point(50, 50);
+    final public Point maxWorldCountTile = new Point(100, 100);
 
-    final int FPS = 60;
+    final int FPS = 45;
 
     TileManager tileManager;
     KeyHandler keyHandler = new KeyHandler();
