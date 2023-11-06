@@ -10,19 +10,19 @@ public class Tile
 {
     public BufferedImage image;
     public boolean collision;
-    public Point worldPosition;
 
     public Tile(String path, boolean collision)
     {
-        try {
+        try
+        {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path)));
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
+            System.out.println("Failed to load tile: " + path);
             throw new RuntimeException(e);
         }
-        this.collision = collision;
-    }
 
-    public Tile()
-    {
+        this.collision = collision;
     }
 }
