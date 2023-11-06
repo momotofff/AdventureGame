@@ -8,8 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
-import java.util.List;
+import java.util.NoSuchElementException;
 
 public class TileManager
 {
@@ -19,41 +18,39 @@ public class TileManager
     public Tile[][] world;
     final public Point defaultWorldPosition;
 
-    public final Map<Integer, ArrayList<Tile>> tiles = new HashMap<>();
+    private final TileStorage tiles = new TileStorage();
 
     public TileManager(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
 
-        tiles.put(Tiles.Grass, new ArrayList<>());
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Grass1.png", false));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Grass2.png", false));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Grass3.png", false));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Grass4.png", false));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Grass5.png", false));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Grass6.png", false));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Grass7.png", false));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Grass8.png", false));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Grass9.png", false));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Grass10.png", false));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Tree1.png", true));
-        tiles.get(Tiles.Grass).add(new Tile("/assets/world/Tree2.png", true));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass2.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass3.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass4.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass5.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass6.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass7.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass8.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass9.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass10.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Tree1.png", true));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Tree2.png", true));
 
-        tiles.put(Tiles.Water, new ArrayList<>());
-        tiles.get(Tiles.Water).add(new Tile("/assets/world/Water1.png", true));
-        tiles.get(Tiles.Water).add(new Tile("/assets/world/Water2.png", true));
-        tiles.get(Tiles.Water).add(new Tile("/assets/world/Water3.png", true));
-        tiles.get(Tiles.Water).add(new Tile("/assets/world/Water4.png", true));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water1.png", true));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water2.png", true));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water3.png", true));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water4.png", true));
 
-        tiles.put(Tiles.BorderBottom, new ArrayList<>(List.of(new Tile("/assets/world/BorderBottom.png", true))));
-        tiles.put(Tiles.BorderLeft, new ArrayList<>(List.of(new Tile("/assets/world/BorderLeft.png", true))));
-        tiles.put(Tiles.BorderRight, new ArrayList<>(List.of(new Tile("/assets/world/BorderRight.png", true))));
-        tiles.put(Tiles.BorderTop, new ArrayList<>(List.of(new Tile("/assets/world/BorderTop.png", true))));
+        tiles.add(Tiles.BorderBottom, new Tile("/assets/world/BorderBottom.png", true));
+        tiles.add(Tiles.BorderLeft, new Tile("/assets/world/BorderLeft.png", true));
+        tiles.add(Tiles.BorderRight, new Tile("/assets/world/BorderRight.png", true));
+        tiles.add(Tiles.BorderTop, new Tile("/assets/world/BorderTop.png", true));
 
-        tiles.put(Tiles.BorderBottomRight, new ArrayList<>(List.of(new Tile("/assets/world/BorderBottomRight.png", true))));
-        tiles.put(Tiles.BorderBottomLeft, new ArrayList<>(List.of(new Tile("/assets/world/BorderBottomLeft.png", true))));
-        tiles.put(Tiles.BorderTopRight, new ArrayList<>(List.of(new Tile("/assets/world/BorderTopRight.png", true))));
-        tiles.put(Tiles.BorderTopLeft, new ArrayList<>(List.of(new Tile("/assets/world/BorderTopLeft.png", true))));
+        tiles.add(Tiles.BorderBottomRight, new Tile("/assets/world/BorderBottomRight.png", true));
+        tiles.add(Tiles.BorderBottomLeft, new Tile("/assets/world/BorderBottomLeft.png", true));
+        tiles.add(Tiles.BorderTopRight, new Tile("/assets/world/BorderTopRight.png", true));
+        tiles.add(Tiles.BorderTopLeft, new Tile("/assets/world/BorderTopLeft.png", true));
 
         world = new Tile[gamePanel.maxWorldCountTile.x][gamePanel.maxWorldCountTile.y];
         getWorld("/assets/world/WorldMap.txt");
@@ -76,16 +73,15 @@ public class TileManager
 
                 for (int x = 0; x < gamePanel.maxWorldCountTile.x; ++x)
                 {
-                    Integer tileId = Integer.parseInt(numbers[x]);
-                    ArrayList<Tile> tile = tiles.get(tileId);
-
-                    if (tile == null || tile.isEmpty())
+                    try
                     {
-                        System.out.println("Failed to load tiles for ID: " + tileId);
+                        world[x][y] = tiles.get(Integer.parseInt(numbers[x]));
+                    }
+                    catch (NoSuchElementException e)
+                    {
+                        System.out.println(e.getMessage());
                         System.exit(1);
                     }
-
-                    world[x][y] = tile.get((int) (Math.random() * tile.size()));
                 }
             }
         }
