@@ -91,7 +91,7 @@ public class TileManager
                     else
                         world[x][y] = tiles.get(Integer.parseInt(numbers[x]));
 
-                    world[x][y].worldPosition = new Point(y * gamePanel.tileSize, x * gamePanel.tileSize);
+                    //world[x][y].worldPosition = new Point(y * gamePanel.tileSize, x * gamePanel.tileSize);
                 }
             }
         }
@@ -109,7 +109,7 @@ public class TileManager
             {
                 BufferedImage image = world[y][x].image;
 
-               // Point worldPositionTile = world[x][y].worldPosition;
+                //Point worldPositionTile = world[x][y].worldPosition;
 
                 Point worldPosition = new Point(y * gamePanel.tileSize, x * gamePanel.tileSize);
                 Point screenPosition = new Point(worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,

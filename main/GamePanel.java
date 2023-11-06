@@ -11,15 +11,15 @@ import java.util.HashSet;
 public class GamePanel extends JPanel implements Runnable
 {
     final int originalTileSize = 16;
-    final public int scale = 3;
+    final public int scale = 4;
 
     public final int tileSize = originalTileSize * scale;
-    final public Point maxBlocksScreen = new Point(16, 9);
+    final public Point maxBlocksScreen = new Point(25, 14);
     public final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
 
     final public Point maxWorldCountTile = new Point(100, 100);
 
-    final int FPS = 45;
+    final int FPS = 60;
 
     TileManager tileManager;
     KeyHandler keyHandler = new KeyHandler();
