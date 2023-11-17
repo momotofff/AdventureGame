@@ -24,7 +24,7 @@ public abstract class BaseObject
         this(tile, audio);
         this.worldPosition = worldPosition;
         this.gamePanel = gamePanel;
-        areaCollision = new Rectangle(worldPosition.x + 12, worldPosition.y + 12, 24, 24);
+        areaCollision = new Rectangle(worldPosition.x + 8, worldPosition.y + 8, 48, 48);
     }
 
     public BaseObject(String tile, Sounds sound)

@@ -23,7 +23,7 @@ public class Player extends Entity
         this.keyHandler = keyHandler;
 
         screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
-        collisionArea = new Rectangle(defaultWorldPosition.x + 12, defaultWorldPosition. y + 12, 24, 24);
+        collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
         speed = 3;
         worldPosition = defaultWorldPosition;
         getImage();
@@ -75,7 +75,7 @@ public class Player extends Entity
 
         if (--coolDownBoost < 0)
         {
-            speed = 3;
+            speed = 6;
             speedAnimation = 10;
         }
     }

@@ -10,11 +10,11 @@ import java.util.HashSet;
 
 public class GamePanel extends JPanel implements Runnable
 {
-    final int originalTileSize = 16;
-    final public int scale = 4;
+    final int originalTileSize = 32;
+    final public int scale = 2;
 
     public final int tileSize = originalTileSize * scale;
-    final public Point maxBlocksScreen = new Point(25, 14);
+    final public Point maxBlocksScreen = new Point(26, 14);
     public final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
 
     final public Point maxWorldCountTile = new Point(100, 100);
@@ -31,6 +31,10 @@ public class GamePanel extends JPanel implements Runnable
 
     public Player player;
     public HashSet<BaseObject> items = new HashSet<>();
+
+    boolean playState = false;
+    boolean pauseState = false;
+
 
     public GamePanel()
     {
@@ -49,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable
         assetSetter.setObject();
         sound.play(Sounds.Theme);
         sound.loop();
+        playState = true;
     }
 
     public void startGameThread()

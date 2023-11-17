@@ -24,33 +24,45 @@ public class TileManager
     {
         this.gamePanel = gamePanel;
 
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass2.png", false));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass3.png", false));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass4.png", false));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass5.png", false));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass6.png", false));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass7.png", false));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass8.png", false));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass9.png", false));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass10.png", false));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Tree1.png", true));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Tree2.png", true));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass2.png", false, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass3.png", false, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass4.png", false, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass5.png", false, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass6.png", false, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass7.png", false, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass8.png", false, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass9.png", false, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass10.png", false, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Tree1.png", true, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Tree2.png", true, gamePanel));
 
-        tiles.add(Tiles.Water, new Tile("/assets/world/Water1.png", true));
-        tiles.add(Tiles.Water, new Tile("/assets/world/Water2.png", true));
-        tiles.add(Tiles.Water, new Tile("/assets/world/Water3.png", true));
-        tiles.add(Tiles.Water, new Tile("/assets/world/Water4.png", true));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water1.png", true, gamePanel));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water2.png", true, gamePanel));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water3.png", true, gamePanel));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water4.png", true, gamePanel));
 
-        tiles.add(Tiles.BorderBottom, new Tile("/assets/world/BorderBottom.png", true));
-        tiles.add(Tiles.BorderLeft, new Tile("/assets/world/BorderLeft.png", true));
-        tiles.add(Tiles.BorderRight, new Tile("/assets/world/BorderRight.png", true));
-        tiles.add(Tiles.BorderTop, new Tile("/assets/world/BorderTop.png", true));
+        tiles.add(Tiles.BorderBottom, new Tile("/assets/world/BorderBottom.png", true, gamePanel));
+        tiles.add(Tiles.BorderLeft, new Tile("/assets/world/BorderLeft.png", true, gamePanel));
+        tiles.add(Tiles.BorderRight, new Tile("/assets/world/BorderRight.png", true, gamePanel));
+        tiles.add(Tiles.BorderTop, new Tile("/assets/world/BorderTop.png", true, gamePanel));
 
-        tiles.add(Tiles.BorderBottomRight, new Tile("/assets/world/BorderBottomRight.png", true));
-        tiles.add(Tiles.BorderBottomLeft, new Tile("/assets/world/BorderBottomLeft.png", true));
-        tiles.add(Tiles.BorderTopRight, new Tile("/assets/world/BorderTopRight.png", true));
-        tiles.add(Tiles.BorderTopLeft, new Tile("/assets/world/BorderTopLeft.png", true));
+        tiles.add(Tiles.BorderBottomRight, new Tile("/assets/world/BorderBottomRight.png", true, gamePanel));
+        tiles.add(Tiles.BorderBottomLeft, new Tile("/assets/world/BorderBottomLeft.png", true, gamePanel));
+        tiles.add(Tiles.BorderTopRight, new Tile("/assets/world/BorderTopRight.png", true, gamePanel));
+        tiles.add(Tiles.BorderTopLeft, new Tile("/assets/world/BorderTopLeft.png", true, gamePanel));
+
+        tiles.add(Tiles.CornerBottomRight, new Tile("/assets/world/CornerBottomRight.png", true, gamePanel));
+        tiles.add(Tiles.CornerBottomLeft, new Tile("/assets/world/CornerBottomLeft.png", true, gamePanel));
+        tiles.add(Tiles.CornerTopRight, new Tile("/assets/world/CornerTopRight.png", true, gamePanel));
+        tiles.add(Tiles.CornerTopLeft, new Tile("/assets/world/CornerTopLeft.png", true, gamePanel));
+
+        tiles.add(Tiles.RoadHorizontal, new Tile("/assets/world/RoadHorizontal.png", false, gamePanel));
+        tiles.add(Tiles.RoadVertical, new Tile("/assets/world/RoadVertical.png", false, gamePanel));
+        tiles.add(Tiles.RoadTopLeft, new Tile("/assets/world/RoadTopLeft.png", false, gamePanel));
+        tiles.add(Tiles.RoadTopRight, new Tile("/assets/world/RoadTopRight.png", false, gamePanel));
+        tiles.add(Tiles.RoadBottomLeft, new Tile("/assets/world/RoadBottomLeft.png", false, gamePanel));
+        tiles.add(Tiles.RoadBottomRight, new Tile("/assets/world/RoadBottomRight.png", false, gamePanel));
 
         world = new Tile[gamePanel.maxWorldCountTile.x][gamePanel.maxWorldCountTile.y];
         getWorld("/assets/world/WorldMap.txt");
@@ -69,7 +81,7 @@ public class TileManager
             for (int y = 0; y < gamePanel.maxWorldCountTile.y; ++y)
             {
                 String line = bufferedReader.readLine();
-                String[] numbers = line.split(" ");
+                String[] numbers = line.split("\\s+");
 
                 for (int x = 0; x < gamePanel.maxWorldCountTile.x; ++x)
                 {
@@ -104,7 +116,7 @@ public class TileManager
                     y * gamePanel.tileSize - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
                 );
 
-                graphics2D.drawImage(image, screenPosition.x, screenPosition.y, gamePanel.tileSize, gamePanel.tileSize, null);
+                graphics2D.drawImage(image, screenPosition.x, screenPosition.y,null);
             }
         }
     }

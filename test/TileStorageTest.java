@@ -1,3 +1,4 @@
+import main.GamePanel;
 import tile.Tile;
 import tile.TileStorage;
 import tile.Tiles;
@@ -13,7 +14,7 @@ class TileStorageTest
     @org.junit.jupiter.api.Test
     void getAfterAdd_ExpectSuccess()
     {
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, new GamePanel()));
         Tile tile = tiles.get(Tiles.Grass);
         assertNotNull(tile);
         assertFalse(tile.collision);
@@ -28,7 +29,7 @@ class TileStorageTest
     @org.junit.jupiter.api.Test
     void getAnotherTile_ExpectException()
     {
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, new GamePanel()));
         assertThrows(NoSuchElementException.class, () -> tiles.get(Tiles.Water));
     }
 }
