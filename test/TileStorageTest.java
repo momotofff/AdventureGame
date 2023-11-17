@@ -14,10 +14,14 @@ class TileStorageTest
     @org.junit.jupiter.api.Test
     void getAfterAdd_ExpectSuccess()
     {
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, new GamePanel()));
+        final int ScaledSize = 64;
+
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, ScaledSize));
         Tile tile = tiles.get(Tiles.Grass);
         assertNotNull(tile);
         assertFalse(tile.collision);
+        assertEquals(tile.image.getHeight(), ScaledSize);
+        assertEquals(tile.image.getWidth(), ScaledSize);
     }
 
     @org.junit.jupiter.api.Test
@@ -29,7 +33,7 @@ class TileStorageTest
     @org.junit.jupiter.api.Test
     void getAnotherTile_ExpectException()
     {
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, new GamePanel()));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, 64));
         assertThrows(NoSuchElementException.class, () -> tiles.get(Tiles.Water));
     }
 }

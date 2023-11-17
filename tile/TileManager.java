@@ -24,45 +24,45 @@ public class TileManager
     {
         this.gamePanel = gamePanel;
 
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass2.png", false, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass3.png", false, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass4.png", false, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass5.png", false, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass6.png", false, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass7.png", false, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass8.png", false, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass9.png", false, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass10.png", false, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Tree1.png", true, gamePanel));
-        tiles.add(Tiles.Grass, new Tile("/assets/world/Tree2.png", true, gamePanel));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass2.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass3.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass4.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass5.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass6.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass7.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass8.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass9.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Grass10.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Tree1.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.Grass, new Tile("/assets/world/Tree2.png", true, gamePanel.tileSize));
 
-        tiles.add(Tiles.Water, new Tile("/assets/world/Water1.png", true, gamePanel));
-        tiles.add(Tiles.Water, new Tile("/assets/world/Water2.png", true, gamePanel));
-        tiles.add(Tiles.Water, new Tile("/assets/world/Water3.png", true, gamePanel));
-        tiles.add(Tiles.Water, new Tile("/assets/world/Water4.png", true, gamePanel));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water1.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water2.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water3.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.Water, new Tile("/assets/world/Water4.png", true, gamePanel.tileSize));
 
-        tiles.add(Tiles.BorderBottom, new Tile("/assets/world/BorderBottom.png", true, gamePanel));
-        tiles.add(Tiles.BorderLeft, new Tile("/assets/world/BorderLeft.png", true, gamePanel));
-        tiles.add(Tiles.BorderRight, new Tile("/assets/world/BorderRight.png", true, gamePanel));
-        tiles.add(Tiles.BorderTop, new Tile("/assets/world/BorderTop.png", true, gamePanel));
+        tiles.add(Tiles.BorderBottom, new Tile("/assets/world/BorderBottom.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.BorderLeft, new Tile("/assets/world/BorderLeft.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.BorderRight, new Tile("/assets/world/BorderRight.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.BorderTop, new Tile("/assets/world/BorderTop.png", true, gamePanel.tileSize));
 
-        tiles.add(Tiles.BorderBottomRight, new Tile("/assets/world/BorderBottomRight.png", true, gamePanel));
-        tiles.add(Tiles.BorderBottomLeft, new Tile("/assets/world/BorderBottomLeft.png", true, gamePanel));
-        tiles.add(Tiles.BorderTopRight, new Tile("/assets/world/BorderTopRight.png", true, gamePanel));
-        tiles.add(Tiles.BorderTopLeft, new Tile("/assets/world/BorderTopLeft.png", true, gamePanel));
+        tiles.add(Tiles.BorderBottomRight, new Tile("/assets/world/BorderBottomRight.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.BorderBottomLeft, new Tile("/assets/world/BorderBottomLeft.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.BorderTopRight, new Tile("/assets/world/BorderTopRight.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.BorderTopLeft, new Tile("/assets/world/BorderTopLeft.png", true, gamePanel.tileSize));
 
-        tiles.add(Tiles.CornerBottomRight, new Tile("/assets/world/CornerBottomRight.png", true, gamePanel));
-        tiles.add(Tiles.CornerBottomLeft, new Tile("/assets/world/CornerBottomLeft.png", true, gamePanel));
-        tiles.add(Tiles.CornerTopRight, new Tile("/assets/world/CornerTopRight.png", true, gamePanel));
-        tiles.add(Tiles.CornerTopLeft, new Tile("/assets/world/CornerTopLeft.png", true, gamePanel));
+        tiles.add(Tiles.CornerBottomRight, new Tile("/assets/world/CornerBottomRight.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.CornerBottomLeft, new Tile("/assets/world/CornerBottomLeft.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.CornerTopRight, new Tile("/assets/world/CornerTopRight.png", true, gamePanel.tileSize));
+        tiles.add(Tiles.CornerTopLeft, new Tile("/assets/world/CornerTopLeft.png", true, gamePanel.tileSize));
 
-        tiles.add(Tiles.RoadHorizontal, new Tile("/assets/world/RoadHorizontal.png", false, gamePanel));
-        tiles.add(Tiles.RoadVertical, new Tile("/assets/world/RoadVertical.png", false, gamePanel));
-        tiles.add(Tiles.RoadTopLeft, new Tile("/assets/world/RoadTopLeft.png", false, gamePanel));
-        tiles.add(Tiles.RoadTopRight, new Tile("/assets/world/RoadTopRight.png", false, gamePanel));
-        tiles.add(Tiles.RoadBottomLeft, new Tile("/assets/world/RoadBottomLeft.png", false, gamePanel));
-        tiles.add(Tiles.RoadBottomRight, new Tile("/assets/world/RoadBottomRight.png", false, gamePanel));
+        tiles.add(Tiles.RoadHorizontal, new Tile("/assets/world/RoadHorizontal.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.RoadVertical, new Tile("/assets/world/RoadVertical.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.RoadTopLeft, new Tile("/assets/world/RoadTopLeft.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.RoadTopRight, new Tile("/assets/world/RoadTopRight.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.RoadBottomLeft, new Tile("/assets/world/RoadBottomLeft.png", false, gamePanel.tileSize));
+        tiles.add(Tiles.RoadBottomRight, new Tile("/assets/world/RoadBottomRight.png", false, gamePanel.tileSize));
 
         world = new Tile[gamePanel.maxWorldCountTile.x][gamePanel.maxWorldCountTile.y];
         getWorld("/assets/world/WorldMap.txt");
