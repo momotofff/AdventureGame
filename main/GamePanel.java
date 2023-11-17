@@ -32,9 +32,7 @@ public class GamePanel extends JPanel implements Runnable
     public Player player;
     public HashSet<BaseObject> items = new HashSet<>();
 
-    boolean playState = false;
-    boolean pauseState = false;
-
+    private GameState state = GameState.Running;
 
     public GamePanel()
     {
@@ -53,7 +51,6 @@ public class GamePanel extends JPanel implements Runnable
         assetSetter.setObject();
         sound.play(Sounds.Theme);
         sound.loop();
-        playState = true;
     }
 
     public void startGameThread()
