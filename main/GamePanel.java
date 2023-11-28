@@ -99,12 +99,7 @@ public class GamePanel extends JPanel implements Runnable
                 break;
             case Paused: break;
         }
-
-
     }
-
-
-
 
     @Override
     public void paintComponent(Graphics graphics)

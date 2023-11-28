@@ -13,7 +13,8 @@ public class KeyHandler implements KeyListener
     private boolean downPressed;
     private boolean leftPressed;
     private boolean rightPressed;
-    boolean paused = false;
+    private boolean paused = false;
+    private boolean inventory = false;
 
     public KeyHandler(GamePanel gamePanel)
     {
@@ -43,6 +44,16 @@ public class KeyHandler implements KeyListener
                 paused = true;
             }
             break;
+            case KeyEvent.VK_E : if(inventory) {
+                inventory = false;
+                gamePanel.state = GameState.Running;
+            }
+            else
+            {
+                gamePanel.state = GameState.Inventory;
+                inventory = true;
+            }
+                break;
 
         }
     }
