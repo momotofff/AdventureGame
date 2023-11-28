@@ -17,6 +17,7 @@ public class Tile
         {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path)));
         }
+
         catch (IOException e)
         {
             System.out.println("Failed to load tile: " + path);

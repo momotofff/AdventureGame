@@ -8,7 +8,17 @@ import java.util.Optional;
 
 public class KeyHandler implements KeyListener
 {
-    private boolean upPressed, downPressed, leftPressed, rightPressed;
+    GamePanel gamePanel;
+    private boolean upPressed;
+    private boolean downPressed;
+    private boolean leftPressed;
+    private boolean rightPressed;
+    boolean paused = false;
+
+    public KeyHandler(GamePanel gamePanel)
+    {
+        this.gamePanel = gamePanel;
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {}
@@ -16,12 +26,24 @@ public class KeyHandler implements KeyListener
     @Override
     public void keyPressed(KeyEvent e)
     {
+
         switch (e.getKeyCode())
         {
             case KeyEvent.VK_W : upPressed = true; break;
             case KeyEvent.VK_A : leftPressed = true; break;
             case KeyEvent.VK_S : downPressed = true; break;
             case KeyEvent.VK_D : rightPressed = true; break;
+            case KeyEvent.VK_SPACE : if(paused) {
+                paused = false;
+                gamePanel.state = GameState.Running;
+            }
+            else
+            {
+                gamePanel.state = GameState.Paused;
+                paused = true;
+            }
+            break;
+
         }
     }
 

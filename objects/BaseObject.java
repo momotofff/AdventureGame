@@ -17,6 +17,7 @@ public abstract class BaseObject
     public Rectangle areaCollision;
     public Sounds soundEffect = Sounds.None;
 
+
     GamePanel gamePanel;
 
     public BaseObject(String tile, Sounds audio, Point worldPosition, GamePanel gamePanel)

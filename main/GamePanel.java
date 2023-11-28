@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable
     final int FPS = 60;
 
     TileManager tileManager;
-    KeyHandler keyHandler = new KeyHandler();
+    KeyHandler keyHandler = new KeyHandler(this);
     public Sound sound = new Sound();
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter;
@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable
     public Player player;
     public HashSet<BaseObject> items = new HashSet<>();
 
-    private GameState state = GameState.Running;
+    public GameState state = GameState.Running;
 
     public GamePanel()
     {
@@ -88,13 +88,23 @@ public class GamePanel extends JPanel implements Runnable
 
     public void update()
     {
-        player.update();
-
-        for (BaseObject item : items)
+        switch (state)
         {
-            item.update();
+            case Running : player.update();
+                for (BaseObject item : items)
+                {
+                    item.update();
+                }
+
+                break;
+            case Paused: break;
         }
+
+
     }
+
+
+
 
     @Override
     public void paintComponent(Graphics graphics)

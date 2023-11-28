@@ -1,5 +1,6 @@
 package entity;
 
+import assets.Strings.TextMessages;
 import main.GamePanel;
 import main.KeyHandler;
 import main.Sounds;
@@ -16,6 +17,7 @@ public class Player extends Entity
     public int hasKey = 0;
     int speedAnimation = 10;
     int coolDownBoost;
+    TextMessages textMessages = new TextMessages();
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler, Point defaultWorldPosition)
     {
@@ -90,14 +92,14 @@ public class Player extends Entity
         if (item instanceof Key)
         {
             ++hasKey;
-            gamePanel.ui.showMessage("У вас есть ключ");
+            gamePanel.ui.showMessage(textMessages.getKeyMessage());
         }
         else if (item instanceof Box)
         {
-            System.out.println("Open inventory");
+            System.out.println("Ваш инвентарь");
         }
         else if (item instanceof Door)
-            System.out.println("Check yes or no Key");
+            System.out.println("Не факт что у тебя есть нужный ключ.");
         else if (item instanceof Boots)
         {
             speed += 2;
