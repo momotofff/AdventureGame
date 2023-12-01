@@ -50,8 +50,7 @@ public class UI
         int length = (int) graphics2D.getFontMetrics().getStringBounds(paused, graphics2D).getWidth();
         int x = gamePanel.screenSize.x / 2 - length / 2;
         int y = gamePanel.screenSize.y / 2;
-
-        graphics2D.draw(new Rectangle(0,0, 500,500));
+        
         graphics2D.drawString(paused, x, y);
 
     }
