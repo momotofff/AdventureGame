@@ -26,7 +26,7 @@ public class Player extends Entity
 
         screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
         collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
-        speed = 3;
+        speed = 2;
         worldPosition = defaultWorldPosition;
         getImage();
         direction = Direction.Down;
@@ -77,7 +77,7 @@ public class Player extends Entity
 
         if (--coolDownBoost < 0)
         {
-            speed = 6;
+            speed = 3;
             speedAnimation = 10;
         }
     }
@@ -121,11 +121,22 @@ public class Player extends Entity
     {
         LoadAnimation(Direction.Up, "/assets/player/up1.png");
         LoadAnimation(Direction.Up, "/assets/player/up2.png");
+        LoadAnimation(Direction.Up, "/assets/player/up3.png");
+        LoadAnimation(Direction.Up, "/assets/player/up4.png");
+
         LoadAnimation(Direction.Left, "/assets/player/left1.png");
         LoadAnimation(Direction.Left, "/assets/player/left2.png");
+        LoadAnimation(Direction.Left, "/assets/player/left3.png");
+        LoadAnimation(Direction.Left, "/assets/player/left4.png");
+
         LoadAnimation(Direction.Down, "/assets/player/down1.png");
         LoadAnimation(Direction.Down, "/assets/player/down2.png");
+        LoadAnimation(Direction.Down, "/assets/player/down3.png");
+        LoadAnimation(Direction.Down, "/assets/player/down4.png");
+
         LoadAnimation(Direction.Right, "/assets/player/right1.png");
         LoadAnimation(Direction.Right, "/assets/player/right2.png");
+        LoadAnimation(Direction.Right, "/assets/player/right3.png");
+        LoadAnimation(Direction.Right, "/assets/player/right4.png");
     }
 }
