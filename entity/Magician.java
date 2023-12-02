@@ -6,18 +6,22 @@ import main.Sounds;
 import objects.BaseObject;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Magician extends Entity
 {
     GamePanel gamePanel;
     KeyHandler keyHandler;
     int speedAnimation = 10;
+    int timeOutAnimations = 0;
+    ArrayList<Integer> directionsNPC = new ArrayList<>();
 
     public Magician(GamePanel gamePanel, Point defaultWorldPosition)
     {
         super(gamePanel, defaultWorldPosition);
-        this.keyHandler = gamePanel.keyHandler;
+        keyHandler = new KeyHandler(gamePanel);
 
         this.gamePanel = gamePanel;
 
@@ -27,10 +31,47 @@ public class Magician extends Entity
         getImage();
         direction = Direction.Right;
 
+        directionsNPC.add(KeyEvent.VK_W);
+        directionsNPC.add(KeyEvent.VK_A);
+        directionsNPC.add(KeyEvent.VK_S);
+        directionsNPC.add(KeyEvent.VK_D);
     }
 
     public void update()
     {
+        if (--timeOutAnimations < 0)
+        {
+            switch (directionsNPC.get((int) (Math.random() * directionsNPC.size())))
+            {
+                case KeyEvent.VK_W:
+                    keyHandler.upPressed = true;
+                    keyHandler.leftPressed = false;
+                    keyHandler.downPressed = false;
+                    keyHandler.rightPressed = false;
+                    break;
+                case KeyEvent.VK_A:
+                    keyHandler.upPressed = false;
+                    keyHandler.leftPressed = true;
+                    keyHandler.downPressed = false;
+                    keyHandler.rightPressed = false;
+                    break;
+                case KeyEvent.VK_S:
+                    keyHandler.upPressed = false;
+                    keyHandler.leftPressed = false;
+                    keyHandler.downPressed = true;
+                    keyHandler.rightPressed = false;
+                    break;
+                case KeyEvent.VK_D:
+                    keyHandler.upPressed = false;
+                    keyHandler.leftPressed = false;
+                    keyHandler.downPressed = false;
+                    keyHandler.rightPressed = true;
+                    break;
+            }
+            timeOutAnimations = 300;
+        }
+
+
         screenCoordinates = new Point(
                 worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
                 worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
