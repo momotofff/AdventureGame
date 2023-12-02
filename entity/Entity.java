@@ -1,5 +1,7 @@
 package entity;
 
+import main.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,17 +13,23 @@ import java.util.Objects;
 
 public class Entity
 {
+    GamePanel gamePanel;
     public int speed;
     public Point worldPosition;
     public Direction direction;
     public int spriteCounter = 0;
     public int spriteNumber = 1;
     public Rectangle collisionArea;
+    public Point screenCoordinates;
 
     private final Map<Direction, ArrayList<BufferedImage>> animations;
 
-    Entity()
+    Entity(GamePanel gamePanel, Point defaultWorldPosition)
     {
+        this.gamePanel = gamePanel;
+        collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
+        worldPosition = defaultWorldPosition;
+
         animations = new HashMap<>();
         for (Direction direction: Direction.values())
             animations.put(direction, new ArrayList<>());
@@ -48,5 +56,14 @@ public class Entity
             throw new RuntimeException("No animations were loaded");
 
         return animation.get(index % animation.size());
+    }
+
+    public void getImage() {}
+
+    public void drawing(Graphics2D graphics2D)
+    {
+        BufferedImage image = GetAnimationFrame(direction, spriteNumber);
+        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
+
     }
 }

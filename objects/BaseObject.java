@@ -13,7 +13,7 @@ public abstract class BaseObject
 {
     public BufferedImage image;
     public Point worldPosition;
-    public Point screenPosition;
+    public Point screenCoordinates;
     public Rectangle areaCollision;
     public Sounds soundEffect = Sounds.None;
 
@@ -45,7 +45,7 @@ public abstract class BaseObject
 
     public void update()
     {
-        screenPosition = new Point(
+        screenCoordinates = new Point(
                 worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
                 worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
         );
@@ -53,6 +53,6 @@ public abstract class BaseObject
 
     public void drawing(Graphics2D graphics2D, GamePanel gamePanel)
     {
-        graphics2D.drawImage(image, screenPosition.x, screenPosition.y, gamePanel.tileSize, gamePanel.tileSize, null);
+        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 }
