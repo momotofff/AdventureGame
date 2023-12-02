@@ -1,5 +1,7 @@
 package main;
 
+import entity.Entity;
+import entity.Magician;
 import objects.Boots;
 import objects.Box;
 import objects.Key;
@@ -24,5 +26,10 @@ public class AssetSetter
         gamePanel.items.add(new Box(new Point(15 * gamePanel.tileSize,25 * gamePanel.tileSize), gamePanel));
         gamePanel.items.add(new Box(new Point(50 * gamePanel.tileSize,32 * gamePanel.tileSize), gamePanel));
         gamePanel.items.add(new Boots(new Point(19 * gamePanel.tileSize,19 * gamePanel.tileSize), gamePanel));
+    }
+
+    public Entity add_NPC()
+    {
+        return  new Magician(gamePanel, new Point(15 * gamePanel.tileSize, 15 * gamePanel.tileSize));
     }
 }

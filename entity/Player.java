@@ -8,10 +8,10 @@ import objects.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 public class Player extends Entity
 {
-    GamePanel gamePanel;
     KeyHandler keyHandler;
     public final Point screenCoordinates;
     public int hasKey = 0;
@@ -21,13 +21,12 @@ public class Player extends Entity
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler, Point defaultWorldPosition)
     {
-        this.gamePanel = gamePanel;
+        super(gamePanel, defaultWorldPosition);
         this.keyHandler = keyHandler;
 
         screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
-        collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
+
         speed = 2;
-        worldPosition = defaultWorldPosition;
         getImage();
         direction = Direction.Down;
     }
@@ -64,16 +63,24 @@ public class Player extends Entity
                         worldPosition.y += speed;
                         collisionArea.y += speed;
                         break;
+
+                    default:
+
+                        break;
+                }
+
+                if (++spriteCounter > speedAnimation)
+                {
+                    ++spriteNumber;
+                    spriteCounter = 0;
+                    gamePanel.sound.play(Sounds.Step);
                 }
             }
-
-            if (++spriteCounter > speedAnimation)
-            {
-                ++spriteNumber;
-                spriteCounter = 0;
-                gamePanel.sound.play(Sounds.Step);
-            }
         });
+
+        if (keyHandler.getPressedDirection().isEmpty()) {
+            spriteNumber = 0;
+        }
 
         if (--coolDownBoost < 0)
         {
@@ -111,32 +118,33 @@ public class Player extends Entity
         gamePanel.items.remove(item);
     }
 
-    public void drawing(Graphics2D g2)
+    public void drawing(Graphics2D graphics2D)
     {
         BufferedImage image = GetAnimationFrame(direction, spriteNumber);
-        g2.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
+        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 
+    @Override
     public void getImage()
     {
-        LoadAnimation(Direction.Up, "/assets/player/up1.png");
-        LoadAnimation(Direction.Up, "/assets/player/up2.png");
-        LoadAnimation(Direction.Up, "/assets/player/up3.png");
-        LoadAnimation(Direction.Up, "/assets/player/up4.png");
+        LoadAnimation(Direction.Up, "/assets/Player/up1.png");
+        LoadAnimation(Direction.Up, "/assets/Player/up2.png");
+        LoadAnimation(Direction.Up, "/assets/Player/up3.png");
+        LoadAnimation(Direction.Up, "/assets/Player/up4.png");
 
-        LoadAnimation(Direction.Left, "/assets/player/left1.png");
-        LoadAnimation(Direction.Left, "/assets/player/left2.png");
-        LoadAnimation(Direction.Left, "/assets/player/left3.png");
-        LoadAnimation(Direction.Left, "/assets/player/left4.png");
+        LoadAnimation(Direction.Left, "/assets/Player/left1.png");
+        LoadAnimation(Direction.Left, "/assets/Player/left2.png");
+        LoadAnimation(Direction.Left, "/assets/Player/left3.png");
+        LoadAnimation(Direction.Left, "/assets/Player/left4.png");
 
-        LoadAnimation(Direction.Down, "/assets/player/down1.png");
-        LoadAnimation(Direction.Down, "/assets/player/down2.png");
-        LoadAnimation(Direction.Down, "/assets/player/down3.png");
-        LoadAnimation(Direction.Down, "/assets/player/down4.png");
+        LoadAnimation(Direction.Down, "/assets/Player/down1.png");
+        LoadAnimation(Direction.Down, "/assets/Player/down2.png");
+        LoadAnimation(Direction.Down, "/assets/Player/down3.png");
+        LoadAnimation(Direction.Down, "/assets/Player/down4.png");
 
-        LoadAnimation(Direction.Right, "/assets/player/right1.png");
-        LoadAnimation(Direction.Right, "/assets/player/right2.png");
-        LoadAnimation(Direction.Right, "/assets/player/right3.png");
-        LoadAnimation(Direction.Right, "/assets/player/right4.png");
+        LoadAnimation(Direction.Right, "/assets/Player/right1.png");
+        LoadAnimation(Direction.Right, "/assets/Player/right2.png");
+        LoadAnimation(Direction.Right, "/assets/Player/right3.png");
+        LoadAnimation(Direction.Right, "/assets/Player/right4.png");
     }
 }

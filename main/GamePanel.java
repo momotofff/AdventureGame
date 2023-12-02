@@ -1,5 +1,6 @@
 package main;
 
+import entity.Magician;
 import entity.Player;
 import objects.BaseObject;
 import tile.TileManager;
@@ -31,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable
 
     public Player player;
     public HashSet<BaseObject> items = new HashSet<>();
+    public Magician magician;
 
     public GameState state = GameState.Running;
 
@@ -48,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable
 
     public void setupGame()
     {
+        //magician = (Magician) assetSetter.add_NPC();
         assetSetter.setObject();
         sound.play(Sounds.Theme);
         sound.loop();
@@ -116,6 +119,7 @@ public class GamePanel extends JPanel implements Runnable
         }
 
         player.drawing(graphics2D);
+        //magician.drawing(graphics2D);
         ui.draw(graphics2D);
 
         graphics2D.dispose();
