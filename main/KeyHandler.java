@@ -9,10 +9,10 @@ import java.util.Optional;
 public class KeyHandler implements KeyListener
 {
     GamePanel gamePanel;
-    private boolean upPressed;
-    private boolean downPressed;
-    private boolean leftPressed;
-    private boolean rightPressed;
+    public boolean upPressed;
+    public boolean downPressed;
+    public boolean leftPressed;
+    public boolean rightPressed;
     private boolean paused = false;
     private boolean inventory = false;
 
