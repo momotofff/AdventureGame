@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class Player extends Entity
 {
-    KeyHandler keyHandler;
+    public KeyHandler keyHandler;
     public final Point screenCoordinates;
     public int hasKey = 0;
     int speedAnimation = 10;
