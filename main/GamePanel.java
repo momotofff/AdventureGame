@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable
     final int FPS = 60;
 
     TileManager tileManager;
-    KeyHandler keyHandler = new KeyHandler(this);
+    public KeyHandler keyHandler = new KeyHandler(this);
     public Sound sound = new Sound();
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter;
@@ -46,11 +46,11 @@ public class GamePanel extends JPanel implements Runnable
         tileManager = new TileManager(this);
         player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
         assetSetter = new AssetSetter(this);
+        magician = (Magician) assetSetter.add_NPC();
     }
 
     public void setupGame()
     {
-        //magician = (Magician) assetSetter.add_NPC();
         assetSetter.setObject();
         sound.play(Sounds.Theme);
         sound.loop();
@@ -94,6 +94,8 @@ public class GamePanel extends JPanel implements Runnable
         switch (state)
         {
             case Running : player.update();
+                           magician.update();
+
                 for (BaseObject item : items)
                 {
                     item.update();
@@ -119,7 +121,7 @@ public class GamePanel extends JPanel implements Runnable
         }
 
         player.drawing(graphics2D);
-        //magician.drawing(graphics2D);
+        magician.drawing(graphics2D);
         ui.draw(graphics2D);
 
         graphics2D.dispose();
