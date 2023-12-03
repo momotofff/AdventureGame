@@ -11,10 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Entity
+public abstract class Entity
 {
     GamePanel gamePanel;
-    public int speed;
+    public int movementSpeed;
+    public int animationSpeed = 10;
     public Point worldPosition;
     public Direction direction;
     public int spriteCounter = 0;
@@ -33,6 +34,8 @@ public class Entity
         animations = new HashMap<>();
         for (Direction direction: Direction.values())
             animations.put(direction, new ArrayList<>());
+
+        loadImages();
     }
 
     protected void LoadAnimation(Direction direction, String path)
@@ -58,12 +61,11 @@ public class Entity
         return animation.get(index % animation.size());
     }
 
-    public void getImage() {}
+    public abstract void loadImages();
 
     public void drawing(Graphics2D graphics2D)
     {
         BufferedImage image = GetAnimationFrame(direction, spriteNumber);
         graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
-
     }
 }

@@ -8,14 +8,11 @@ import objects.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Optional;
 
 public class Player extends Entity
 {
     public KeyHandler keyHandler;
-    public final Point screenCoordinates;
     public int hasKey = 0;
-    int speedAnimation = 10;
     int coolDownBoost;
     TextMessages textMessages = new TextMessages();
 
@@ -26,8 +23,7 @@ public class Player extends Entity
 
         screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
 
-        speed = 2;
-        getImage();
+        movementSpeed = 2;
         direction = Direction.Down;
     }
 
@@ -45,23 +41,23 @@ public class Player extends Entity
                 switch (direction)
                 {
                     case Up:
-                        worldPosition.y -= speed;
-                        collisionArea.y -= speed;
+                        worldPosition.y -= movementSpeed;
+                        collisionArea.y -= movementSpeed;
                         break;
 
                     case Left:
-                        worldPosition.x -= speed;
-                        collisionArea.x -= speed;
+                        worldPosition.x -= movementSpeed;
+                        collisionArea.x -= movementSpeed;
                         break;
 
                     case Right:
-                        worldPosition.x += speed;
-                        collisionArea.x += speed;
+                        worldPosition.x += movementSpeed;
+                        collisionArea.x += movementSpeed;
                         break;
 
                     case Down:
-                        worldPosition.y += speed;
-                        collisionArea.y += speed;
+                        worldPosition.y += movementSpeed;
+                        collisionArea.y += movementSpeed;
                         break;
 
                     default:
@@ -69,7 +65,7 @@ public class Player extends Entity
                         break;
                 }
 
-                if (++spriteCounter > speedAnimation)
+                if (++spriteCounter > animationSpeed)
                 {
                     ++spriteNumber;
                     spriteCounter = 0;
@@ -84,8 +80,8 @@ public class Player extends Entity
 
         if (--coolDownBoost < 0)
         {
-            speed = 3;
-            speedAnimation = 10;
+            movementSpeed = 3;
+            animationSpeed = 10;
         }
     }
 
@@ -109,8 +105,8 @@ public class Player extends Entity
             System.out.println("Не факт что у тебя есть нужный ключ.");
         else if (item instanceof Boots)
         {
-            speed += 2;
-            speedAnimation /= 2;
+            movementSpeed += 2;
+            animationSpeed /= 2;
             coolDownBoost = 100;
             gamePanel.ui.showMessage("Ля какие шикарные бархатные тяги");
         }
@@ -118,14 +114,8 @@ public class Player extends Entity
         gamePanel.items.remove(item);
     }
 
-    public void drawing(Graphics2D graphics2D)
-    {
-        BufferedImage image = GetAnimationFrame(direction, spriteNumber);
-        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
-    }
-
     @Override
-    public void getImage()
+    public void loadImages()
     {
         LoadAnimation(Direction.Up, "/assets/Player/up1.png");
         LoadAnimation(Direction.Up, "/assets/Player/up2.png");

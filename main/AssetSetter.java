@@ -30,6 +30,6 @@ public class AssetSetter
 
     public Entity add_NPC()
     {
-        return  new Magician(gamePanel, new Point(15 * gamePanel.tileSize, 15 * gamePanel.tileSize));
+        return new Magician(gamePanel, new Point(15 * gamePanel.tileSize, 15 * gamePanel.tileSize));
     }
 }

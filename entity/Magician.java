@@ -1,134 +1,94 @@
 package entity;
 
 import main.GamePanel;
-import main.KeyHandler;
-import main.Sounds;
-import objects.BaseObject;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Magician extends Entity
 {
-    GamePanel gamePanel;
-    KeyHandler keyHandler;
-    int speedAnimation = 10;
     int timeOutAnimations = 0;
-    ArrayList<Integer> directionsNPC = new ArrayList<>();
+    ArrayList<Direction> directions = new ArrayList<>();
 
     public Magician(GamePanel gamePanel, Point defaultWorldPosition)
     {
         super(gamePanel, defaultWorldPosition);
-        keyHandler = new KeyHandler(gamePanel);
-
-        this.gamePanel = gamePanel;
 
         collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
         worldPosition = defaultWorldPosition;
-        speed = 1;
-        getImage();
+        movementSpeed = 1;
         direction = Direction.Right;
 
-        directionsNPC.add(KeyEvent.VK_W);
-        directionsNPC.add(KeyEvent.VK_A);
-        directionsNPC.add(KeyEvent.VK_S);
-        directionsNPC.add(KeyEvent.VK_D);
+        directions.add(Direction.Up);
+        directions.add(Direction.Left);
+        directions.add(Direction.Right);
+        directions.add(Direction.Down);
     }
 
     public void update()
     {
         if (--timeOutAnimations < 0)
         {
-            switch (directionsNPC.get((int) (Math.random() * directionsNPC.size())))
-            {
-                case KeyEvent.VK_W:
-                    keyHandler.upPressed = true;
-                    keyHandler.leftPressed = false;
-                    keyHandler.downPressed = false;
-                    keyHandler.rightPressed = false;
-                    break;
-                case KeyEvent.VK_A:
-                    keyHandler.upPressed = false;
-                    keyHandler.leftPressed = true;
-                    keyHandler.downPressed = false;
-                    keyHandler.rightPressed = false;
-                    break;
-                case KeyEvent.VK_S:
-                    keyHandler.upPressed = false;
-                    keyHandler.leftPressed = false;
-                    keyHandler.downPressed = true;
-                    keyHandler.rightPressed = false;
-                    break;
-                case KeyEvent.VK_D:
-                    keyHandler.upPressed = false;
-                    keyHandler.leftPressed = false;
-                    keyHandler.downPressed = false;
-                    keyHandler.rightPressed = true;
-                    break;
-            }
+            direction = directions.get((int) (Math.random() * directions.size()));
             timeOutAnimations = 300;
         }
-
 
         screenCoordinates = new Point(
                 worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
                 worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
         );
 
-        keyHandler.getPressedDirection().ifPresent(value ->
+        if (!gamePanel.collisionChecker.checkTile(this))
+            makeStep();
+        else
+            changeDirection();
+    }
+
+    private void makeStep()
+    {
+        switch (direction)
         {
-            this.direction = value;
+            case Up:
+                worldPosition.y -= movementSpeed;
+                collisionArea.y -= movementSpeed;
+                break;
 
+            case Left:
+                worldPosition.x -= movementSpeed;
+                collisionArea.x -= movementSpeed;
+                break;
 
-            if (!gamePanel.collisionChecker.checkTile(this))
-            {
-                switch (direction)
-                {
-                    case Up:
-                        worldPosition.y -= speed;
-                        collisionArea.y -= speed;
-                        break;
+            case Right:
+                worldPosition.x += movementSpeed;
+                collisionArea.x += movementSpeed;
+                break;
 
-                    case Left:
-                        worldPosition.x -= speed;
-                        collisionArea.x -= speed;
-                        break;
-
-                    case Right:
-                        worldPosition.x += speed;
-                        collisionArea.x += speed;
-                        break;
-
-                    case Down:
-                        worldPosition.y += speed;
-                        collisionArea.y += speed;
-                        break;
-
-                    default:
-
-                        break;
-                }
-
-                if (++spriteCounter > speedAnimation)
-                {
-                    ++spriteNumber;
-                    spriteCounter = 0;
-                    //gamePanel.sound.play(Sounds.Step);
-                }
-            }
-        });
-
-        if (keyHandler.getPressedDirection().isEmpty()) {
-            spriteNumber = 0;
+            case Down:
+                worldPosition.y += movementSpeed;
+                collisionArea.y += movementSpeed;
+                break;
         }
 
+        if (++spriteCounter > animationSpeed)
+        {
+            ++spriteNumber;
+            spriteCounter = 0;
+        }
+    }
 
+    private void changeDirection()
+    {
+        Direction newDirection = direction;
+
+        while (newDirection == direction)
+            newDirection = directions.get((int) (Math.random() * directions.size()));
+
+        direction = newDirection;
     }
 
     @Override
-    public void getImage()
+    public void loadImages()
     {
         LoadAnimation(Direction.Up, "/assets/Magician/up1.png");
         LoadAnimation(Direction.Up, "/assets/Magician/up2.png");
@@ -150,12 +110,4 @@ public class Magician extends Entity
         LoadAnimation(Direction.Right, "/assets/Magician/right3.png");
         LoadAnimation(Direction.Right, "/assets/Magician/right4.png");
     }
-
-    public void drawing(Graphics2D graphics2D)
-    {
-        BufferedImage image = GetAnimationFrame(direction, spriteNumber);
-        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
-    }
-
-
 }

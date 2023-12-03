@@ -25,25 +25,25 @@ public class CollisionChecker
         switch (entity.direction)
         {
             case Up:
-                entityTopRow = (entity.collisionArea.y - entity.speed) / gamePanel.tileSize;
+                entityTopRow = (entity.collisionArea.y - entity.movementSpeed) / gamePanel.tileSize;
                 tile1 = gamePanel.tileManager.world[entityLeftCol][entityTopRow];
                 tile2 = gamePanel.tileManager.world[entityRightCol][entityTopRow];
                 break;
 
             case Down:
-                entityBottomRow = (entity.collisionArea.y + entity.collisionArea.height + entity.speed) / gamePanel.tileSize;
+                entityBottomRow = (entity.collisionArea.y + entity.collisionArea.height + entity.movementSpeed) / gamePanel.tileSize;
                 tile1 = gamePanel.tileManager.world[entityLeftCol][entityBottomRow];
                 tile2 = gamePanel.tileManager.world[entityRightCol][entityBottomRow];
                 break;
 
             case Left:
-                entityLeftCol = (entity.collisionArea.x - entity.speed) / gamePanel.tileSize;
+                entityLeftCol = (entity.collisionArea.x - entity.movementSpeed) / gamePanel.tileSize;
                 tile1 = gamePanel.tileManager.world[entityLeftCol][entityTopRow];
                 tile2 = gamePanel.tileManager.world[entityLeftCol][entityBottomRow];
                 break;
 
             case Right:
-                entityRightCol = (entity.collisionArea.x + entity.collisionArea.width + entity.speed) / gamePanel.tileSize;
+                entityRightCol = (entity.collisionArea.x + entity.collisionArea.width + entity.movementSpeed) / gamePanel.tileSize;
                 tile1 = gamePanel.tileManager.world[entityRightCol][entityTopRow];
                 tile2 = gamePanel.tileManager.world[entityRightCol][entityBottomRow];
                 break;
