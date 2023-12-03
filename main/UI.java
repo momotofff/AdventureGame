@@ -2,7 +2,6 @@ package main;
 
 import objects.Key;
 
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -60,7 +59,7 @@ public class UI
         graphics2D.setFont(font);
         graphics2D.setColor(new Color(230,200,170));
         graphics2D.drawImage(bufferedImage, gamePanel.tileSize / 2, gamePanel.tileSize / 2, gamePanel.tileSize / 2, gamePanel.tileSize / 2, null);
-        graphics2D.drawString(" x " + gamePanel.player.hasKey, 60, 60);
+        graphics2D.drawString(" x " + gamePanel.player.keysCount, 60, 60);
 
         if (message != null)
         {

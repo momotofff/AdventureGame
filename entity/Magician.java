@@ -3,12 +3,11 @@ package entity;
 import main.GamePanel;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Magician extends Entity
 {
-    int timeOutAnimations = 0;
+    int animationsTimeout = 0;
     ArrayList<Direction> directions = new ArrayList<>();
 
     public Magician(GamePanel gamePanel, Point defaultWorldPosition)
@@ -28,10 +27,10 @@ public class Magician extends Entity
 
     public void update()
     {
-        if (--timeOutAnimations < 0)
+        if (--animationsTimeout < 0)
         {
             direction = directions.get((int) (Math.random() * directions.size()));
-            timeOutAnimations = 300;
+            animationsTimeout = 300;
         }
 
         screenCoordinates = new Point(
@@ -40,41 +39,9 @@ public class Magician extends Entity
         );
 
         if (!gamePanel.collisionChecker.checkTile(this))
-            makeStep();
+            makeStep(false);
         else
             changeDirection();
-    }
-
-    private void makeStep()
-    {
-        switch (direction)
-        {
-            case Up:
-                worldPosition.y -= movementSpeed;
-                collisionArea.y -= movementSpeed;
-                break;
-
-            case Left:
-                worldPosition.x -= movementSpeed;
-                collisionArea.x -= movementSpeed;
-                break;
-
-            case Right:
-                worldPosition.x += movementSpeed;
-                collisionArea.x += movementSpeed;
-                break;
-
-            case Down:
-                worldPosition.y += movementSpeed;
-                collisionArea.y += movementSpeed;
-                break;
-        }
-
-        if (++spriteCounter > animationSpeed)
-        {
-            ++spriteNumber;
-            spriteCounter = 0;
-        }
     }
 
     private void changeDirection()
