@@ -32,7 +32,9 @@ public class Player extends Entity
             this.direction = value;
 
             pickUpObject(gamePanel.collisionChecker.checkObject(this));
-            makeStep(true);
+
+            if (!gamePanel.collisionChecker.checkTile(this))
+                makeStep(true);
         });
 
         if (keyHandler.getPressedDirection().isEmpty())
