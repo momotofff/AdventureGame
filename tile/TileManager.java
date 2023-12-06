@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 public class TileManager
@@ -20,9 +21,12 @@ public class TileManager
 
     private final TileStorage tiles = new TileStorage();
 
+    public ArrayList<Point> trueNpcPositions = new ArrayList();
+
     public TileManager(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
+        gamePanel.trueNpcPositions = this.trueNpcPositions;
 
         tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, gamePanel.tileSize));
         tiles.add(Tiles.Grass, new Tile("/assets/world/Grass2.png", false, gamePanel.tileSize));
@@ -87,7 +91,11 @@ public class TileManager
                 {
                     try
                     {
-                        world[x][y] = tiles.get(Integer.parseInt(numbers[x]));
+                        Tile tile = tiles.get(Integer.parseInt(numbers[x]));
+                        world[x][y] = tile;
+
+                        if (!tile.collision)
+                            trueNpcPositions.add(new Point(x,y));
                     }
                     catch (NoSuchElementException e)
                     {
@@ -120,4 +128,6 @@ public class TileManager
             }
         }
     }
+
+
 }

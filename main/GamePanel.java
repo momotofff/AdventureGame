@@ -1,12 +1,13 @@
 package main;
 
-import entity.Magician;
+import entity.Entity;
 import entity.Player;
 import objects.BaseObject;
 import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class GamePanel extends JPanel implements Runnable
@@ -15,7 +16,7 @@ public class GamePanel extends JPanel implements Runnable
     final public int scale = 2;
 
     public final int tileSize = originalTileSize * scale;
-    final public Point maxBlocksScreen = new Point(26, 14);
+    final public Point maxBlocksScreen = new Point(25, 14);
     public final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
 
     final public Point maxWorldCountTile = new Point(100, 100);
@@ -32,7 +33,8 @@ public class GamePanel extends JPanel implements Runnable
 
     public Player player;
     public HashSet<BaseObject> items = new HashSet<>();
-    public Magician magician;
+    ArrayList<Entity> NPC = new ArrayList<>();
+    public ArrayList<Point> trueNpcPositions = new ArrayList();
 
     public GameState state = GameState.Running;
 
@@ -44,14 +46,16 @@ public class GamePanel extends JPanel implements Runnable
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
         tileManager = new TileManager(this);
-        player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
+
         assetSetter = new AssetSetter(this);
-        magician = (Magician) assetSetter.add_NPC();
+
+        player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
     }
 
     public void setupGame()
     {
         assetSetter.setObject();
+        assetSetter.set_NPC();
         sound.play(Sounds.Theme);
         sound.loop();
     }
@@ -94,12 +98,10 @@ public class GamePanel extends JPanel implements Runnable
         switch (state)
         {
             case Running : player.update();
-                           magician.update();
-
+                for (Entity entity : NPC)
+                    entity.update();
                 for (BaseObject item : items)
-                {
                     item.update();
-                }
 
                 break;
             case Paused: break;
@@ -120,8 +122,11 @@ public class GamePanel extends JPanel implements Runnable
                 item.drawing(graphics2D, this);
         }
 
+        for (Entity entity : NPC)
+            entity.drawing(graphics2D);
+
         player.drawing(graphics2D);
-        magician.drawing(graphics2D);
+
         ui.draw(graphics2D);
 
         graphics2D.dispose();

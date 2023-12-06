@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Magician extends Entity
 {
     int animationsTimeout = 0;
-    ArrayList<Direction> directions = new ArrayList<>();
+
 
     public Magician(GamePanel gamePanel, Point defaultWorldPosition)
     {
@@ -17,12 +17,12 @@ public class Magician extends Entity
         collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
         worldPosition = defaultWorldPosition;
         movementSpeed = 1;
-        direction = Direction.Right;
 
         directions.add(Direction.Up);
         directions.add(Direction.Left);
         directions.add(Direction.Right);
         directions.add(Direction.Down);
+        direction = directions.get((int) (Math.random() * directions.size()));
     }
 
     public void update()
@@ -42,16 +42,6 @@ public class Magician extends Entity
             makeStep(false);
         else
             changeDirection();
-    }
-
-    private void changeDirection()
-    {
-        Direction newDirection = direction;
-
-        while (newDirection == direction)
-            newDirection = directions.get((int) (Math.random() * directions.size()));
-
-        direction = newDirection;
     }
 
     @Override
