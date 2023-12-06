@@ -5,5 +5,4 @@ public enum GameState
     Running,
     Paused,
     Inventory,
-
 }

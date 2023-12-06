@@ -69,7 +69,7 @@ public class Player extends Entity
         {
             movementSpeed += 2;
             animationSpeed /= 2;
-            boostCoolDown = 100;
+            boostCoolDown = 1000;
             gamePanel.ui.showMessage("Ля какие шикарные бархатные тяги");
         }
 

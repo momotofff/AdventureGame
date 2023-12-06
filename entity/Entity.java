@@ -25,6 +25,8 @@ public abstract class Entity
     private int spriteCounter = 0;
     private int spriteNumber = 1;
 
+    ArrayList<Direction> directions = new ArrayList<>();
+
     private final Map<Direction, ArrayList<BufferedImage>> animations;
 
     Entity(GamePanel gamePanel, Point defaultWorldPosition)
@@ -71,6 +73,9 @@ public abstract class Entity
         graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
     }
 
+    public void update()
+    {}
+
     protected void makeStep(boolean playSound)
     {
         switch (direction)
@@ -104,6 +109,16 @@ public abstract class Entity
             if (playSound)
                 gamePanel.sound.play(Sounds.Step);
         }
+    }
+
+    public void changeDirection()
+    {
+        Direction newDirection = direction;
+
+        while (newDirection == direction)
+            newDirection = directions.get((int) (Math.random() * directions.size()));
+
+        direction = newDirection;
     }
 
     protected void resetAnimation()

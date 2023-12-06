@@ -2,6 +2,7 @@ package main;
 
 import entity.Entity;
 import entity.Magician;
+import entity.Rabbit;
 import objects.Boots;
 import objects.Box;
 import objects.Key;
@@ -28,8 +29,27 @@ public class AssetSetter
         gamePanel.items.add(new Boots(new Point(19 * gamePanel.tileSize,19 * gamePanel.tileSize), gamePanel));
     }
 
-    public Entity add_NPC()
+    public void set_NPC()
     {
-        return new Magician(gamePanel, new Point(15 * gamePanel.tileSize, 15 * gamePanel.tileSize));
+        for (int i = 0; i < 40; ++i)
+            gamePanel.NPC.add(add_Rabbit(setNpcPosition()));
+        for (int i = 0; i < 10; ++i)
+            gamePanel.NPC.add(add_Magician(setNpcPosition()));;
+    }
+
+
+    public Entity add_Magician(Point position)
+    {
+        return new Magician(gamePanel, new Point(position.x * gamePanel.tileSize, position.y * gamePanel.tileSize));
+    }
+
+    public Entity add_Rabbit(Point position)
+    {
+        return new Rabbit(gamePanel, new Point(position.x * gamePanel.tileSize, position.y * gamePanel.tileSize));
+    }
+
+    public Point setNpcPosition()
+    {
+        return gamePanel.trueNpcPositions.get((int) (Math.random() * gamePanel.trueNpcPositions.size()));
     }
 }
