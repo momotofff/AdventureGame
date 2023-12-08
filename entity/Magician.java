@@ -14,7 +14,7 @@ public class Magician extends Entity
     {
         super(gamePanel, defaultWorldPosition);
 
-        collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
+        collisionArea = new Rectangle(defaultWorldPosition.x + 12, defaultWorldPosition.y + 12, 24, 24);
         worldPosition = defaultWorldPosition;
         movementSpeed = 1;
 
@@ -73,28 +73,5 @@ public class Magician extends Entity
         LoadAnimation(Direction.Right, "/assets/Magician/right3.png");
         LoadAnimation(Direction.Right, "/assets/Magician/right4.png");
     }
-
-    private void validDirection()
-    {
-        switch (gamePanel.player.direction)
-        {
-            case Left -> {
-                direction = Direction.Right;
-                break;
-            }
-            case Right -> {
-                direction = Direction.Left;
-                break;
-            }
-            case Up -> {
-                direction = Direction.Down;
-                break;
-            }
-            case Down -> {
-                direction = Direction.Up;
-                break;
-            }
-        }
-    }
-
 }
+

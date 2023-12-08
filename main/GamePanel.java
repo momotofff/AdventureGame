@@ -34,7 +34,8 @@ public class GamePanel extends JPanel implements Runnable
     public Player player;
     public HashSet<BaseObject> items = new HashSet<>();
     ArrayList<Entity> NPC = new ArrayList<>();
-    public ArrayList<Point> trueNpcPositions = new ArrayList();
+    ArrayList<Entity> animals = new ArrayList<>();
+    public ArrayList<Point> trueNpcPositions = new ArrayList<>();
 
     public GameState state = GameState.Running;
 
@@ -56,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable
     {
         assetSetter.setObject();
         assetSetter.set_NPC();
+        assetSetter.setAnimals();
         sound.play(Sounds.Theme);
         sound.loop();
     }
@@ -102,7 +104,8 @@ public class GamePanel extends JPanel implements Runnable
                     entity.update();
                 for (BaseObject item : items)
                     item.update();
-
+                for (Entity entity : animals)
+                    entity.update();
                 break;
             case Paused: break;
         }
@@ -123,6 +126,9 @@ public class GamePanel extends JPanel implements Runnable
         }
 
         for (Entity entity : NPC)
+            entity.drawing(graphics2D);
+
+        for (Entity entity : animals)
             entity.drawing(graphics2D);
 
         player.drawing(graphics2D);
