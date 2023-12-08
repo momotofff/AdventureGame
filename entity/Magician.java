@@ -27,21 +27,27 @@ public class Magician extends Entity
 
     public void update()
     {
-        if (--animationsTimeout < 0)
-        {
-            direction = directions.get((int) (Math.random() * directions.size()));
-            animationsTimeout = 300;
-        }
-
         screenCoordinates = new Point(
                 worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
                 worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
         );
 
-        if (!gamePanel.collisionChecker.checkTile(this))
-            makeStep(false);
+        if (!gamePanel.collisionChecker.checkPlayer(this))
+        {
+            if (--animationsTimeout < 0)
+            {
+                direction = directions.get((int) (Math.random() * directions.size()));
+                animationsTimeout = 300;
+            }
+
+            if (!gamePanel.collisionChecker.checkTile(this))
+                makeStep(false);
+            else
+                changeDirection();
+        }
         else
-            changeDirection();
+            validDirection();
+
     }
 
     @Override
@@ -67,4 +73,28 @@ public class Magician extends Entity
         LoadAnimation(Direction.Right, "/assets/Magician/right3.png");
         LoadAnimation(Direction.Right, "/assets/Magician/right4.png");
     }
+
+    private void validDirection()
+    {
+        switch (gamePanel.player.direction)
+        {
+            case Left -> {
+                direction = Direction.Right;
+                break;
+            }
+            case Right -> {
+                direction = Direction.Left;
+                break;
+            }
+            case Up -> {
+                direction = Direction.Down;
+                break;
+            }
+            case Down -> {
+                direction = Direction.Up;
+                break;
+            }
+        }
+    }
+
 }

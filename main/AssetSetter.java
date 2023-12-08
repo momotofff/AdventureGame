@@ -34,10 +34,10 @@ public class AssetSetter
         for (int i = 0; i < 40; ++i)
             gamePanel.NPC.add(add_Rabbit(setNpcPosition()));
         for (int i = 0; i < 10; ++i)
-            gamePanel.NPC.add(add_Magician(setNpcPosition()));;
+            gamePanel.NPC.add(add_Magician(setNpcPosition()));
+
+        gamePanel.NPC.add(add_Magician(new Point(15, 15)));
     }
-
-
     public Entity add_Magician(Point position)
     {
         return new Magician(gamePanel, new Point(position.x * gamePanel.tileSize, position.y * gamePanel.tileSize));

@@ -33,9 +33,18 @@ public class Player extends Entity
 
             pickUpObject(gamePanel.collisionChecker.checkObject(this));
 
-            if (!gamePanel.collisionChecker.checkTile(this))
-                makeStep(true);
+           if (!gamePanel.collisionChecker.checkEntity(this))
+            {
+                if (!gamePanel.collisionChecker.checkTile(this))
+                    makeStep(true);
+            }
+           else
+               System.out.println("пересеклись");
+
+
         });
+
+
 
         if (keyHandler.getPressedDirection().isEmpty())
             resetAnimation();

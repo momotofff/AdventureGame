@@ -4,6 +4,8 @@ import entity.Entity;
 import objects.BaseObject;
 import tile.Tile;
 
+import java.awt.*;
+
 public class CollisionChecker
 {
     GamePanel gamePanel;
@@ -52,7 +54,7 @@ public class CollisionChecker
         if (tile1 == null || tile2 == null)
             return false;
 
-        return tile1.collision || tile2.collision;
+        return tile1.collision || tile2.collision ;
     }
 
     public BaseObject checkObject(Entity entity)
@@ -73,5 +75,49 @@ public class CollisionChecker
                 return item;
         }
 */
+    }
+    public boolean checkEntity(Entity player)
+    {
+        Rectangle playerCollisionArea = null;
+        Rectangle entityCollisionArea = null;
+
+        for (Entity entity: gamePanel.NPC)
+        {
+            playerCollisionArea = new Rectangle(player.collisionArea);
+            entityCollisionArea = new Rectangle(entity.collisionArea);
+
+            switch (player.direction)
+            {
+                case Up:
+                    playerCollisionArea.y -= gamePanel.tileSize;
+                    break;
+
+                case Down:
+                    playerCollisionArea.y += gamePanel.tileSize;
+                    break;
+
+                case Left:
+                    playerCollisionArea.x -= gamePanel.tileSize;
+                    break;
+
+                case Right:
+                    playerCollisionArea.x += gamePanel.tileSize;
+                    break;
+            }
+        }
+
+        return playerCollisionArea.intersects(entityCollisionArea);
+    }
+
+    public boolean checkPlayer(Entity entity)
+    {
+        Rectangle collisionArea = new Rectangle(entity.collisionArea);
+
+        collisionArea.width += 100;
+        collisionArea.height += 100;
+        collisionArea.x -= 50;
+        collisionArea.y -= 50;
+
+        return collisionArea.intersects(gamePanel.player.collisionArea);
     }
 }
