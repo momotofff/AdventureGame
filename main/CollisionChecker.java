@@ -76,15 +76,13 @@ public class CollisionChecker
         }
 */
     }
-    public boolean checkEntity(Entity player)
+    public Entity checkEntity(Entity player)
     {
-        Rectangle playerCollisionArea = null;
-        Rectangle entityCollisionArea = null;
+        Rectangle playerCollisionArea;
 
         for (Entity entity: gamePanel.NPC)
         {
             playerCollisionArea = new Rectangle(player.collisionArea);
-            entityCollisionArea = new Rectangle(entity.collisionArea);
 
             switch (player.direction)
             {
@@ -104,9 +102,12 @@ public class CollisionChecker
                     playerCollisionArea.x += gamePanel.tileSize;
                     break;
             }
+
+            if (playerCollisionArea.intersects(entity.collisionArea))
+                return entity;
         }
 
-        return playerCollisionArea.intersects(entityCollisionArea);
+        return null;
     }
 
     public boolean checkPlayer(Entity entity)

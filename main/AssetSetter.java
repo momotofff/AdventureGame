@@ -31,12 +31,16 @@ public class AssetSetter
 
     public void set_NPC()
     {
-        for (int i = 0; i < 40; ++i)
-            gamePanel.NPC.add(add_Rabbit(setNpcPosition()));
-        for (int i = 0; i < 10; ++i)
-            gamePanel.NPC.add(add_Magician(setNpcPosition()));
-
+        gamePanel.NPC.add(add_Magician(new Point(15, 19)));
         gamePanel.NPC.add(add_Magician(new Point(15, 15)));
+        gamePanel.NPC.add(add_Magician(new Point(15, 17)));
+    }
+
+    public void setAnimals()
+    {
+        gamePanel.animals.add(add_Rabbit(new Point(15, 16)));
+        gamePanel.animals.add(add_Rabbit(new Point(15, 20)));
+        gamePanel.animals.add(add_Rabbit(new Point(15, 23)));
     }
     public Entity add_Magician(Point position)
     {

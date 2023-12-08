@@ -32,7 +32,7 @@ public abstract class Entity
     Entity(GamePanel gamePanel, Point defaultWorldPosition)
     {
         this.gamePanel = gamePanel;
-        collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
+        collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 24, 24, 24);
         worldPosition = defaultWorldPosition;
 
         animations = new HashMap<>();
@@ -71,6 +71,7 @@ public abstract class Entity
     {
         BufferedImage image = GetAnimationFrame(direction, spriteNumber);
         graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
+        graphics2D.drawRect(screenCoordinates.x + 24, screenCoordinates.y + 24, collisionArea.width, collisionArea.height);
     }
 
     public void update()
@@ -124,5 +125,21 @@ public abstract class Entity
     protected void resetAnimation()
     {
         spriteNumber = 0;
+    }
+
+    public void validDirection()
+    {
+        switch (gamePanel.player.direction)
+        {
+            case Left ->
+                    direction = Direction.Right;
+            case Right ->
+                    direction = Direction.Left;
+            case Up ->
+                    direction = Direction.Down;
+            case Down ->
+                    direction = Direction.Up;
+
+        }
     }
 }
