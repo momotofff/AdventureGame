@@ -2,6 +2,7 @@ package entity;
 
 import assets.Strings.TextMessages;
 import main.GamePanel;
+import main.GameState;
 import main.KeyHandler;
 import objects.*;
 
@@ -34,17 +35,18 @@ public class Player extends Entity
             pickUpObject(gamePanel.collisionChecker.checkObject(this));
 
             Entity getEntity = gamePanel.collisionChecker.checkEntity(this);
+
             if (getEntity == null)
             {
                 if (!gamePanel.collisionChecker.checkTile(this))
                     makeStep(true);
             }
-           else
-           {
-               System.out.println("Встретился с NPC");
-               getEntity.validDirection();
-           }
-
+            else
+            {
+                System.out.println("Встретился с " + getEntity);
+                getEntity.validDirection();
+                gamePanel.state = GameState.Dialog;
+            }
         });
 
         if (keyHandler.getPressedDirection().isEmpty())
