@@ -19,6 +19,8 @@ public class UI
     Color edging = new Color(100, 60, 20);
     Color filling = new Color(150, 120, 50, 220);
 
+    public String currentDialogue = "";
+
     public UI(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
@@ -123,6 +125,9 @@ public class UI
         graphics2D.setColor(edging);
         graphics2D.setStroke(new BasicStroke(10));
         graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
+
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 40));
+        graphics2D.drawString(currentDialogue, window.x + gamePanel.tileSize, window.y + gamePanel.tileSize);
     }
 }
 

@@ -15,6 +15,7 @@ public class KeyHandler implements KeyListener
     public boolean rightPressed;
     private boolean paused = false;
     private boolean inventory = false;
+    private boolean dialog = false;
 
     public KeyHandler(GamePanel gamePanel)
     {
@@ -34,27 +35,24 @@ public class KeyHandler implements KeyListener
             case KeyEvent.VK_A : leftPressed = true; break;
             case KeyEvent.VK_S : downPressed = true; break;
             case KeyEvent.VK_D : rightPressed = true; break;
-            case KeyEvent.VK_SPACE : if(paused) {
-                paused = false;
-                gamePanel.state = GameState.Running;
-            }
-            else
-            {
-                gamePanel.state = GameState.Paused;
-                paused = true;
-            }
-            break;
-            case KeyEvent.VK_E : if(inventory) {
-                inventory = false;
-                gamePanel.state = GameState.Running;
-            }
-            else
-            {
-                gamePanel.state = GameState.Inventory;
-                inventory = true;
-            }
+            case KeyEvent.VK_SPACE :
+                switch (gamePanel.state)
+                {
+                    case Inventory : gamePanel.state = GameState.Running; break;
+                    case Dialog : gamePanel.state = GameState.Running; break;
+                    case Paused : gamePanel.state = GameState.Running; break;
+                    case Running : gamePanel.state = GameState.Paused; break;
+                }
+
                 break;
 
+            case KeyEvent.VK_E :
+                switch (gamePanel.state)
+                {
+                    case Running : gamePanel.state = GameState.Inventory; break;
+                    case Inventory : gamePanel.state = GameState.Running; break;
+                }
+                break;
         }
     }
 

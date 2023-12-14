@@ -23,6 +23,7 @@ public class Magician extends Entity
         directions.add(Direction.Right);
         directions.add(Direction.Down);
         direction = directions.get((int) (Math.random() * directions.size()));
+        setDialogues();
     }
 
     public void update()
@@ -73,5 +74,20 @@ public class Magician extends Entity
         LoadAnimation(Direction.Right, "/assets/Magician/right3.png");
         LoadAnimation(Direction.Right, "/assets/Magician/right4.png");
     }
+
+    public void setDialogues()
+    {
+        dialogues.add("Привет путешественник.");
+        dialogues.add("Могу помочь тебе с поиском сокровищ.");
+        dialogues.add("Заранее хочу тебя предупредить что тебя могут ждать трудности.");
+        dialogues.add("Вот тебе первая подсказка для начала твоего путеществия. Удачи.");
+    }
+
+    @Override
+    public void speak()
+    {
+        gamePanel.ui.currentDialogue = dialogues.get(0);
+    }
+
 }
 
