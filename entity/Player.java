@@ -46,6 +46,7 @@ public class Player extends Entity
                 System.out.println("Встретился с " + getEntity);
                 getEntity.validDirection();
                 gamePanel.state = GameState.Dialog;
+                getEntity.speak();
             }
         });
 

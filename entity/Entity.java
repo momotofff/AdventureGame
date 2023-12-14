@@ -25,9 +25,11 @@ public abstract class Entity
     private int spriteCounter = 0;
     private int spriteNumber = 1;
 
-    ArrayList<Direction> directions = new ArrayList<>();
+    public ArrayList<Direction> directions = new ArrayList<>();
 
     private final Map<Direction, ArrayList<BufferedImage>> animations;
+
+    ArrayList<String> dialogues = new ArrayList<>();
 
     Entity(GamePanel gamePanel, Point defaultWorldPosition)
     {
@@ -142,4 +144,8 @@ public abstract class Entity
 
         }
     }
+
+    public void speak()
+    {}
+
 }
