@@ -3,12 +3,10 @@ package entity;
 import main.GamePanel;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Magician extends Entity
 {
     int animationsTimeout = 0;
-
 
     public Magician(GamePanel gamePanel, Point defaultWorldPosition)
     {
@@ -18,11 +16,7 @@ public class Magician extends Entity
         worldPosition = defaultWorldPosition;
         movementSpeed = 1;
 
-        directions.add(Direction.Up);
-        directions.add(Direction.Left);
-        directions.add(Direction.Right);
-        directions.add(Direction.Down);
-        direction = directions.get((int) (Math.random() * directions.size()));
+        direction = getRandomDirection();
         setDialogues();
     }
 
@@ -37,7 +31,7 @@ public class Magician extends Entity
         {
             if (--animationsTimeout < 0)
             {
-                direction = directions.get((int) (Math.random() * directions.size()));
+                direction = getRandomDirection();
                 animationsTimeout = 300;
             }
 
@@ -46,9 +40,6 @@ public class Magician extends Entity
             else
                 changeDirection();
         }
-        else
-            validDirection();
-
     }
 
     @Override
@@ -89,5 +80,15 @@ public class Magician extends Entity
         gamePanel.ui.currentDialogue = dialogues.get(0);
     }
 
+    public void rotateToPlayer(Direction playerDirection)
+    {
+        switch (playerDirection)
+        {
+            case Left ->    direction = Direction.Right;
+            case Right ->   direction = Direction.Left;
+            case Up ->      direction = Direction.Down;
+            case Down ->    direction = Direction.Up;
+        }
+    }
 }
 

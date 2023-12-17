@@ -9,24 +9,22 @@ public class Rabbit extends Entity {
     int animationsTimeout = 0;
 
 
-    public Rabbit(GamePanel gamePanel, Point defaultWorldPosition) {
+    public Rabbit(GamePanel gamePanel, Point defaultWorldPosition)
+    {
         super(gamePanel, defaultWorldPosition);
 
         collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
         worldPosition = defaultWorldPosition;
         movementSpeed = 1;
 
-        directions.add(Direction.Left);
-        directions.add(Direction.Right);
-        direction = directions.get((int) (Math.random() * directions.size()));
-
+        direction = getRandomDirection();
     }
 
     public void update()
     {
         if (--animationsTimeout < 0)
         {
-            direction = directions.get((int) (Math.random() * directions.size()));
+            direction = getRandomDirection();
             animationsTimeout = 300;
         }
 
@@ -42,7 +40,15 @@ public class Rabbit extends Entity {
     }
 
     @Override
-    public void loadImages() {
+    public Direction getRandomDirection()
+    {
+        Direction[] directions = {Direction.Left, Direction.Right};
+        return directions[((int) (Math.random() * directions.length))];
+    }
+
+    @Override
+    public void loadImages()
+    {
         LoadAnimation(Direction.Left, "/assets/Rabbit/left1.png");
         LoadAnimation(Direction.Left, "/assets/Rabbit/left2.png");
         LoadAnimation(Direction.Left, "/assets/Rabbit/left3.png");

@@ -44,7 +44,7 @@ public class AssetSetter
 
     private Entity createEntity(Class<? extends Entity> cls, ArrayList<Point> freePlaces)
     {
-        Point position = freePlaces.get((int) (Math.random() * freePlaces.size()));
+        Point position = new Point(freePlaces.get((int) (Math.random() * freePlaces.size())));
         position.x *= gamePanel.tileSize;
         position.y *= gamePanel.tileSize;
 

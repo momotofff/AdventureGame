@@ -32,9 +32,9 @@ public class GamePanel extends JPanel implements Runnable
     Thread gameThread;
 
     public Player player;
-    public HashSet<BaseObject> items = new HashSet<>();
+    final public HashSet<BaseObject> items = new HashSet<>();
     final ArrayList<Entity> NPC = new ArrayList<>();
-    ArrayList<Entity> animals = new ArrayList<>();
+    final ArrayList<Entity> animals = new ArrayList<>();
 
     public GameState state = GameState.Running;
 
@@ -98,10 +98,13 @@ public class GamePanel extends JPanel implements Runnable
             return;
 
         player.update();
+
         for (Entity entity : NPC)
             entity.update();
+
         for (BaseObject item : items)
             item.update();
+
         for (Entity entity : animals)
             entity.update();
     }

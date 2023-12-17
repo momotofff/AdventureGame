@@ -25,8 +25,6 @@ public abstract class Entity
     private int spriteCounter = 0;
     private int spriteNumber = 1;
 
-    public ArrayList<Direction> directions = new ArrayList<>();
-
     private final Map<Direction, ArrayList<BufferedImage>> animations;
 
     ArrayList<String> dialogues = new ArrayList<>();
@@ -115,12 +113,18 @@ public abstract class Entity
         }
     }
 
+    public Direction getRandomDirection()
+    {
+        Direction[] directions = Direction.values();
+        return directions[((int) (Math.random() * directions.length))];
+    }
+
     public void changeDirection()
     {
         Direction newDirection = direction;
 
         while (newDirection == direction)
-            newDirection = directions.get((int) (Math.random() * directions.size()));
+            newDirection = getRandomDirection();
 
         direction = newDirection;
     }
@@ -128,22 +132,6 @@ public abstract class Entity
     protected void resetAnimation()
     {
         spriteNumber = 0;
-    }
-
-    public void validDirection()
-    {
-        switch (gamePanel.player.direction)
-        {
-            case Left ->
-                    direction = Direction.Right;
-            case Right ->
-                    direction = Direction.Left;
-            case Up ->
-                    direction = Direction.Down;
-            case Down ->
-                    direction = Direction.Up;
-
-        }
     }
 
     public void speak()
