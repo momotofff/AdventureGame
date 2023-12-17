@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable
 
     public Player player;
     public HashSet<BaseObject> items = new HashSet<>();
-    ArrayList<Entity> NPC = new ArrayList<>();
+    final ArrayList<Entity> NPC = new ArrayList<>();
     ArrayList<Entity> animals = new ArrayList<>();
 
     public GameState state = GameState.Running;
@@ -45,16 +45,16 @@ public class GamePanel extends JPanel implements Runnable
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
-        tileManager = new TileManager(this);
 
+        tileManager = new TileManager(this);
         assetSetter = new AssetSetter(this);
+        assetSetter.initObjects(tileManager.getFreePlaces());
 
         player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
     }
 
     public void setupGame()
     {
-        assetSetter.initObjects(tileManager.getFreePlaces());
         sound.play(Sounds.Theme);
         sound.loop();
     }

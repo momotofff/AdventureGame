@@ -94,7 +94,7 @@ public class TileManager
                         world[x][y] = tile;
 
                         if (!tile.collision)
-                            freePlaces.add(new Point(x,y));
+                            freePlaces.add(new Point(x, y));
                     }
                     catch (NoSuchElementException e)
                     {
