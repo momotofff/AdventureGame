@@ -34,19 +34,22 @@ public class Player extends Entity
 
             pickUpObject(gamePanel.collisionChecker.checkObject(this));
 
-            Entity getEntity = gamePanel.collisionChecker.checkEntity(this);
+            Entity entity = gamePanel.collisionChecker.checkEntity(this);
 
-            if (getEntity == null)
+            if (entity == null)
             {
                 if (!gamePanel.collisionChecker.checkTile(this))
                     makeStep(true);
             }
             else
             {
-                System.out.println("Встретился с " + getEntity);
-                getEntity.validDirection();
+                System.out.println("Встретился с " + entity);
+
+                if (entity instanceof Magician)
+                    ((Magician) entity).rotateToPlayer(direction);
+
                 gamePanel.state = GameState.Dialog;
-                getEntity.speak();
+                entity.speak();
             }
         });
 

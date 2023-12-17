@@ -32,10 +32,9 @@ public class GamePanel extends JPanel implements Runnable
     Thread gameThread;
 
     public Player player;
-    public HashSet<BaseObject> items = new HashSet<>();
-    ArrayList<Entity> NPC = new ArrayList<>();
-    ArrayList<Entity> animals = new ArrayList<>();
-    public ArrayList<Point> trueNpcPositions = new ArrayList<>();
+    final public HashSet<BaseObject> items = new HashSet<>();
+    final ArrayList<Entity> NPC = new ArrayList<>();
+    final ArrayList<Entity> animals = new ArrayList<>();
 
     public GameState state = GameState.Running;
 
@@ -46,18 +45,16 @@ public class GamePanel extends JPanel implements Runnable
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
-        tileManager = new TileManager(this);
 
+        tileManager = new TileManager(this);
         assetSetter = new AssetSetter(this);
+        assetSetter.initObjects(tileManager.getFreePlaces());
 
         player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
     }
 
     public void setupGame()
     {
-        assetSetter.setObject();
-        assetSetter.set_NPC();
-        assetSetter.setAnimals();
         sound.play(Sounds.Theme);
         sound.loop();
     }
@@ -97,18 +94,19 @@ public class GamePanel extends JPanel implements Runnable
 
     public void update()
     {
-        switch (state)
-        {
-            case Running : player.update();
-                for (Entity entity : NPC)
-                    entity.update();
-                for (BaseObject item : items)
-                    item.update();
-                for (Entity entity : animals)
-                    entity.update();
-                break;
-            case Paused: break;
-        }
+        if (state != GameState.Running)
+            return;
+
+        player.update();
+
+        for (Entity entity : NPC)
+            entity.update();
+
+        for (BaseObject item : items)
+            item.update();
+
+        for (Entity entity : animals)
+            entity.update();
     }
 
     @Override

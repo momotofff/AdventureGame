@@ -8,6 +8,8 @@ import objects.Box;
 import objects.Key;
 
 import java.awt.*;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 
 public class AssetSetter
 {
@@ -18,42 +20,42 @@ public class AssetSetter
         this.gamePanel = gamePanel;
     }
 
-    public void setObject()
+    public void initObjects(ArrayList<Point> freePlaces)
     {
-        gamePanel.items.add(new Key(new Point(19 * gamePanel.tileSize,14 * gamePanel.tileSize), gamePanel));
-        gamePanel.items.add(new Key(new Point(39 * gamePanel.tileSize,16 * gamePanel.tileSize), gamePanel));
-        gamePanel.items.add(new Key(new Point(15 * gamePanel.tileSize,13 * gamePanel.tileSize), gamePanel));
-        gamePanel.items.add(new Key(new Point(29 * gamePanel.tileSize,20 * gamePanel.tileSize), gamePanel));
-        gamePanel.items.add(new Box(new Point(15 * gamePanel.tileSize,25 * gamePanel.tileSize), gamePanel));
-        gamePanel.items.add(new Box(new Point(50 * gamePanel.tileSize,32 * gamePanel.tileSize), gamePanel));
-        gamePanel.items.add(new Boots(new Point(19 * gamePanel.tileSize,19 * gamePanel.tileSize), gamePanel));
+        setObjects();
+
+        for (int i = 0; i < 20; ++i)
+            gamePanel.NPC.add(createEntity(Magician.class, freePlaces));
+
+        for (int i = 0; i < 20; ++i)
+            gamePanel.animals.add(createEntity(Rabbit.class, freePlaces));
     }
 
-    public void set_NPC()
+    private void setObjects()
     {
-        gamePanel.NPC.add(add_Magician(new Point(15, 19)));
-        gamePanel.NPC.add(add_Magician(new Point(15, 15)));
-        gamePanel.NPC.add(add_Magician(new Point(15, 17)));
+        gamePanel.items.add(new Key(new Point(19 * gamePanel.tileSize, 14 * gamePanel.tileSize), gamePanel));
+        gamePanel.items.add(new Key(new Point(39 * gamePanel.tileSize, 16 * gamePanel.tileSize), gamePanel));
+        gamePanel.items.add(new Key(new Point(15 * gamePanel.tileSize, 13 * gamePanel.tileSize), gamePanel));
+        gamePanel.items.add(new Key(new Point(29 * gamePanel.tileSize, 20 * gamePanel.tileSize), gamePanel));
+        gamePanel.items.add(new Box(new Point(15 * gamePanel.tileSize, 25 * gamePanel.tileSize), gamePanel));
+        gamePanel.items.add(new Box(new Point(50 * gamePanel.tileSize, 32 * gamePanel.tileSize), gamePanel));
+        gamePanel.items.add(new Boots(new Point(19 * gamePanel.tileSize, 19 * gamePanel.tileSize), gamePanel));
     }
 
-    public void setAnimals()
+    private Entity createEntity(Class<? extends Entity> cls, ArrayList<Point> freePlaces)
     {
-        gamePanel.animals.add(add_Rabbit(new Point(15, 16)));
-        gamePanel.animals.add(add_Rabbit(new Point(15, 20)));
-        gamePanel.animals.add(add_Rabbit(new Point(15, 23)));
-    }
-    public Entity add_Magician(Point position)
-    {
-        return new Magician(gamePanel, new Point(position.x * gamePanel.tileSize, position.y * gamePanel.tileSize));
-    }
+        Point position = new Point(freePlaces.get((int) (Math.random() * freePlaces.size())));
+        position.x *= gamePanel.tileSize;
+        position.y *= gamePanel.tileSize;
 
-    public Entity add_Rabbit(Point position)
-    {
-        return new Rabbit(gamePanel, new Point(position.x * gamePanel.tileSize, position.y * gamePanel.tileSize));
-    }
-
-    public Point setNpcPosition()
-    {
-        return gamePanel.trueNpcPositions.get((int) (Math.random() * gamePanel.trueNpcPositions.size()));
+        try
+        {
+            Constructor<? extends Entity> constructor = cls.getConstructor(GamePanel.class, Point.class);
+            return constructor.newInstance(gamePanel, position);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 }

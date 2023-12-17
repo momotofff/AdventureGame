@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 
 public class TileManager
@@ -20,13 +21,11 @@ public class TileManager
     final public Point defaultWorldPosition;
 
     private final TileStorage tiles = new TileStorage();
-
-    public ArrayList<Point> trueNpcPositions = new ArrayList();
+    private final ArrayList<Point> freePlaces = new ArrayList<>();
 
     public TileManager(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
-        gamePanel.trueNpcPositions = this.trueNpcPositions;
 
         tiles.add(Tiles.Grass, new Tile("/assets/world/Grass1.png", false, gamePanel.tileSize));
         tiles.add(Tiles.Grass, new Tile("/assets/world/Grass2.png", false, gamePanel.tileSize));
@@ -95,7 +94,7 @@ public class TileManager
                         world[x][y] = tile;
 
                         if (!tile.collision)
-                            trueNpcPositions.add(new Point(x,y));
+                            freePlaces.add(new Point(x, y));
                     }
                     catch (NoSuchElementException e)
                     {
@@ -129,5 +128,8 @@ public class TileManager
         }
     }
 
-
+    public ArrayList<Point> getFreePlaces()
+    {
+        return freePlaces;
+    }
 }
