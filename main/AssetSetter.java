@@ -8,6 +8,7 @@ import objects.Box;
 import objects.Key;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class AssetSetter
 {
@@ -18,7 +19,14 @@ public class AssetSetter
         this.gamePanel = gamePanel;
     }
 
-    public void setObject()
+    public void initObjects(ArrayList<Point> freePlaces)
+    {
+        setObjects();
+        setNpc(freePlaces);
+        setAnimals();
+    }
+
+    private void setObjects()
     {
         gamePanel.items.add(new Key(new Point(19 * gamePanel.tileSize,14 * gamePanel.tileSize), gamePanel));
         gamePanel.items.add(new Key(new Point(39 * gamePanel.tileSize,16 * gamePanel.tileSize), gamePanel));
@@ -29,31 +37,32 @@ public class AssetSetter
         gamePanel.items.add(new Boots(new Point(19 * gamePanel.tileSize,19 * gamePanel.tileSize), gamePanel));
     }
 
-    public void set_NPC()
+    private void setNpc(ArrayList<Point> freePlaces)
     {
-        gamePanel.NPC.add(add_Magician(new Point(15, 19)));
-        gamePanel.NPC.add(add_Magician(new Point(15, 15)));
-        gamePanel.NPC.add(add_Magician(new Point(15, 17)));
+        for (int i = 0; i < 20; ++i)
+            gamePanel.NPC.add(addMagician(setNpcPosition(freePlaces)));
+
     }
 
-    public void setAnimals()
+    private void setAnimals()
     {
-        gamePanel.animals.add(add_Rabbit(new Point(15, 16)));
-        gamePanel.animals.add(add_Rabbit(new Point(15, 20)));
-        gamePanel.animals.add(add_Rabbit(new Point(15, 23)));
+        gamePanel.animals.add(addRabbit(new Point(15, 16)));
+        gamePanel.animals.add(addRabbit(new Point(15, 20)));
+        gamePanel.animals.add(addRabbit(new Point(15, 23)));
     }
-    public Entity add_Magician(Point position)
+
+    private Entity addMagician(Point position)
     {
         return new Magician(gamePanel, new Point(position.x * gamePanel.tileSize, position.y * gamePanel.tileSize));
     }
 
-    public Entity add_Rabbit(Point position)
+    private Entity addRabbit(Point position)
     {
         return new Rabbit(gamePanel, new Point(position.x * gamePanel.tileSize, position.y * gamePanel.tileSize));
     }
 
-    public Point setNpcPosition()
+    private Point setNpcPosition(ArrayList<Point> freePlaces)
     {
-        return gamePanel.trueNpcPositions.get((int) (Math.random() * gamePanel.trueNpcPositions.size()));
+        return freePlaces.get((int) (Math.random() * freePlaces.size()));
     }
 }

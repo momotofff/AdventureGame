@@ -36,6 +36,7 @@ public abstract class Entity
         this.gamePanel = gamePanel;
         collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 24, 24, 24);
         worldPosition = defaultWorldPosition;
+        screenCoordinates = defaultWorldPosition;
 
         animations = new HashMap<>();
         for (Direction direction: Direction.values())
