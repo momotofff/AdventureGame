@@ -23,9 +23,18 @@ public class AssetSetter
     public void initObjects(ArrayList<Point> freePlaces)
     {
         setObjects();
+    }
 
-        for (int i = 0; i < 20; ++i)
-            gamePanel.NPC.add(createEntity(Magician.class, freePlaces));
+    public void initEntity(ArrayList<Point> freePlaces)
+    {
+        Magician magician = new Magician(gamePanel, new Point(15 * gamePanel.tileSize, 15 * gamePanel.tileSize));
+        magician.dialogues.add("Привет путешественник. ");
+        magician.dialogues.add("Могу помочь тебе с поиском сокровищ.");
+        magician.dialogues.add("Заранее хочу тебя предупредить что тебя могут ждать /nтрудности.");
+        magician.dialogues.add("Вот тебе первая подсказка для начала твоего путешествия. /nУдачи.");
+        magician.utteranceCounter = magician.dialogues.size();
+        magician.name = "Mag";
+        gamePanel.NPC.add(magician);
 
         for (int i = 0; i < 20; ++i)
             gamePanel.animals.add(createEntity(Rabbit.class, freePlaces));

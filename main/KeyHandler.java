@@ -13,9 +13,6 @@ public class KeyHandler implements KeyListener
     public boolean downPressed;
     public boolean leftPressed;
     public boolean rightPressed;
-    private boolean paused = false;
-    private boolean inventory = false;
-    private boolean dialog = false;
 
     public KeyHandler(GamePanel gamePanel)
     {
@@ -28,6 +25,14 @@ public class KeyHandler implements KeyListener
     @Override
     public void keyPressed(KeyEvent e)
     {
+        if (gamePanel.state == GameState.Dialog)
+            if ((gamePanel.NPC.get(0)).utteranceCounter > 0)
+                if (KeyEvent.VK_SPACE == e.getKeyCode())
+                {
+                    gamePanel.NPC.get(0).speak(gamePanel.NPC.get(0).utteranceCounter);
+                    (gamePanel.NPC.get(0)).utteranceCounter--;
+                }
+
 
         switch (e.getKeyCode())
         {

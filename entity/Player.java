@@ -7,6 +7,7 @@ import main.KeyHandler;
 import objects.*;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Player extends Entity
 {
@@ -14,6 +15,7 @@ public class Player extends Entity
     public int keysCount = 0;
     int boostCoolDown;
     TextMessages textMessages = new TextMessages();
+    BaseObject[][] inventory = new BaseObject[5][5];
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler, Point defaultWorldPosition)
     {
@@ -35,6 +37,14 @@ public class Player extends Entity
             pickUpObject(gamePanel.collisionChecker.checkObject(this));
 
             Entity entity = gamePanel.collisionChecker.checkEntity(this);
+            Magician magician;
+
+            if (entity instanceof Magician)
+            {
+                magician = (Magician) entity;
+                System.out.println("Встретился с " + magician.name);
+                magician.rotateToPlayer(direction);
+            }
 
             if (entity == null)
             {
@@ -43,13 +53,11 @@ public class Player extends Entity
             }
             else
             {
-                System.out.println("Встретился с " + entity);
 
-                if (entity instanceof Magician)
-                    ((Magician) entity).rotateToPlayer(direction);
+
 
                 gamePanel.state = GameState.Dialog;
-                entity.speak();
+
             }
         });
 

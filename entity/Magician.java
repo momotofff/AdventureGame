@@ -3,10 +3,13 @@ package entity;
 import main.GamePanel;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Magician extends Entity
 {
     int animationsTimeout = 0;
+    public ArrayList<String> dialogues = new ArrayList<>();
+    public int utteranceCounter;
 
     public Magician(GamePanel gamePanel, Point defaultWorldPosition)
     {
@@ -17,7 +20,6 @@ public class Magician extends Entity
         movementSpeed = 1;
 
         direction = getRandomDirection();
-        setDialogues();
     }
 
     public void update()
@@ -66,18 +68,10 @@ public class Magician extends Entity
         LoadAnimation(Direction.Right, "/assets/Magician/right4.png");
     }
 
-    public void setDialogues()
+    public void speak(int replica)
     {
-        dialogues.add("Привет путешественник.");
-        dialogues.add("Могу помочь тебе с поиском сокровищ.");
-        dialogues.add("Заранее хочу тебя предупредить что тебя могут ждать трудности.");
-        dialogues.add("Вот тебе первая подсказка для начала твоего путеществия. Удачи.");
-    }
-
-    @Override
-    public void speak()
-    {
-        gamePanel.ui.currentDialogue = dialogues.get(0);
+        int id = dialogues.size() - utteranceCounter;
+        gamePanel.ui.currentDialogue = dialogues.get(id);
     }
 
     public void rotateToPlayer(Direction playerDirection)

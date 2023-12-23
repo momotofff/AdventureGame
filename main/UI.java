@@ -125,9 +125,13 @@ public class UI
         graphics2D.setColor(edging);
         graphics2D.setStroke(new BasicStroke(10));
         graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
-
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 40));
-        graphics2D.drawString(currentDialogue, window.x + gamePanel.tileSize, window.y + gamePanel.tileSize);
+
+        for (String line : currentDialogue.split("/n"))
+        {
+            graphics2D.drawString(line, window.x + gamePanel.tileSize, window.y + gamePanel.tileSize);
+            window.y += gamePanel.tileSize;
+        }
     }
 }
 

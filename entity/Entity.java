@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public abstract class Entity
 {
+
     GamePanel gamePanel;
     public int movementSpeed;
     public int animationSpeed = 10;
@@ -21,13 +22,12 @@ public abstract class Entity
     public Direction direction;
     public Rectangle collisionArea;
     public Point screenCoordinates;
+    public String name;
 
     private int spriteCounter = 0;
     private int spriteNumber = 1;
 
     private final Map<Direction, ArrayList<BufferedImage>> animations;
-
-    ArrayList<String> dialogues = new ArrayList<>();
 
     Entity(GamePanel gamePanel, Point defaultWorldPosition)
     {
