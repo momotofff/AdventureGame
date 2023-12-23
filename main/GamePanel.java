@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import entity.Magician;
 import entity.Player;
 import objects.BaseObject;
 import tile.TileManager;
@@ -33,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable
 
     public Player player;
     final public HashSet<BaseObject> items = new HashSet<>();
-    final ArrayList<Entity> NPC = new ArrayList<>();
+    final ArrayList<Magician> NPC = new ArrayList<>();
     final ArrayList<Entity> animals = new ArrayList<>();
 
     public GameState state = GameState.Running;
@@ -49,6 +50,7 @@ public class GamePanel extends JPanel implements Runnable
         tileManager = new TileManager(this);
         assetSetter = new AssetSetter(this);
         assetSetter.initObjects(tileManager.getFreePlaces());
+        assetSetter.initEntity(tileManager.getFreePlaces());
 
         player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
     }
