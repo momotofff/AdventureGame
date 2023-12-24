@@ -9,7 +9,6 @@ public class Magician extends Entity
 {
     int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
-    public int utteranceCounter;
 
     public Magician(GamePanel gamePanel, Point defaultWorldPosition)
     {
@@ -66,12 +65,6 @@ public class Magician extends Entity
         LoadAnimation(Direction.Right, "/assets/Magician/right2.png");
         LoadAnimation(Direction.Right, "/assets/Magician/right3.png");
         LoadAnimation(Direction.Right, "/assets/Magician/right4.png");
-    }
-
-    public void speak(int replica)
-    {
-        int id = dialogues.size() - utteranceCounter;
-        gamePanel.ui.currentDialogue = dialogues.get(id);
     }
 
     public void rotateToPlayer(Direction playerDirection)

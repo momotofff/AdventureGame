@@ -4,10 +4,12 @@ import assets.Strings.TextMessages;
 import main.GamePanel;
 import main.GameState;
 import main.KeyHandler;
+import main.MagicianDialogue;
 import objects.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Player extends Entity
 {
@@ -44,20 +46,13 @@ public class Player extends Entity
                 magician = (Magician) entity;
                 System.out.println("Встретился с " + magician.name);
                 magician.rotateToPlayer(direction);
+                gamePanel.startDialogue(new MagicianDialogue(magician.dialogues));
             }
 
             if (entity == null)
             {
                 if (!gamePanel.collisionChecker.checkTile(this))
                     makeStep(true);
-            }
-            else
-            {
-
-
-
-                gamePanel.state = GameState.Dialog;
-
             }
         });
 

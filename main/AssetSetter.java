@@ -32,7 +32,6 @@ public class AssetSetter
         magician.dialogues.add("Могу помочь тебе с поиском сокровищ.");
         magician.dialogues.add("Заранее хочу тебя предупредить что тебя могут ждать /nтрудности.");
         magician.dialogues.add("Вот тебе первая подсказка для начала твоего путешествия. /nУдачи.");
-        magician.utteranceCounter = magician.dialogues.size();
         magician.name = "Mag";
         gamePanel.NPC.add(magician);
 

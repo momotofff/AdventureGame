@@ -4,19 +4,21 @@ import entity.Direction;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 import java.util.Optional;
 
 public class KeyHandler implements KeyListener
 {
-    GamePanel gamePanel;
-    public boolean upPressed;
-    public boolean downPressed;
-    public boolean leftPressed;
-    public boolean rightPressed;
+    private final HashMap<Integer, Runnable> listeners = new HashMap<>();
 
-    public KeyHandler(GamePanel gamePanel)
+    private boolean upPressed;
+    private boolean downPressed;
+    private boolean leftPressed;
+    private boolean rightPressed;
+
+    public void addListener(Integer key, Runnable listener)
     {
-        this.gamePanel = gamePanel;
+        listeners.put(key, listener);
     }
 
     @Override
@@ -25,14 +27,9 @@ public class KeyHandler implements KeyListener
     @Override
     public void keyPressed(KeyEvent e)
     {
-        if (gamePanel.state == GameState.Dialog)
-            if ((gamePanel.NPC.get(0)).utteranceCounter > 0)
-                if (KeyEvent.VK_SPACE == e.getKeyCode())
-                {
-                    gamePanel.NPC.get(0).speak(gamePanel.NPC.get(0).utteranceCounter);
-                    (gamePanel.NPC.get(0)).utteranceCounter--;
-                }
-
+        Runnable listener = listeners.get(e.getKeyCode());
+        if (listener != null)
+            listener.run();
 
         switch (e.getKeyCode())
         {
@@ -40,24 +37,6 @@ public class KeyHandler implements KeyListener
             case KeyEvent.VK_A : leftPressed = true; break;
             case KeyEvent.VK_S : downPressed = true; break;
             case KeyEvent.VK_D : rightPressed = true; break;
-            case KeyEvent.VK_SPACE :
-                switch (gamePanel.state)
-                {
-                    case Inventory : gamePanel.state = GameState.Running; break;
-                    case Dialog : gamePanel.state = GameState.Running; break;
-                    case Paused : gamePanel.state = GameState.Running; break;
-                    case Running : gamePanel.state = GameState.Paused; break;
-                }
-
-                break;
-
-            case KeyEvent.VK_E :
-                switch (gamePanel.state)
-                {
-                    case Running : gamePanel.state = GameState.Inventory; break;
-                    case Inventory : gamePanel.state = GameState.Running; break;
-                }
-                break;
         }
     }
 

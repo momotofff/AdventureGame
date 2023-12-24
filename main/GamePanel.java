@@ -8,6 +8,7 @@ import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -25,7 +26,7 @@ public class GamePanel extends JPanel implements Runnable
     final int FPS = 60;
 
     TileManager tileManager;
-    public KeyHandler keyHandler = new KeyHandler(this);
+    public KeyHandler keyHandler = new KeyHandler();
     public Sound sound = new Sound();
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter;
@@ -38,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable
     final ArrayList<Entity> animals = new ArrayList<>();
 
     public GameState state = GameState.Running;
+    public AbstractDialogue currentDialogue;
 
     public GamePanel()
     {
@@ -53,6 +55,28 @@ public class GamePanel extends JPanel implements Runnable
         assetSetter.initEntity(tileManager.getFreePlaces());
 
         player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
+
+        keyHandler.addListener(KeyEvent.VK_E, () -> {
+            switch (state)
+            {
+                case Running -> state = GameState.Inventory;
+                case Inventory -> state = GameState.Running;
+            }
+        });
+
+        keyHandler.addListener(KeyEvent.VK_SPACE, () -> {
+            switch (state)
+            {
+                case Inventory : state = GameState.Running; break;
+                case Dialog :
+                    currentDialogue.onKeyPressed(KeyEvent.VK_SPACE);
+                    if (currentDialogue.isFinished())
+                        state = GameState.Running;
+                    break;
+                case Paused : state = GameState.Running; break;
+                case Running : state = GameState.Paused; break;
+            }
+        });
     }
 
     public void setupGame()
@@ -136,5 +160,11 @@ public class GamePanel extends JPanel implements Runnable
         ui.draw(graphics2D);
 
         graphics2D.dispose();
+    }
+
+    public void startDialogue(AbstractDialogue dialogue)
+    {
+        currentDialogue = dialogue;
+        state = GameState.Dialog;
     }
 }
