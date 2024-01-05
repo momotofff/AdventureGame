@@ -21,8 +21,6 @@ public class GamePanel extends JPanel implements Runnable
     final public Point maxBlocksScreen = new Point(25, 14);
     public final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
 
-    final public Point maxWorldCountTile = new Point(100, 100);
-
     final int FPS = 60;
 
     TileManager tileManager;
@@ -49,7 +47,7 @@ public class GamePanel extends JPanel implements Runnable
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
 
-        tileManager = new TileManager(this);
+        tileManager = new TileManager(tileSize);
         assetSetter = new AssetSetter(this);
         assetSetter.initObjects(tileManager.getFreePlaces());
         assetSetter.initEntity(tileManager.getFreePlaces());
@@ -141,7 +139,7 @@ public class GamePanel extends JPanel implements Runnable
         super.paintComponent(graphics);
 
         Graphics2D graphics2D = (Graphics2D) graphics;
-        tileManager.drawing(graphics2D);
+        tileManager.drawing(graphics2D, player);
 
         for (BaseObject item: items)
         {

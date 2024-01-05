@@ -2,7 +2,6 @@ package main;
 
 import objects.Key;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -84,14 +83,13 @@ public class UI
 
     public void drawInterphase()
     {
-        graphics2D.setFont(maruMonica);
+        graphics2D.setFont(maruMonica.deriveFont(30F));
         graphics2D.setColor(new Color(230,200,170));
         graphics2D.drawImage(bufferedImage, gamePanel.tileSize / 2, gamePanel.tileSize / 2, gamePanel.tileSize / 2, gamePanel.tileSize / 2, null);
         graphics2D.drawString(" x " + gamePanel.player.keysCount, 60, 60);
 
         if (message != null)
         {
-            graphics2D.setFont(maruMonica.deriveFont(30F));
             graphics2D.drawString(message, gamePanel.tileSize / 2, gamePanel.tileSize * 2);
 
             if (--messageCounter < 0)
