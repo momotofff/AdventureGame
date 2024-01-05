@@ -1,5 +1,6 @@
 package entity;
 
+import main.CollisionChecker;
 import main.GamePanel;
 
 import java.awt.*;
@@ -9,9 +10,9 @@ public class Rabbit extends Entity {
     int animationsTimeout = 0;
 
 
-    public Rabbit(GamePanel gamePanel, Point defaultWorldPosition)
+    public Rabbit(Point defaultWorldPosition)
     {
-        super(gamePanel, defaultWorldPosition);
+        super(defaultWorldPosition);
 
         collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
         worldPosition = defaultWorldPosition;
@@ -20,7 +21,7 @@ public class Rabbit extends Entity {
         direction = getRandomDirection();
     }
 
-    public void update()
+    public void update(Player player, CollisionChecker collisionChecker)
     {
         if (--animationsTimeout < 0)
         {
@@ -29,12 +30,12 @@ public class Rabbit extends Entity {
         }
 
         screenCoordinates = new Point(
-                worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
-                worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
+                worldPosition.x - player.worldPosition.x + player.screenCoordinates.x,
+                worldPosition.y - player.worldPosition.y + player.screenCoordinates.y
         );
 
-        if (!gamePanel.collisionChecker.checkTile(this))
-            makeStep(false);
+        if (!collisionChecker.checkTile(this))
+            makeStep(false, null);
         else
             changeDirection();
     }

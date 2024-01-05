@@ -1,10 +1,7 @@
 package entity;
 
 import assets.Strings.TextMessages;
-import main.GamePanel;
-import main.GameState;
-import main.KeyHandler;
-import main.MagicianDialogue;
+import main.*;
 import objects.*;
 
 import java.awt.*;
@@ -13,6 +10,7 @@ import java.util.ArrayList;
 
 public class Player extends Entity
 {
+    GamePanel gamePanel;
     public KeyHandler keyHandler;
     public int keysCount = 0;
     int boostCoolDown;
@@ -21,7 +19,8 @@ public class Player extends Entity
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler, Point defaultWorldPosition)
     {
-        super(gamePanel, defaultWorldPosition);
+        super(defaultWorldPosition);
+        this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
 
         screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
@@ -30,13 +29,13 @@ public class Player extends Entity
         direction = Direction.Down;
     }
 
-    public void update()
+    public void update(Sound sound)
     {
         keyHandler.getPressedDirection().ifPresent(value ->
         {
             this.direction = value;
 
-            pickUpObject(gamePanel.collisionChecker.checkObject(this));
+            pickUpObject(gamePanel.collisionChecker.checkObject(this), sound);
 
             Entity entity = gamePanel.collisionChecker.checkEntity(this);
             Magician magician;
@@ -52,7 +51,7 @@ public class Player extends Entity
             if (entity == null)
             {
                 if (!gamePanel.collisionChecker.checkTile(this))
-                    makeStep(true);
+                    makeStep(true, sound);
             }
         });
 
@@ -66,12 +65,12 @@ public class Player extends Entity
         }
     }
 
-    public void pickUpObject(BaseObject item)
+    public void pickUpObject(BaseObject item, Sound sound)
     {
         if (item == null)
             return;
 
-        gamePanel.sound.play(item.soundEffect);
+        sound.play(item.soundEffect);
 
         if (item instanceof Key)
         {

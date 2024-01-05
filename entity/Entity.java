@@ -1,6 +1,8 @@
 package entity;
 
+import main.CollisionChecker;
 import main.GamePanel;
+import main.Sound;
 import main.Sounds;
 
 import javax.imageio.ImageIO;
@@ -29,7 +31,7 @@ public abstract class Entity
 
     private final Map<Direction, ArrayList<BufferedImage>> animations;
 
-    Entity(GamePanel gamePanel, Point defaultWorldPosition)
+    Entity(Point defaultWorldPosition)
     {
         this.gamePanel = gamePanel;
         collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 24, 24, 24);
@@ -68,17 +70,17 @@ public abstract class Entity
 
     public abstract void loadImages();
 
-    public void drawing(Graphics2D graphics2D)
+    public void drawing(Graphics2D graphics2D, int tileSize)
     {
         BufferedImage image = GetAnimationFrame(direction, spriteNumber);
-        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
+        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, tileSize, tileSize, null);
         graphics2D.drawRect(screenCoordinates.x + 24, screenCoordinates.y + 24, collisionArea.width, collisionArea.height);
     }
 
     public void update()
     {}
 
-    protected void makeStep(boolean playSound)
+    protected void makeStep(boolean playSound, Sound sound)
     {
         switch (direction)
         {
@@ -109,7 +111,7 @@ public abstract class Entity
             spriteCounter = 0;
 
             if (playSound)
-                gamePanel.sound.play(Sounds.Step);
+                sound.play(Sounds.Step);
         }
     }
 
@@ -137,4 +139,6 @@ public abstract class Entity
     public void speak()
     {}
 
+    public void update(Player player, CollisionChecker collisionChecker) {
+    }
 }

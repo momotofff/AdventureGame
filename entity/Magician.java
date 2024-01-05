@@ -1,7 +1,6 @@
 package entity;
 
-import main.GamePanel;
-
+import main.CollisionChecker;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -10,9 +9,9 @@ public class Magician extends Entity
     int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
 
-    public Magician(GamePanel gamePanel, Point defaultWorldPosition)
+    public Magician(Point defaultWorldPosition)
     {
-        super(gamePanel, defaultWorldPosition);
+        super(defaultWorldPosition);
 
         collisionArea = new Rectangle(defaultWorldPosition.x + 12, defaultWorldPosition.y + 12, 24, 24);
         worldPosition = defaultWorldPosition;
@@ -21,14 +20,14 @@ public class Magician extends Entity
         direction = getRandomDirection();
     }
 
-    public void update()
+    public void update(Player player, CollisionChecker collisionChecker)
     {
         screenCoordinates = new Point(
-                worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
-                worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
+                worldPosition.x - player.worldPosition.x + player.screenCoordinates.x,
+                worldPosition.y - player.worldPosition.y + player.screenCoordinates.y
         );
 
-        if (!gamePanel.collisionChecker.checkPlayer(this))
+        if (!collisionChecker.checkPlayer(this))
         {
             if (--animationsTimeout < 0)
             {
@@ -36,8 +35,8 @@ public class Magician extends Entity
                 animationsTimeout = 300;
             }
 
-            if (!gamePanel.collisionChecker.checkTile(this))
-                makeStep(false);
+            if (!collisionChecker.checkTile(this))
+                makeStep(false, null);
             else
                 changeDirection();
         }

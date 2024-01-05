@@ -6,8 +6,8 @@ import java.awt.*;
 
 public class Door extends BaseObject
 {
-    public Door(Point worldPosition, GamePanel gamePanel)
+    public Door(Point worldPosition)
     {
-        super("/assets/gameElements/door.png", null, worldPosition, gamePanel);
+        super("/assets/gameElements/door.png", null, worldPosition);
     }
 }
