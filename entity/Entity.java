@@ -110,7 +110,7 @@ public abstract class Entity
             ++spriteNumber;
             spriteCounter = 0;
 
-            if (playSound)
+            if (playSound && spriteNumber % 2 != 0)
                 sound.play(Sounds.Step);
         }
     }
@@ -140,5 +140,10 @@ public abstract class Entity
     {}
 
     public void update(Player player, CollisionChecker collisionChecker) {
+    }
+
+    public BufferedImage getTile()
+    {
+        return animations.get(Direction.Down).get(0);
     }
 }

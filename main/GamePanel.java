@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable
     final ArrayList<Magician> NPC = new ArrayList<>();
     final ArrayList<Entity> animals = new ArrayList<>();
 
-    public GameState state = GameState.Running;
+    public GameState state;
     public AbstractDialogue currentDialogue;
 
     public GamePanel()
@@ -65,6 +65,10 @@ public class GamePanel extends JPanel implements Runnable
         keyHandler.addListener(KeyEvent.VK_SPACE, () -> {
             switch (state)
             {
+                case StartScreen: state = GameState.Running;
+                                  sound.play(Sounds.Theme);
+                                  sound.loop();
+                    break;
                 case Inventory : state = GameState.Running; break;
                 case Dialog :
                     currentDialogue.onKeyPressed(KeyEvent.VK_SPACE);
@@ -79,8 +83,8 @@ public class GamePanel extends JPanel implements Runnable
 
     public void setupGame()
     {
-        sound.play(Sounds.Theme);
-        sound.loop();
+        state = GameState.StartScreen;
+
     }
 
     public void startGameThread()
@@ -139,25 +143,34 @@ public class GamePanel extends JPanel implements Runnable
         super.paintComponent(graphics);
 
         Graphics2D graphics2D = (Graphics2D) graphics;
-        tileManager.drawing(graphics2D, player);
 
-        for (BaseObject item: items)
+        if (state != GameState.StartScreen)
         {
-            if (item != null)
-                item.drawing(graphics2D, tileSize);
+            tileManager.drawing(graphics2D, player);
+
+            for (BaseObject item: items)
+            {
+                if (item != null)
+                    item.drawing(graphics2D, tileSize);
+            }
+
+            for (Entity entity : NPC)
+                entity.drawing(graphics2D, tileSize);
+
+            for (Entity entity : animals)
+                entity.drawing(graphics2D, tileSize);
+
+            player.drawing(graphics2D, tileSize);
+
+            ui.draw(graphics2D, state);
+
+            graphics2D.dispose();
         }
 
-        for (Entity entity : NPC)
-            entity.drawing(graphics2D, tileSize);
-
-        for (Entity entity : animals)
-            entity.drawing(graphics2D, tileSize);
-
-        player.drawing(graphics2D, tileSize);
-
-        ui.draw(graphics2D);
-
-        graphics2D.dispose();
+        else
+        {
+            ui.draw(graphics2D, state);
+        }
     }
 
     public void startDialogue(AbstractDialogue dialogue)
