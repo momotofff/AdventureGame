@@ -1,5 +1,6 @@
 package objects;
 
+import entity.Player;
 import main.GamePanel;
 import main.Sounds;
 
@@ -17,13 +18,10 @@ public abstract class BaseObject
     public Rectangle areaCollision;
     public Sounds soundEffect = Sounds.None;
 
-    GamePanel gamePanel;
-
-    public BaseObject(String tile, Sounds audio, Point worldPosition, GamePanel gamePanel)
+    public BaseObject(String tile, Sounds audio, Point worldPosition)
     {
         this(tile, audio);
         this.worldPosition = worldPosition;
-        this.gamePanel = gamePanel;
         this.screenCoordinates = worldPosition;
 
         areaCollision = new Rectangle(worldPosition.x + 8, worldPosition.y + 8, 48, 48);
@@ -44,16 +42,16 @@ public abstract class BaseObject
         }
     }
 
-    public void update()
+    public void update(Player player)
     {
         screenCoordinates = new Point(
-                worldPosition.x - gamePanel.player.worldPosition.x + gamePanel.player.screenCoordinates.x,
-                worldPosition.y - gamePanel.player.worldPosition.y + gamePanel.player.screenCoordinates.y
+                worldPosition.x - player.worldPosition.x + player.screenCoordinates.x,
+                worldPosition.y - player.worldPosition.y + player.screenCoordinates.y
         );
     }
 
-    public void drawing(Graphics2D graphics2D, GamePanel gamePanel)
+    public void drawing(Graphics2D graphics2D, int tileSize)
     {
-        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, gamePanel.tileSize, gamePanel.tileSize, null);
+        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, tileSize, tileSize, null);
     }
 }

@@ -6,8 +6,8 @@ import java.awt.*;
 
 public class Box extends BaseObject
 {
-    public Box(Point worldPosition, GamePanel gamePanel)
+    public Box(Point worldPosition)
     {
-        super("/assets/gameElements/Box.png", null, worldPosition, gamePanel);
+        super("/assets/gameElements/Box.png", null, worldPosition);
     }
 }

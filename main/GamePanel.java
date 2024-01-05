@@ -48,9 +48,9 @@ public class GamePanel extends JPanel implements Runnable
         this.setFocusable(true);
 
         tileManager = new TileManager(tileSize);
-        assetSetter = new AssetSetter(this);
-        assetSetter.initObjects(tileManager.getFreePlaces());
-        assetSetter.initEntity(tileManager.getFreePlaces());
+        assetSetter = new AssetSetter(tileSize);
+        assetSetter.initObjects(tileManager.getFreePlaces(), items);
+        assetSetter.initEntity(tileManager.getFreePlaces(), NPC, animals);
 
         player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
 
@@ -121,16 +121,16 @@ public class GamePanel extends JPanel implements Runnable
         if (state != GameState.Running)
             return;
 
-        player.update();
+        player.update(sound);
 
         for (Entity entity : NPC)
-            entity.update();
+            entity.update(player, collisionChecker);
 
         for (BaseObject item : items)
-            item.update();
+            item.update(player);
 
         for (Entity entity : animals)
-            entity.update();
+            entity.update(player, collisionChecker);
     }
 
     @Override
@@ -144,16 +144,16 @@ public class GamePanel extends JPanel implements Runnable
         for (BaseObject item: items)
         {
             if (item != null)
-                item.drawing(graphics2D, this);
+                item.drawing(graphics2D, tileSize);
         }
 
         for (Entity entity : NPC)
-            entity.drawing(graphics2D);
+            entity.drawing(graphics2D, tileSize);
 
         for (Entity entity : animals)
-            entity.drawing(graphics2D);
+            entity.drawing(graphics2D, tileSize);
 
-        player.drawing(graphics2D);
+        player.drawing(graphics2D, tileSize);
 
         ui.draw(graphics2D);
 

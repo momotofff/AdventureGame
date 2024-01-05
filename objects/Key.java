@@ -7,9 +7,10 @@ import java.awt.*;
 
 public class Key extends BaseObject
 {
-    public Key(Point worldPosition, GamePanel gamePanel)
+    public Key(Point worldPosition)
     {
-        super("/assets/gameElements/key.png", Sounds.Key, worldPosition, gamePanel);
+
+        super("/assets/gameElements/key.png", Sounds.Key, worldPosition);
     }
 
     public Key()

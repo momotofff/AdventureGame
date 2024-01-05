@@ -7,8 +7,8 @@ import java.awt.*;
 
 public class Boots extends BaseObject
 {
-    public Boots(Point worldPosition, GamePanel gamePanel)
+    public Boots(Point worldPosition)
     {
-        super("/assets/gameElements/boots.png", Sounds.Boots, worldPosition, gamePanel);
+        super("/assets/gameElements/boots.png", Sounds.Boots, worldPosition);
     }
 }
