@@ -6,4 +6,5 @@ public enum GameState
     Paused,
     Inventory,
     Dialog,
+    StartScreen
 }

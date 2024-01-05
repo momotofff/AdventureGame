@@ -48,17 +48,45 @@ public class UI
         message = text;
     }
 
-    public void draw(Graphics2D graphics2D)
+    public void draw(Graphics2D graphics2D, GameState state)
     {
         this.graphics2D = graphics2D;
 
-        switch (gamePanel.state)
+        switch (state)
         {
             case Running : drawInterphase(); break;
             case Paused : drawPausedScreen(); break;
             case Inventory : drawInventory(); break;
             case Dialog : drawDialog(); break;
+            case StartScreen: drawStartScreen(); break;
         }
+    }
+
+    private void drawStartScreen()
+    {
+        graphics2D.setColor(filling);
+        graphics2D.fillRect(0, 0, gamePanel.screenSize.x, gamePanel.screenSize.y);
+
+
+        graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 150f));
+        String nameGame = "Adventure game";
+        int length = (int) graphics2D.getFontMetrics().getStringBounds(nameGame, graphics2D).getWidth();
+        int x = gamePanel.screenSize.x / 2 - length / 2;
+        int y = gamePanel.screenSize.y / 4;
+
+        graphics2D.setColor(Color.black);
+        graphics2D.drawString(nameGame, x + 5, y + 5);
+
+        graphics2D.setColor(edging);
+        graphics2D.drawString(nameGame, x, y);
+
+        x = gamePanel.screenSize.x / 2 - length / 2;
+        y += gamePanel.tileSize * 2;
+        graphics2D.drawImage(gamePanel.player.getTile(), x, y, gamePanel.tileSize * 2, gamePanel.tileSize * 2, null);
+
+        graphics2D.setColor(edging);
+        graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
+        graphics2D.drawString("Press SPACE to play", x + gamePanel.tileSize * 5, y + gamePanel.tileSize);
     }
 
     public void drawPausedScreen()
