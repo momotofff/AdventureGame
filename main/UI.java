@@ -2,14 +2,17 @@ package main;
 
 import objects.Key;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class UI
 {
     GamePanel gamePanel;
     Graphics2D graphics2D;
-    Font font;
+    Font maruMonica;
     BufferedImage bufferedImage;
 
     private String message = null;
@@ -22,7 +25,22 @@ public class UI
     public UI(GamePanel gamePanel)
     {
         this.gamePanel = gamePanel;
-        font = new Font("Arial", Font.PLAIN, 30);
+
+        InputStream inputStream = getClass().getResourceAsStream("/assets/Font/MaruMonica.ttf");
+
+        try
+        {
+            if (inputStream != null)
+            {
+                maruMonica = Font.createFont(Font.TRUETYPE_FONT, inputStream);
+                maruMonica.deriveFont(30f);
+            }
+        }
+        catch (FontFormatException | IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+
         bufferedImage = new Key().image;
     }
 
@@ -53,9 +71,7 @@ public class UI
         graphics2D.setStroke(new BasicStroke(10));
         graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
 
-
-
-        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 100));
+        graphics2D.setFont(maruMonica.deriveFont(Font.PLAIN, 100));
         graphics2D.setColor(edging);
 
         String paused = "PAUSED";
@@ -68,14 +84,14 @@ public class UI
 
     public void drawInterphase()
     {
-        graphics2D.setFont(font);
+        graphics2D.setFont(maruMonica);
         graphics2D.setColor(new Color(230,200,170));
         graphics2D.drawImage(bufferedImage, gamePanel.tileSize / 2, gamePanel.tileSize / 2, gamePanel.tileSize / 2, gamePanel.tileSize / 2, null);
         graphics2D.drawString(" x " + gamePanel.player.keysCount, 60, 60);
 
         if (message != null)
         {
-            graphics2D.setFont(graphics2D.getFont().deriveFont(30F));
+            graphics2D.setFont(maruMonica.deriveFont(30F));
             graphics2D.drawString(message, gamePanel.tileSize / 2, gamePanel.tileSize * 2);
 
             if (--messageCounter < 0)
@@ -95,7 +111,7 @@ public class UI
         graphics2D.setStroke(new BasicStroke(10));
         graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
 
-        graphics2D.setFont(font);
+        graphics2D.setFont(maruMonica.deriveFont(30f));
         graphics2D.setColor(edging);
         graphics2D.drawImage(bufferedImage, gamePanel.tileSize / 2, gamePanel.tileSize / 2, gamePanel.tileSize / 2, gamePanel.tileSize / 2, null);
 
@@ -103,7 +119,7 @@ public class UI
 
         if (message != null)
         {
-            graphics2D.setFont(graphics2D.getFont().deriveFont(30F));
+            graphics2D.setFont(maruMonica.deriveFont(30f));
             graphics2D.drawString(message, gamePanel.tileSize / 2, gamePanel.tileSize * 2);
 
             if (--messageCounter < 0)
@@ -122,7 +138,7 @@ public class UI
         graphics2D.setColor(edging);
         graphics2D.setStroke(new BasicStroke(10));
         graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
-        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 40));
+        graphics2D.setFont(maruMonica.deriveFont(Font.PLAIN, 40));
 
         for (String line : gamePanel.currentDialogue.getText().split("/n"))
         {
