@@ -1,14 +1,13 @@
 package entity;
 
 import main.CollisionChecker;
-import main.GamePanel;
 
 import java.awt.*;
 
 
-public class Rabbit extends Entity {
+public class Rabbit extends Entity
+{
     int animationsTimeout = 0;
-
 
     public Rabbit(Point defaultWorldPosition)
     {
@@ -50,14 +49,14 @@ public class Rabbit extends Entity {
     @Override
     public void loadImages()
     {
-        LoadAnimation(Direction.Left, "/assets/Rabbit/left1.png");
-        LoadAnimation(Direction.Left, "/assets/Rabbit/left2.png");
-        LoadAnimation(Direction.Left, "/assets/Rabbit/left3.png");
-        LoadAnimation(Direction.Left, "/assets/Rabbit/left4.png");
+        loadAnimation(Direction.Left, "/assets/Rabbit/left1.png");
+        loadAnimation(Direction.Left, "/assets/Rabbit/left2.png");
+        loadAnimation(Direction.Left, "/assets/Rabbit/left3.png");
+        loadAnimation(Direction.Left, "/assets/Rabbit/left4.png");
 
-        LoadAnimation(Direction.Right, "/assets/Rabbit/right1.png");
-        LoadAnimation(Direction.Right, "/assets/Rabbit/right2.png");
-        LoadAnimation(Direction.Right, "/assets/Rabbit/right3.png");
-        LoadAnimation(Direction.Right, "/assets/Rabbit/right4.png");
+        loadAnimation(Direction.Right, "/assets/Rabbit/right1.png");
+        loadAnimation(Direction.Right, "/assets/Rabbit/right2.png");
+        loadAnimation(Direction.Right, "/assets/Rabbit/right3.png");
+        loadAnimation(Direction.Right, "/assets/Rabbit/right4.png");
     }
 }

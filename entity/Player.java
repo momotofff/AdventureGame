@@ -1,12 +1,13 @@
 package entity;
 
 import assets.Strings.TextMessages;
-import main.*;
+import main.GamePanel;
+import main.KeyHandler;
+import main.MagicianDialogue;
+import main.Sound;
 import objects.*;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 public class Player extends Entity
 {
@@ -38,11 +39,9 @@ public class Player extends Entity
             pickUpObject(gamePanel.collisionChecker.checkObject(this), sound);
 
             Entity entity = gamePanel.collisionChecker.checkEntity(this);
-            Magician magician;
 
-            if (entity instanceof Magician)
+            if (entity instanceof Magician magician)
             {
-                magician = (Magician) entity;
                 System.out.println("Встретился с " + magician.name);
                 magician.rotateToPlayer(direction);
                 gamePanel.startDialogue(new MagicianDialogue(magician.dialogues));
@@ -97,24 +96,24 @@ public class Player extends Entity
     @Override
     public void loadImages()
     {
-        LoadAnimation(Direction.Up, "/assets/Player/up1.png");
-        LoadAnimation(Direction.Up, "/assets/Player/up2.png");
-        LoadAnimation(Direction.Up, "/assets/Player/up3.png");
-        LoadAnimation(Direction.Up, "/assets/Player/up4.png");
+        loadAnimation(Direction.Up, "/assets/Player/up1.png");
+        loadAnimation(Direction.Up, "/assets/Player/up2.png");
+        loadAnimation(Direction.Up, "/assets/Player/up3.png");
+        loadAnimation(Direction.Up, "/assets/Player/up4.png");
 
-        LoadAnimation(Direction.Left, "/assets/Player/left1.png");
-        LoadAnimation(Direction.Left, "/assets/Player/left2.png");
-        LoadAnimation(Direction.Left, "/assets/Player/left3.png");
-        LoadAnimation(Direction.Left, "/assets/Player/left4.png");
+        loadAnimation(Direction.Left, "/assets/Player/left1.png");
+        loadAnimation(Direction.Left, "/assets/Player/left2.png");
+        loadAnimation(Direction.Left, "/assets/Player/left3.png");
+        loadAnimation(Direction.Left, "/assets/Player/left4.png");
 
-        LoadAnimation(Direction.Down, "/assets/Player/down1.png");
-        LoadAnimation(Direction.Down, "/assets/Player/down2.png");
-        LoadAnimation(Direction.Down, "/assets/Player/down3.png");
-        LoadAnimation(Direction.Down, "/assets/Player/down4.png");
+        loadAnimation(Direction.Down, "/assets/Player/down1.png");
+        loadAnimation(Direction.Down, "/assets/Player/down2.png");
+        loadAnimation(Direction.Down, "/assets/Player/down3.png");
+        loadAnimation(Direction.Down, "/assets/Player/down4.png");
 
-        LoadAnimation(Direction.Right, "/assets/Player/right1.png");
-        LoadAnimation(Direction.Right, "/assets/Player/right2.png");
-        LoadAnimation(Direction.Right, "/assets/Player/right3.png");
-        LoadAnimation(Direction.Right, "/assets/Player/right4.png");
+        loadAnimation(Direction.Right, "/assets/Player/right1.png");
+        loadAnimation(Direction.Right, "/assets/Player/right2.png");
+        loadAnimation(Direction.Right, "/assets/Player/right3.png");
+        loadAnimation(Direction.Right, "/assets/Player/right4.png");
     }
 }

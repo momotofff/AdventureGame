@@ -84,7 +84,6 @@ public class GamePanel extends JPanel implements Runnable
     public void setupGame()
     {
         state = GameState.StartScreen;
-
     }
 
     public void startGameThread()

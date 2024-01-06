@@ -1,7 +1,6 @@
 package entity;
 
 import main.CollisionChecker;
-import main.GamePanel;
 import main.Sound;
 import main.Sounds;
 
@@ -16,8 +15,6 @@ import java.util.Objects;
 
 public abstract class Entity
 {
-
-    GamePanel gamePanel;
     public int movementSpeed;
     public int animationSpeed = 10;
     public Point worldPosition;
@@ -29,23 +26,21 @@ public abstract class Entity
     private int spriteCounter = 0;
     private int spriteNumber = 1;
 
-    private final Map<Direction, ArrayList<BufferedImage>> animations;
+    private final Map<Direction, ArrayList<BufferedImage>> animations = new HashMap<>();
 
     Entity(Point defaultWorldPosition)
     {
-        this.gamePanel = gamePanel;
         collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 24, 24, 24);
         worldPosition = defaultWorldPosition;
         screenCoordinates = defaultWorldPosition;
 
-        animations = new HashMap<>();
         for (Direction direction: Direction.values())
             animations.put(direction, new ArrayList<>());
 
         loadImages();
     }
 
-    protected void LoadAnimation(Direction direction, String path)
+    protected void loadAnimation(Direction direction, String path)
     {
         try
         {
@@ -58,7 +53,7 @@ public abstract class Entity
         }
     }
 
-    protected BufferedImage GetAnimationFrame(Direction direction, int index)
+    protected BufferedImage getAnimationFrame(Direction direction, int index)
     {
         ArrayList<BufferedImage> animation = animations.get(direction);
 
@@ -72,13 +67,10 @@ public abstract class Entity
 
     public void drawing(Graphics2D graphics2D, int tileSize)
     {
-        BufferedImage image = GetAnimationFrame(direction, spriteNumber);
+        BufferedImage image = getAnimationFrame(direction, spriteNumber);
         graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, tileSize, tileSize, null);
         graphics2D.drawRect(screenCoordinates.x + 24, screenCoordinates.y + 24, collisionArea.width, collisionArea.height);
     }
-
-    public void update()
-    {}
 
     protected void makeStep(boolean playSound, Sound sound)
     {
@@ -135,9 +127,6 @@ public abstract class Entity
     {
         spriteNumber = 0;
     }
-
-    public void speak()
-    {}
 
     public void update(Player player, CollisionChecker collisionChecker) {
     }

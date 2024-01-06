@@ -54,11 +54,11 @@ public class UI
 
         switch (state)
         {
-            case Running : drawInterphase(); break;
-            case Paused : drawPausedScreen(); break;
-            case Inventory : drawInventory(); break;
-            case Dialog : drawDialog(); break;
-            case StartScreen: drawStartScreen(); break;
+            case Running -> drawInterphase();
+            case Paused -> drawPausedScreen();
+            case Inventory -> drawInventory();
+            case Dialog -> drawDialog();
+            case StartScreen -> drawStartScreen();
         }
     }
 

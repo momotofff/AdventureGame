@@ -45,25 +45,25 @@ public class Magician extends Entity
     @Override
     public void loadImages()
     {
-        LoadAnimation(Direction.Up, "/assets/Magician/up1.png");
-        LoadAnimation(Direction.Up, "/assets/Magician/up2.png");
-        LoadAnimation(Direction.Up, "/assets/Magician/up3.png");
-        LoadAnimation(Direction.Up, "/assets/Magician/up4.png");
+        loadAnimation(Direction.Up, "/assets/Magician/up1.png");
+        loadAnimation(Direction.Up, "/assets/Magician/up2.png");
+        loadAnimation(Direction.Up, "/assets/Magician/up3.png");
+        loadAnimation(Direction.Up, "/assets/Magician/up4.png");
 
-        LoadAnimation(Direction.Left, "/assets/Magician/left1.png");
-        LoadAnimation(Direction.Left, "/assets/Magician/left2.png");
-        LoadAnimation(Direction.Left, "/assets/Magician/left3.png");
-        LoadAnimation(Direction.Left, "/assets/Magician/left4.png");
+        loadAnimation(Direction.Left, "/assets/Magician/left1.png");
+        loadAnimation(Direction.Left, "/assets/Magician/left2.png");
+        loadAnimation(Direction.Left, "/assets/Magician/left3.png");
+        loadAnimation(Direction.Left, "/assets/Magician/left4.png");
 
-        LoadAnimation(Direction.Down, "/assets/Magician/down1.png");
-        LoadAnimation(Direction.Down, "/assets/Magician/down2.png");
-        LoadAnimation(Direction.Down, "/assets/Magician/down3.png");
-        LoadAnimation(Direction.Down, "/assets/Magician/down4.png");
+        loadAnimation(Direction.Down, "/assets/Magician/down1.png");
+        loadAnimation(Direction.Down, "/assets/Magician/down2.png");
+        loadAnimation(Direction.Down, "/assets/Magician/down3.png");
+        loadAnimation(Direction.Down, "/assets/Magician/down4.png");
 
-        LoadAnimation(Direction.Right, "/assets/Magician/right1.png");
-        LoadAnimation(Direction.Right, "/assets/Magician/right2.png");
-        LoadAnimation(Direction.Right, "/assets/Magician/right3.png");
-        LoadAnimation(Direction.Right, "/assets/Magician/right4.png");
+        loadAnimation(Direction.Right, "/assets/Magician/right1.png");
+        loadAnimation(Direction.Right, "/assets/Magician/right2.png");
+        loadAnimation(Direction.Right, "/assets/Magician/right3.png");
+        loadAnimation(Direction.Right, "/assets/Magician/right4.png");
     }
 
     public void rotateToPlayer(Direction playerDirection)

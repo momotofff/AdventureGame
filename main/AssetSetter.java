@@ -15,7 +15,7 @@ import java.util.HashSet;
 
 public class AssetSetter
 {
-    int tileSize;
+    private final int tileSize;
 
     public AssetSetter(int tileSize)
     {
@@ -24,7 +24,13 @@ public class AssetSetter
 
     public void initObjects(ArrayList<Point> freePlaces, HashSet<BaseObject> items)
     {
-        setObjects(items);
+        items.add(new Key(new Point(19 * tileSize, 14 * tileSize)));
+        items.add(new Key(new Point(39 * tileSize, 16 * tileSize)));
+        items.add(new Key(new Point(15 * tileSize, 13 * tileSize)));
+        items.add(new Key(new Point(29 * tileSize, 20 * tileSize)));
+        items.add(new Box(new Point(15 * tileSize, 25 * tileSize)));
+        items.add(new Box(new Point(50 * tileSize, 32 * tileSize)));
+        items.add(new Boots(new Point(19 * tileSize, 19 * tileSize)));
     }
 
     public void initEntity(ArrayList<Point> freePlaces, ArrayList<Magician> NPC, ArrayList<Entity> animals)
@@ -39,7 +45,7 @@ public class AssetSetter
 
         Magician magician2 = new Magician(new Point(15 * tileSize, 20 * tileSize));
         magician2.dialogues.add("Салам братуха борцуха. ");
-        magician2.dialogues.add("Ты уже отработал бархатные тяги?.");
+        magician2.dialogues.add("Ты уже отработал бархатные тяги?");
         magician2.dialogues.add("Я в благородство играть не стану, /nчерез два моста найдешь приору посаженую.");
         magician2.dialogues.add("Вот тебе макасы, в них с толкача удобней заводить.");
         magician2.name = "Mag борэц";
@@ -47,17 +53,6 @@ public class AssetSetter
 
         for (int i = 0; i < 20; ++i)
             animals.add(createEntity(Rabbit.class, freePlaces));
-    }
-
-    private void setObjects(HashSet<BaseObject> items)
-    {
-        items.add(new Key(new Point(19 * tileSize, 14 * tileSize)));
-        items.add(new Key(new Point(39 * tileSize, 16 * tileSize)));
-        items.add(new Key(new Point(15 * tileSize, 13 * tileSize)));
-        items.add(new Key(new Point(29 * tileSize, 20 * tileSize)));
-        items.add(new Box(new Point(15 * tileSize, 25 * tileSize)));
-        items.add(new Box(new Point(50 * tileSize, 32 * tileSize)));
-        items.add(new Boots(new Point(19 * tileSize, 19 * tileSize)));
     }
 
     private Entity createEntity(Class<? extends Entity> cls, ArrayList<Point> freePlaces)
