@@ -21,10 +21,9 @@ public class AbstractDialogue
         return phrases.get(currentPhrase);
     }
 
-    public void onKeyPressed(int key)
+    public void onKeyPressed()
     {
-        if (key == KeyEvent.VK_SPACE)
-            ++currentPhrase;
+        ++currentPhrase;
     }
 
     public boolean isFinished()
