@@ -14,18 +14,18 @@ import java.util.HashSet;
 
 public class GamePanel extends JPanel implements Runnable
 {
-    final int originalTileSize = 32;
-    final public int scale = 2;
+    static final int originalTileSize = 32;
+    static final public int scale = 2;
 
-    public final int tileSize = originalTileSize * scale;
-    final public Point maxBlocksScreen = new Point(25, 14);
-    public final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
+    public static final int tileSize = originalTileSize * scale;
+    static final public Point maxBlocksScreen = new Point(25, 14);
+    private static final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
 
     final int FPS = 60;
 
     TileManager tileManager;
     public KeyHandler keyHandler = new KeyHandler();
-    public Sound sound = new Sound();
+    public static Sound sound = new Sound();
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public AssetSetter assetSetter;
     public UI ui = new UI(this);
@@ -36,8 +36,9 @@ public class GamePanel extends JPanel implements Runnable
     final ArrayList<Magician> NPC = new ArrayList<>();
     final ArrayList<Entity> animals = new ArrayList<>();
 
-    public GameState state;
-    public AbstractDialogue currentDialogue;
+    public static GameState state;
+    public static AbstractDialogue currentDialogue;
+
 
     public GamePanel()
     {
@@ -53,32 +54,6 @@ public class GamePanel extends JPanel implements Runnable
         assetSetter.initEntity(tileManager.getFreePlaces(), NPC, animals);
 
         player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
-
-        keyHandler.addListener(KeyEvent.VK_E, () -> {
-            switch (state)
-            {
-                case Running -> state = GameState.Inventory;
-                case Inventory -> state = GameState.Running;
-            }
-        });
-
-        keyHandler.addListener(KeyEvent.VK_SPACE, () -> {
-            switch (state)
-            {
-                case StartScreen: state = GameState.Running;
-                                  sound.play(Sounds.Theme);
-                                  sound.loop();
-                    break;
-                case Inventory : state = GameState.Running; break;
-                case Dialog :
-                    currentDialogue.onKeyPressed(KeyEvent.VK_SPACE);
-                    if (currentDialogue.isFinished())
-                        state = GameState.Running;
-                    break;
-                case Paused : state = GameState.Running; break;
-                case Running : state = GameState.Paused; break;
-            }
-        });
     }
 
     public void setupGame()
@@ -177,4 +152,16 @@ public class GamePanel extends JPanel implements Runnable
         currentDialogue = dialogue;
         state = GameState.Dialog;
     }
+
+    public static GameState getState()
+    {
+        return state;
+    }
+
+    public static Point getScreenSize()
+    {
+        return screenSize;
+    }
+
+
 }

@@ -16,7 +16,6 @@ public class Player extends Entity
     public int keysCount = 0;
     int boostCoolDown;
     TextMessages textMessages = new TextMessages();
-    BaseObject[][] inventory = new BaseObject[5][5];
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler, Point defaultWorldPosition)
     {
@@ -24,7 +23,7 @@ public class Player extends Entity
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
 
-        screenCoordinates = new Point(gamePanel.screenSize.x / 2 - gamePanel.tileSize / 2, gamePanel.screenSize.y / 2 - gamePanel.tileSize / 2);
+        screenCoordinates = new Point(GamePanel.getScreenSize().x / 2 - gamePanel.tileSize / 2, GamePanel.getScreenSize().y / 2 - gamePanel.tileSize / 2);
 
         movementSpeed = 2;
         direction = Direction.Down;

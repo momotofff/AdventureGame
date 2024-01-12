@@ -1,7 +1,6 @@
 package tile;
 
 import entity.Player;
-import main.GamePanel;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.NoSuchElementException;
 
 public class TileManager
