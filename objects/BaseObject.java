@@ -2,6 +2,7 @@ package objects;
 
 import entity.Player;
 import main.GamePanel;
+import main.Parameters;
 import main.Sounds;
 
 import javax.imageio.ImageIO;
@@ -18,10 +19,10 @@ public abstract class BaseObject
     public Rectangle areaCollision;
     public Sounds soundEffect = Sounds.None;
 
-    public BaseObject(String tile, Sounds audio, Point worldPosition)
+    public BaseObject(String tile, Sounds audio, Point mapPosition)
     {
         this(tile, audio);
-        this.worldPosition = worldPosition;
+        this.worldPosition = new Point(mapPosition.x  * Parameters.tileSize, mapPosition.y * Parameters.tileSize);
         this.screenCoordinates = worldPosition;
 
         areaCollision = new Rectangle(worldPosition.x + 8, worldPosition.y + 8, 48, 48);
@@ -52,6 +53,6 @@ public abstract class BaseObject
 
     public void drawing(Graphics2D graphics2D, int tileSize)
     {
-        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, tileSize, tileSize, null);
+        graphics2D.drawImage(image, screenCoordinates.x, screenCoordinates.y, Parameters.tileSize, tileSize, null);
     }
 }

@@ -1,5 +1,7 @@
 package tile;
 
+import main.Parameters;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,7 +13,7 @@ public class Tile
     public BufferedImage image;
     public boolean collision;
 
-    public Tile(String path, boolean collision, int scaledSize)
+    public Tile(String path, boolean collision)
     {
         try
         {
@@ -24,9 +26,9 @@ public class Tile
             throw new RuntimeException(e);
         }
 
-        BufferedImage scaledImage = new BufferedImage(scaledSize, scaledSize, image.getType());
+        BufferedImage scaledImage = new BufferedImage(Parameters.tileSize, Parameters.tileSize, image.getType());
         Graphics2D graphics2D = scaledImage.createGraphics();
-        graphics2D.drawImage(image, 0, 0, scaledSize, scaledSize, null);
+        graphics2D.drawImage(image, 0, 0, Parameters.tileSize, Parameters.tileSize, null);
         image = scaledImage;
 
         this.collision = collision;

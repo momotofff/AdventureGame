@@ -15,27 +15,20 @@ import java.util.HashSet;
 
 public class AssetSetter
 {
-    private final int tileSize;
-
-    public AssetSetter(int tileSize)
-    {
-        this.tileSize = tileSize;
-    }
-
     public void initObjects(ArrayList<Point> freePlaces, HashSet<BaseObject> items)
     {
-        items.add(new Key(new Point(19 * tileSize, 14 * tileSize)));
-        items.add(new Key(new Point(39 * tileSize, 16 * tileSize)));
-        items.add(new Key(new Point(15 * tileSize, 13 * tileSize)));
-        items.add(new Key(new Point(29 * tileSize, 20 * tileSize)));
-        items.add(new Box(new Point(15 * tileSize, 25 * tileSize)));
-        items.add(new Box(new Point(50 * tileSize, 32 * tileSize)));
-        items.add(new Boots(new Point(19 * tileSize, 19 * tileSize)));
+        items.add(new Key(new Point(19, 14)));
+        items.add(new Key(new Point(39, 16)));
+        items.add(new Key(new Point(15, 13)));
+        items.add(new Key(new Point(29, 20)));
+        items.add(new Box(new Point(15, 25)));
+        items.add(new Box(new Point(50, 32)));
+        items.add(new Boots(new Point(19, 19)));
     }
 
     public void initEntity(ArrayList<Point> freePlaces, ArrayList<Magician> NPC, ArrayList<Entity> animals)
     {
-        Magician magician1 = new Magician(new Point(15 * tileSize, 15 * tileSize));
+        Magician magician1 = new Magician(new Point(15 * Parameters.tileSize, 15 * Parameters.tileSize));
         magician1.dialogues.add("Привет путешественник. ");
         magician1.dialogues.add("Могу помочь тебе с поиском сокровищ.");
         magician1.dialogues.add("Заранее хочу тебя предупредить что тебя могут ждать /nтрудности.");
@@ -43,7 +36,7 @@ public class AssetSetter
         magician1.name = "Mag";
         NPC.add(magician1);
 
-        Magician magician2 = new Magician(new Point(15 * tileSize, 20 * tileSize));
+        Magician magician2 = new Magician(new Point(15 * Parameters.tileSize, 20 * Parameters.tileSize));
         magician2.dialogues.add("Салам братуха борцуха. ");
         magician2.dialogues.add("Ты уже отработал бархатные тяги?");
         magician2.dialogues.add("Я в благородство играть не стану, /nчерез два моста найдешь приору посаженую.");
@@ -58,8 +51,8 @@ public class AssetSetter
     private Entity createEntity(Class<? extends Entity> cls, ArrayList<Point> freePlaces)
     {
         Point position = new Point(freePlaces.get((int) (Math.random() * freePlaces.size())));
-        position.x *= tileSize;
-        position.y *= tileSize;
+        position.x *= Parameters.tileSize;
+        position.y *= Parameters.tileSize;
 
         try
         {

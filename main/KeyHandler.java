@@ -15,12 +15,6 @@ public class KeyHandler implements KeyListener
     private boolean leftPressed;
     private boolean rightPressed;
 
-
-    public void addListener(Integer key, Runnable listener)
-    {
-        listeners.put(key, listener);
-    }
-
     @Override
     public void keyTyped(KeyEvent e) {}
 
