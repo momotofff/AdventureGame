@@ -79,14 +79,14 @@ public class UI
     private void drawStartScreen()
     {
         graphics2D.setColor(filling);
-        graphics2D.fillRect(0, 0, GamePanel.getScreenSize().x, GamePanel.getScreenSize().y);
+        graphics2D.fillRect(0, 0, Parameters.screenSize.x, Parameters.screenSize.y);
 
 
         graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 150f));
         String nameGame = "Adventure game";
         int length = (int) graphics2D.getFontMetrics().getStringBounds(nameGame, graphics2D).getWidth();
-        int x = GamePanel.getScreenSize().x / 2 - length / 2;
-        int y = GamePanel.getScreenSize().y / 4;
+        int x = Parameters.screenSize.x / 2 - length / 2;
+        int y = Parameters.screenSize.y / 4;
 
         graphics2D.setColor(Color.black);
         graphics2D.drawString(nameGame, x, y);
@@ -96,27 +96,27 @@ public class UI
 
         graphics2D.setColor(edging);
         graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("New Game", x, y + GamePanel.tileSize * 2);
+        graphics2D.drawString("New Game", x, y + Parameters.tileSize * 2);
 
         graphics2D.setColor(edging);
         graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Load Game", x, y + GamePanel.tileSize * 3);
+        graphics2D.drawString("Load Game", x, y + Parameters.tileSize * 3);
 
         graphics2D.setColor(edging);
         graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Exit", x, y + GamePanel.tileSize * 4);
+        graphics2D.drawString("Exit", x, y + Parameters.tileSize * 4);
 
         switch (commandMenu)
         {
-            case Start :graphics2D.drawString(">", x - GamePanel.tileSize, y + GamePanel.tileSize * 2); break;
-            case Load : graphics2D.drawString(">", x - GamePanel.tileSize, y + GamePanel.tileSize * 3);break;
-            case Exit : graphics2D.drawString(">", x - GamePanel.tileSize, y + GamePanel.tileSize * 4);break;
+            case Start :graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2); break;
+            case Load : graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);break;
+            case Exit : graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);break;
         }
     }
 
     public void drawPausedScreen()
     {
-        Rectangle window = new Rectangle(GamePanel.tileSize * 6, GamePanel.tileSize * 4, GamePanel.getScreenSize().x - (GamePanel.tileSize * 12), GamePanel.tileSize * 9);
+        Rectangle window = new Rectangle(Parameters.tileSize * 6, Parameters.tileSize * 4, Parameters.screenSize.x - (Parameters.tileSize * 12), Parameters.tileSize * 9);
         graphics2D.setColor(filling);
         graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
         graphics2D.setColor(edging);
@@ -128,33 +128,33 @@ public class UI
 
         String paused = "PAUSED";
         int length = (int) graphics2D.getFontMetrics().getStringBounds(paused, graphics2D).getWidth();
-        int x = GamePanel.getScreenSize().x / 2 - length / 2;
-        int y = GamePanel.getScreenSize().y / 2 - 30;
+        int x = Parameters.screenSize.x / 2 - length / 2;
+        int y = Parameters.screenSize.y / 2 - 30;
         
         graphics2D.drawString(paused, x, y);
 
         graphics2D.setColor(edging);
         graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Continue", x, y + GamePanel.tileSize * 2);
+        graphics2D.drawString("Continue", x, y + Parameters.tileSize * 2);
 
         graphics2D.setColor(edging);
         graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Load", x, y + GamePanel.tileSize * 3);
+        graphics2D.drawString("Load", x, y + Parameters.tileSize * 3);
 
         graphics2D.setColor(edging);
         graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Save", x, y + GamePanel.tileSize * 4);
+        graphics2D.drawString("Save", x, y + Parameters.tileSize * 4);
 
         graphics2D.setColor(edging);
         graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Exit", x, y + GamePanel.tileSize * 5);
+        graphics2D.drawString("Exit", x, y + Parameters.tileSize * 5);
 
         switch (commandPause)
         {
-            case Continue :graphics2D.drawString(">", x - GamePanel.tileSize, y + GamePanel.tileSize * 2); break;
-            case Load : graphics2D.drawString(">", x - GamePanel.tileSize, y + GamePanel.tileSize * 3);break;
-            case Save : graphics2D.drawString(">", x - GamePanel.tileSize, y + GamePanel.tileSize * 4);break;
-            case Exit : graphics2D.drawString(">", x - GamePanel.tileSize, y + GamePanel.tileSize * 5);break;
+            case Continue :graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2); break;
+            case Load : graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);break;
+            case Save : graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);break;
+            case Exit : graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 5);break;
         }
     }
 
@@ -162,12 +162,12 @@ public class UI
     {
         graphics2D.setFont(maruMonica.deriveFont(30F));
         graphics2D.setColor(new Color(230,200,170));
-        graphics2D.drawImage(bufferedImage, GamePanel.tileSize / 2, GamePanel.tileSize / 2, GamePanel.tileSize / 2, GamePanel.tileSize / 2, null);
+        graphics2D.drawImage(bufferedImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
         graphics2D.drawString(" x " + gamePanel.player.keysCount, 60, 60);
 
         if (message != null)
         {
-            graphics2D.drawString(message, GamePanel.tileSize / 2, GamePanel.tileSize * 2);
+            graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
 
             if (--messageCounter < 0)
             {
@@ -179,7 +179,7 @@ public class UI
 
     public void drawInventory()
     {
-        Rectangle window = new Rectangle(GamePanel.tileSize * 3, GamePanel.tileSize, GamePanel.getScreenSize().x - (GamePanel.tileSize * 6), GamePanel.tileSize * 4);
+        Rectangle window = new Rectangle(Parameters.tileSize * 3, Parameters.tileSize, Parameters.screenSize.x - (Parameters.tileSize * 6), Parameters.tileSize * 4);
         graphics2D.setColor(filling);
         graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
         graphics2D.setColor(edging);
@@ -188,14 +188,14 @@ public class UI
 
         graphics2D.setFont(maruMonica.deriveFont(30f));
         graphics2D.setColor(edging);
-        graphics2D.drawImage(bufferedImage, GamePanel.tileSize / 2, GamePanel.tileSize / 2, GamePanel.tileSize / 2, GamePanel.tileSize / 2, null);
+        graphics2D.drawImage(bufferedImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
 
         graphics2D.drawString("Тут будет отображаться инвентарь", 210, 100);
 
         if (message != null)
         {
             graphics2D.setFont(maruMonica.deriveFont(30f));
-            graphics2D.drawString(message, GamePanel.tileSize / 2, GamePanel.tileSize * 2);
+            graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
 
             if (--messageCounter < 0)
             {
@@ -207,7 +207,7 @@ public class UI
 
     private void drawDialog()
     {
-        Rectangle window = new Rectangle(GamePanel.tileSize * 3, GamePanel.tileSize, GamePanel.getScreenSize().x - (GamePanel.tileSize * 6), GamePanel.tileSize * 4);
+        Rectangle window = new Rectangle(Parameters.tileSize * 3, Parameters.tileSize, Parameters.screenSize.x - (Parameters.tileSize * 6), Parameters.tileSize * 4);
         graphics2D.setColor(filling);
         graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
         graphics2D.setColor(edging);
@@ -217,8 +217,8 @@ public class UI
 
         for (String line : gamePanel.currentDialogue.getText().split("/n"))
         {
-            graphics2D.drawString(line, window.x + GamePanel.tileSize, window.y + GamePanel.tileSize);
-            window.y += GamePanel.tileSize;
+            graphics2D.drawString(line, window.x + Parameters.tileSize, window.y + Parameters.tileSize);
+            window.y += Parameters.tileSize;
         }
     }
 }

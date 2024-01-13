@@ -8,19 +8,11 @@ import tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class GamePanel extends JPanel implements Runnable
 {
-    static final int originalTileSize = 32;
-    static final public int scale = 2;
-
-    public static final int tileSize = originalTileSize * scale;
-    static final public Point maxBlocksScreen = new Point(25, 14);
-    private static final Point screenSize = new Point(maxBlocksScreen.x * tileSize, maxBlocksScreen.y * tileSize);
-
     final int FPS = 60;
 
     TileManager tileManager;
@@ -42,18 +34,18 @@ public class GamePanel extends JPanel implements Runnable
 
     public GamePanel()
     {
-        this.setPreferredSize(new Dimension(screenSize.x, screenSize.y));
+        this.setPreferredSize(new Dimension(Parameters.screenSize.x, Parameters.screenSize.y));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
 
-        tileManager = new TileManager(tileSize);
-        assetSetter = new AssetSetter(tileSize);
+        tileManager = new TileManager();
+        assetSetter = new AssetSetter();
         assetSetter.initObjects(tileManager.getFreePlaces(), items);
         assetSetter.initEntity(tileManager.getFreePlaces(), NPC, animals);
 
-        player = new Player(this, keyHandler, tileManager.defaultWorldPosition);
+        player = new Player(this, keyHandler, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize));
     }
 
     public void setupGame()
@@ -125,16 +117,16 @@ public class GamePanel extends JPanel implements Runnable
             for (BaseObject item: items)
             {
                 if (item != null)
-                    item.drawing(graphics2D, tileSize);
+                    item.drawing(graphics2D, Parameters.tileSize);
             }
 
             for (Entity entity : NPC)
-                entity.drawing(graphics2D, tileSize);
+                entity.drawing(graphics2D, Parameters.tileSize);
 
             for (Entity entity : animals)
-                entity.drawing(graphics2D, tileSize);
+                entity.drawing(graphics2D, Parameters.tileSize);
 
-            player.drawing(graphics2D, tileSize);
+            player.drawing(graphics2D, Parameters.tileSize);
 
             ui.draw(graphics2D, state);
 
@@ -157,11 +149,4 @@ public class GamePanel extends JPanel implements Runnable
     {
         return state;
     }
-
-    public static Point getScreenSize()
-    {
-        return screenSize;
-    }
-
-
 }

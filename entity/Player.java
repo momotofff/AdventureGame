@@ -1,10 +1,7 @@
 package entity;
 
 import assets.Strings.TextMessages;
-import main.GamePanel;
-import main.KeyHandler;
-import main.MagicianDialogue;
-import main.Sound;
+import main.*;
 import objects.*;
 
 import java.awt.*;
@@ -23,7 +20,7 @@ public class Player extends Entity
         this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
 
-        screenCoordinates = new Point(GamePanel.getScreenSize().x / 2 - gamePanel.tileSize / 2, GamePanel.getScreenSize().y / 2 - gamePanel.tileSize / 2);
+        screenCoordinates = new Point(Parameters.screenSize.x / 2 - Parameters.tileSize / 2, Parameters.screenSize.y / 2 - Parameters.tileSize / 2);
 
         movementSpeed = 2;
         direction = Direction.Down;

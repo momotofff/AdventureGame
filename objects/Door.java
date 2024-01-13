@@ -1,13 +1,11 @@
 package objects;
 
-import main.GamePanel;
-
 import java.awt.*;
 
 public class Door extends BaseObject
 {
-    public Door(Point worldPosition)
+    public Door(Point mapPosition)
     {
-        super("/assets/gameElements/door.png", null, worldPosition);
+        super("/assets/gameElements/door.png", null, mapPosition);
     }
 }
