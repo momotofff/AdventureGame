@@ -1,5 +1,8 @@
 package main;
 
+import main.screens.AbstractScreen;
+import main.screens.IScreenSwitcher;
+import main.screens.StartMenu;
 import objects.Key;
 
 import java.awt.*;
@@ -7,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class UI
+public class UI implements IScreenSwitcher
 {
     GamePanel gamePanel;
     Graphics2D graphics2D;
@@ -21,8 +24,32 @@ public class UI
     Color edging = new Color(100, 60, 20);
     Color filling = new Color(150, 120, 50, 220);
 
+    private AbstractScreen currentScreen;
+
     public static CommandsMenu commandMenu;
     public static CommandsPause commandPause;
+
+    @Override
+    public void switchScreen(GameState newState)
+    {
+        GamePanel.state = newState;
+
+        if (newState == GameState.Running)
+        {
+            GamePanel.sound.play(Sounds.Theme);
+            GamePanel.sound.loop();
+        }
+
+        if (currentScreen != null)
+            currentScreen.deactivate();
+
+        switch (newState)
+        {
+            case StartScreen -> currentScreen = new StartMenu(this, gamePanel.keyHandler);
+        }
+
+        currentScreen.activate();
+    }
 
     public enum CommandsMenu {
         Start, Load, Exit
@@ -66,52 +93,27 @@ public class UI
     {
         this.graphics2D = graphics2D;
 
+        if (state == GameState.Running)
+        {
+            // TODO: Should be removed after refactor
+            drawInterphase();
+            return;
+        }
+
+        if (currentScreen == null)
+            switchScreen(GameState.StartScreen);
+
+        currentScreen.draw(graphics2D, maruMonica);
+
+        /*
         switch (state)
         {
             case Running -> drawInterphase();
             case Paused -> drawPausedScreen();
             case Inventory -> drawInventory();
             case Dialog -> drawDialog();
-            case StartScreen -> drawStartScreen();
         }
-    }
-
-    private void drawStartScreen()
-    {
-        graphics2D.setColor(filling);
-        graphics2D.fillRect(0, 0, Parameters.screenSize.x, Parameters.screenSize.y);
-
-
-        graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 150f));
-        String nameGame = "Adventure game";
-        int length = (int) graphics2D.getFontMetrics().getStringBounds(nameGame, graphics2D).getWidth();
-        int x = Parameters.screenSize.x / 2 - length / 2;
-        int y = Parameters.screenSize.y / 4;
-
-        graphics2D.setColor(Color.black);
-        graphics2D.drawString(nameGame, x, y);
-
-        graphics2D.setColor(edging);
-        graphics2D.drawString(nameGame, x, y);
-
-        graphics2D.setColor(edging);
-        graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("New Game", x, y + Parameters.tileSize * 2);
-
-        graphics2D.setColor(edging);
-        graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Load Game", x, y + Parameters.tileSize * 3);
-
-        graphics2D.setColor(edging);
-        graphics2D.setFont(maruMonica.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Exit", x, y + Parameters.tileSize * 4);
-
-        switch (commandMenu)
-        {
-            case Start :graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2); break;
-            case Load : graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);break;
-            case Exit : graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);break;
-        }
+        */
     }
 
     public void drawPausedScreen()

@@ -15,6 +15,16 @@ public class KeyHandler implements KeyListener
     private boolean leftPressed;
     private boolean rightPressed;
 
+    public void addListener(Integer key, Runnable listener)
+    {
+        listeners.put(key, listener);
+    }
+
+    public void removeListener(Integer key)
+    {
+        listeners.remove(key);
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {}
 
@@ -24,7 +34,7 @@ public class KeyHandler implements KeyListener
         Runnable listener = listeners.get(e.getKeyCode());
         if (listener != null)
             listener.run();
-
+/*
         if (GamePanel.getState() == GameState.StartScreen)
         {
             switch (e.getKeyCode()) {
@@ -134,7 +144,7 @@ public class KeyHandler implements KeyListener
                     GamePanel.state = GameState.Running;
             }
         }
-
+*/
         switch (e.getKeyCode())
         {
             case KeyEvent.VK_W : upPressed = true; break;

@@ -31,7 +31,6 @@ public class GamePanel extends JPanel implements Runnable
     public static GameState state;
     public static AbstractDialogue currentDialogue;
 
-
     public GamePanel()
     {
         this.setPreferredSize(new Dimension(Parameters.screenSize.x, Parameters.screenSize.y));
@@ -148,5 +147,16 @@ public class GamePanel extends JPanel implements Runnable
     public static GameState getState()
     {
         return state;
+    }
+
+    public static void setState(GameState newState)
+    {
+        state = newState;
+
+        if (state == GameState.Running)
+        {
+            GamePanel.sound.play(Sounds.Theme);
+            GamePanel.sound.loop();
+        }
     }
 }
