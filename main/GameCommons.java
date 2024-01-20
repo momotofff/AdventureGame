@@ -16,7 +16,6 @@ public class GameCommons
     final public CollisionChecker collisionChecker = new CollisionChecker(this);
     final public Sound sound = new Sound();
 
-    public GameState state = GameState.StartScreen;
     final public Player player;
     final public HashSet<BaseObject> items = new HashSet<>();
     final public ArrayList<Magician> NPC = new ArrayList<>();

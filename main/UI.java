@@ -26,16 +26,17 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
     private Thread gameThread;
     private final KeyHandler keyHandler = new KeyHandler();
     private final GameCommons gameCommons;
+    private GameState gameState = GameState.StartScreen;
 
     @Override
     public void switchScreen(GameState newState)
     {
-        AbstractScreen old = screens.get(gameCommons.state);
+        AbstractScreen old = screens.get(gameState);
         if (old != null)
             old.deactivate();
 
-        gameCommons.state = newState;
-        screens.get(gameCommons.state).activate();
+        gameState = newState;
+        screens.get(gameState).activate();
     }
 
     public UI()
@@ -130,7 +131,7 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
     {
         super.paintComponent(graphics);
 
-        AbstractScreen screen = screens.get(gameCommons.state);
+        AbstractScreen screen = screens.get(gameState);
         if (screen == null)
             return;
 

@@ -1,7 +1,6 @@
 package objects;
 
 import entity.Player;
-import main.GamePanel;
 import main.Parameters;
 import main.Sounds;
 
