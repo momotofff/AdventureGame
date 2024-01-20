@@ -8,16 +8,17 @@ import java.awt.*;
 
 public class Player extends Entity
 {
-    GamePanel gamePanel;
-    public KeyHandler keyHandler;
+    final private GameCommons gameCommons;
+    final private KeyHandler keyHandler;
+
     public int keysCount = 0;
     int boostCoolDown;
     TextMessages textMessages = new TextMessages();
 
-    public Player(GamePanel gamePanel, KeyHandler keyHandler, Point defaultWorldPosition)
+    public Player(GameCommons gameCommons, KeyHandler keyHandler, Point defaultWorldPosition)
     {
         super(defaultWorldPosition);
-        this.gamePanel = gamePanel;
+        this.gameCommons = gameCommons;
         this.keyHandler = keyHandler;
 
         screenCoordinates = new Point(Parameters.screenSize.x / 2 - Parameters.tileSize / 2, Parameters.screenSize.y / 2 - Parameters.tileSize / 2);
@@ -32,20 +33,20 @@ public class Player extends Entity
         {
             this.direction = value;
 
-            pickUpObject(gamePanel.collisionChecker.checkObject(this), sound);
+            pickUpObject(gameCommons.collisionChecker.checkObject(this), sound);
 
-            Entity entity = gamePanel.collisionChecker.checkEntity(this);
+            Entity entity = gameCommons.collisionChecker.checkEntity(this);
 
             if (entity instanceof Magician magician)
             {
                 System.out.println("Встретился с " + magician.name);
                 magician.rotateToPlayer(direction);
-                gamePanel.startDialogue(new MagicianDialogue(magician.dialogues));
+                //gameCommons.startDialogue(new MagicianDialogue(magician.dialogues));
             }
 
             if (entity == null)
             {
-                if (!gamePanel.collisionChecker.checkTile(this))
+                if (!gameCommons.collisionChecker.checkTile(this))
                     makeStep(true, sound);
             }
         });
@@ -70,7 +71,7 @@ public class Player extends Entity
         if (item instanceof Key)
         {
             ++keysCount;
-            gamePanel.ui.showMessage(textMessages.getKeyMessage());
+            //gamePanel.ui.showMessage(textMessages.getKeyMessage());
         }
         else if (item instanceof Box)
         {
@@ -83,10 +84,10 @@ public class Player extends Entity
             movementSpeed += 2;
             animationSpeed /= 2;
             boostCoolDown = 1000;
-            gamePanel.ui.showMessage("Ля какие шикарные бархатные тяги");
+            //gamePanel.ui.showMessage("Ля какие шикарные бархатные тяги");
         }
 
-        gamePanel.items.remove(item);
+        gameCommons.items.remove(item);
     }
 
     @Override

@@ -16,17 +16,18 @@ public class GameCommons
     final public CollisionChecker collisionChecker = new CollisionChecker(this);
     final public Sound sound = new Sound();
 
+    public GameState state = GameState.StartScreen;
     final public Player player;
     final public HashSet<BaseObject> items = new HashSet<>();
     final public ArrayList<Magician> NPC = new ArrayList<>();
     final public ArrayList<Entity> animals = new ArrayList<>();
 
-    public GameCommons(GamePanel gamePanel, KeyHandler keyHandler)
+    public GameCommons(KeyHandler keyHandler)
     {
         AssetSetter assetSetter = new AssetSetter();
         assetSetter.initObjects(tileManager.getFreePlaces(), items);
         assetSetter.initEntity(tileManager.getFreePlaces(), NPC, animals);
 
-        player = new Player(gamePanel, keyHandler, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize));
+        player = new Player(this, keyHandler, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize));
     }
 }

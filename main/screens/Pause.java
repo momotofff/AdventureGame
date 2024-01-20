@@ -1,6 +1,5 @@
 package main.screens;
 
-import main.GamePanel;
 import main.GameState;
 import main.KeyHandler;
 import main.Parameters;
@@ -8,9 +7,9 @@ import main.Parameters;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class Pause extends AbstractScreen implements IScreenSwitcher
+public class Pause extends AbstractScreen
 {
-    private enum PauseItems
+    private enum Items
     {
         Continue,
         Load,
@@ -18,7 +17,7 @@ public class Pause extends AbstractScreen implements IScreenSwitcher
         Exit
     }
 
-    private PauseItems pausePosition = PauseItems.Continue;
+    private Items menuPosition = Items.Continue;
     private final KeyHandler keyHandler;
 
     public Pause(IScreenSwitcher switcher, KeyHandler keyHandler)
@@ -63,57 +62,64 @@ public class Pause extends AbstractScreen implements IScreenSwitcher
         graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
         graphics2D.drawString("Exit", x, y + Parameters.tileSize * 5);
 
-        switch (pausePosition)
+        switch (menuPosition)
         {
-            case Continue :graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2); break;
-            case Load : graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);break;
-            case Save : graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);break;
-            case Exit : graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 5);break;
+            case Continue: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2); break;
+            case Load: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);break;
+            case Save: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);break;
+            case Exit: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 5);break;
         }
     }
 
     @Override
     public void activate()
     {
-        pausePosition = PauseItems.Continue;
+        menuPosition = Items.Continue;
 
-        keyHandler.addListener(KeyEvent.VK_W, () -> {
-            switch (pausePosition)
-            {
-                case Continue -> pausePosition = PauseItems.Exit;
-                case Load -> pausePosition = PauseItems.Continue;
-                case Save -> pausePosition = PauseItems.Load;
-                case Exit -> pausePosition = PauseItems.Save;
-            }
-        });
+        keyHandler.addListener(KeyEvent.VK_W, this::onKeyW);
+        keyHandler.addListener(KeyEvent.VK_S, this::onKeyS);
+        keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+    }
 
-        keyHandler.addListener(KeyEvent.VK_S, () -> {
-            switch (pausePosition)
-            {
-                case Continue -> pausePosition = PauseItems.Load;
-                case Load -> pausePosition = PauseItems.Save;
-                case Save -> pausePosition = PauseItems.Exit;
-                case Exit -> pausePosition = PauseItems.Continue;
-            }
-        });
+    private void onKeyW()
+    {
+        switch (menuPosition)
+        {
+            case Continue -> menuPosition = Items.Exit;
+            case Load -> menuPosition = Items.Continue;
+            case Save -> menuPosition = Items.Load;
+            case Exit -> menuPosition = Items.Save;
+        }
+    }
 
-        keyHandler.addListener(KeyEvent.VK_SPACE, () -> {
-            switch (pausePosition)
-            {
-                case Continue:
-                    switcher.switchScreen(GameState.Running);
-                    break;
-                case Load:
-                    pausePosition = PauseItems.Exit;
-                    break;
-                case Save:
-                    pausePosition = PauseItems.Exit;
-                    break;
-                case Exit:
-                    switcher.switchScreen(GameState.StartScreen);
-                    break;
-            }
-        });
+    private void onKeyS()
+    {
+        switch (menuPosition)
+        {
+            case Continue -> menuPosition = Items.Load;
+            case Load -> menuPosition = Items.Save;
+            case Save -> menuPosition = Items.Exit;
+            case Exit -> menuPosition = Items.Continue;
+        }
+    }
+
+    private void onKeySpace()
+    {
+        switch (menuPosition)
+        {
+            case Continue:
+                switcher.switchScreen(GameState.Running);
+                break;
+            case Load:
+                menuPosition = Items.Exit;
+                break;
+            case Save:
+                menuPosition = Items.Exit;
+                break;
+            case Exit:
+                switcher.switchScreen(GameState.StartScreen);
+                break;
+        }
     }
 
     @Override
@@ -122,11 +128,5 @@ public class Pause extends AbstractScreen implements IScreenSwitcher
         keyHandler.removeListener(KeyEvent.VK_W);
         keyHandler.removeListener(KeyEvent.VK_S);
         keyHandler.removeListener(KeyEvent.VK_SPACE);
-    }
-
-    @Override
-    public void switchScreen(GameState newState)
-    {
-        GamePanel.state = newState;
     }
 }

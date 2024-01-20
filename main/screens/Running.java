@@ -1,16 +1,11 @@
 package main.screens;
 
 import entity.Entity;
-import entity.Magician;
-import entity.Player;
 import main.*;
 import objects.BaseObject;
-import tile.TileManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Running extends AbstractScreen
 {
@@ -60,6 +55,9 @@ public class Running extends AbstractScreen
     {
         keyHandler.addListener(KeyEvent.VK_E, this::onKeyE);
         keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+
+        gameCommons.sound.play(Sounds.Theme);
+        gameCommons.sound.loop();
     }
 
     private void onKeyE()
@@ -77,5 +75,7 @@ public class Running extends AbstractScreen
     {
         keyHandler.removeListener(KeyEvent.VK_E);
         keyHandler.removeListener(KeyEvent.VK_SPACE);
+
+        gameCommons.sound.stop();
     }
 }

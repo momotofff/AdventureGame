@@ -35,49 +35,6 @@ public class KeyHandler implements KeyListener
         if (listener != null)
             listener.run();
 /*
-        else if (GamePanel.getState() == GameState.Paused)
-        {
-            switch (e.getKeyCode())
-            {
-                case KeyEvent.VK_W:
-                    if (UI.commandPause == UI.CommandsPause.Continue)
-                        UI.commandPause = UI.CommandsPause.Exit;
-                    else if (UI.commandPause == UI.CommandsPause.Exit)
-                        UI.commandPause = UI.CommandsPause.Save;
-                    else if (UI.commandPause == UI.CommandsPause.Save)
-                        UI.commandPause = UI.CommandsPause.Load;
-                    else if (UI.commandPause == UI.CommandsPause.Load)
-                        UI.commandPause = UI.CommandsPause.Continue;
-                    break;
-
-                case KeyEvent.VK_S:
-                    if (UI.commandPause == UI.CommandsPause.Continue)
-                        UI.commandPause = UI.CommandsPause.Load;
-                    else if (UI.commandPause == UI.CommandsPause.Load)
-                        UI.commandPause = UI.CommandsPause.Save;
-                    else if (UI.commandPause == UI.CommandsPause.Save)
-                        UI.commandPause = UI.CommandsPause.Exit;
-                    else if (UI.commandPause == UI.CommandsPause.Exit)
-                        UI.commandPause = UI.CommandsPause.Continue;
-                    break;
-
-                case KeyEvent.VK_SPACE:
-                    if (UI.commandPause == UI.CommandsPause.Continue)
-                        GamePanel.state = GameState.Running;
-                    else if (UI.commandPause == UI.CommandsPause.Load)
-                        System.exit(1);
-                    else if (UI.commandPause == UI.CommandsPause.Save)
-                        System.exit(1);
-                    else if (UI.commandPause == UI.CommandsPause.Exit)
-                    {
-                        GamePanel.state = GameState.StartScreen;
-                        GamePanel.sound.stop();
-                    }
-
-                    break;
-            }
-        }
-
         else if (GamePanel.getState() == GameState.Inventory)
         {
             switch (e.getKeyCode()) {

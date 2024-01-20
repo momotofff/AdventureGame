@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements Runnable
     public static Sound sound = new Sound();
     public CollisionChecker collisionChecker;// = new CollisionChecker(this);
     public AssetSetter assetSetter;
-    public UI ui = new UI(this);
+    //public UI ui = new UI(this);
     Thread gameThread;
 
     public Player player;
@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable
         assetSetter.initObjects(tileManager.getFreePlaces(), items);
         assetSetter.initEntity(tileManager.getFreePlaces(), NPC, animals);
 
-        player = new Player(this, keyHandler, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize));
+        //player = new Player(this, keyHandler, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize));
     }
 
     public void setupGame()
