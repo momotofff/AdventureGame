@@ -3,14 +3,17 @@ package main.screens;
 import entity.Entity;
 import main.*;
 import objects.BaseObject;
+import objects.Key;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 public class Running extends AbstractScreen
 {
     private final KeyHandler keyHandler;
     private final GameCommons gameCommons;
+    private final BufferedImage keyImage = new Key().image;
 
     public Running(IScreenSwitcher switcher, KeyHandler keyHandler, GameCommons gameCommons)
     {
@@ -48,6 +51,24 @@ public class Running extends AbstractScreen
             entity.drawing(graphics2D, Parameters.tileSize);
 
         gameCommons.player.drawing(graphics2D, Parameters.tileSize);
+
+        graphics2D.setFont(font.deriveFont(30F));
+        graphics2D.setColor(new Color(230,200,170));
+        graphics2D.drawImage(keyImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
+        graphics2D.drawString(" x " + gameCommons.player.keysCount, 60, 60);
+
+/*
+        if (message != null)
+        {
+            graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
+
+            if (--messageCounter < 0)
+            {
+                messageCounter = 180;
+                message = null;
+            }
+        }
+*/
     }
 
     @Override

@@ -35,16 +35,6 @@ public class KeyHandler implements KeyListener
         if (listener != null)
             listener.run();
 /*
-        else if (GamePanel.getState() == GameState.Inventory)
-        {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_E:
-                case KeyEvent.VK_SPACE:
-                    GamePanel.state = GameState.Running;
-                    break;
-            }
-        }
-
         else if (GamePanel.getState() == GameState.Dialog)
         {
             if (e.getKeyCode() == KeyEvent.VK_SPACE)

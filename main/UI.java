@@ -15,10 +15,8 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
 {
     Graphics2D graphics2D;
     Font maruMonica;
-    BufferedImage bufferedImage;
 
     private String message = null;
-
     int messageCounter = 180;
 
     Color edging = new Color(100, 60, 20);
@@ -69,32 +67,11 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
         {
             throw new RuntimeException(e);
         }
-
-        bufferedImage = new Key().image;
     }
 
     public void showMessage(String text)
     {
         message = text;
-    }
-
-    public void drawInterface()
-    {
-        graphics2D.setFont(maruMonica.deriveFont(30F));
-        graphics2D.setColor(new Color(230,200,170));
-        graphics2D.drawImage(bufferedImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
-        graphics2D.drawString(" x " + gameCommons.player.keysCount, 60, 60);
-
-        if (message != null)
-        {
-            graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
-
-            if (--messageCounter < 0)
-            {
-                messageCounter = 180;
-                message = null;
-            }
-        }
     }
 
     private void drawDialog()
@@ -123,7 +100,6 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
 
         while (gameThread != null)
         {
-            //update();
             repaint();
 
             long remainingTime = nextDrawTime - System.currentTimeMillis();

@@ -1,10 +1,12 @@
 package main.screens;
 
+import main.GameState;
 import main.KeyHandler;
 import main.Parameters;
 import objects.Key;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class Inventory extends AbstractScreen
@@ -19,6 +21,7 @@ public class Inventory extends AbstractScreen
         super(switcher);
         this.keyHandler = keyHandler;
     }
+
     @Override
     public void draw(Graphics2D graphics2D, Font font)
     {
@@ -49,12 +52,16 @@ public class Inventory extends AbstractScreen
     }
 
     @Override
-    public void activate() {
-
+    public void activate()
+    {
+        keyHandler.addListener(KeyEvent.VK_E, () -> switcher.switchScreen(GameState.Running));
+        keyHandler.addListener(KeyEvent.VK_SPACE, () -> switcher.switchScreen(GameState.Running));
     }
 
     @Override
-    public void deactivate() {
-
+    public void deactivate()
+    {
+        keyHandler.removeListener(KeyEvent.VK_E);
+        keyHandler.removeListener(KeyEvent.VK_SPACE);
     }
 }
