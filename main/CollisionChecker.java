@@ -3,16 +3,16 @@ package main;
 import entity.Entity;
 import objects.BaseObject;
 import tile.Tile;
+import tile.TileManager;
 
 import java.awt.*;
 
 public class CollisionChecker
 {
-    GamePanel gamePanel;
-
-    public CollisionChecker(GamePanel gamePanel)
+    GameCommons gameCommons;
+    public CollisionChecker(GameCommons gameCommons)
     {
-        this.gamePanel = gamePanel;
+        this.gameCommons = gameCommons;
     }
 
     public boolean checkTile(Entity entity)
@@ -28,26 +28,26 @@ public class CollisionChecker
         {
             case Up:
                 entityTopRow = (entity.collisionArea.y - entity.movementSpeed) / Parameters.tileSize;
-                tile1 = gamePanel.tileManager.world[entityLeftCol][entityTopRow];
-                tile2 = gamePanel.tileManager.world[entityRightCol][entityTopRow];
+                tile1 = gameCommons.tileManager.world[entityLeftCol][entityTopRow];
+                tile2 = gameCommons.tileManager.world[entityRightCol][entityTopRow];
                 break;
 
             case Down:
                 entityBottomRow = (entity.collisionArea.y + entity.collisionArea.height + entity.movementSpeed) / Parameters.tileSize;
-                tile1 = gamePanel.tileManager.world[entityLeftCol][entityBottomRow];
-                tile2 = gamePanel.tileManager.world[entityRightCol][entityBottomRow];
+                tile1 = gameCommons.tileManager.world[entityLeftCol][entityBottomRow];
+                tile2 = gameCommons.tileManager.world[entityRightCol][entityBottomRow];
                 break;
 
             case Left:
                 entityLeftCol = (entity.collisionArea.x - entity.movementSpeed) / Parameters.tileSize;
-                tile1 = gamePanel.tileManager.world[entityLeftCol][entityTopRow];
-                tile2 = gamePanel.tileManager.world[entityLeftCol][entityBottomRow];
+                tile1 = gameCommons.tileManager.world[entityLeftCol][entityTopRow];
+                tile2 = gameCommons.tileManager.world[entityLeftCol][entityBottomRow];
                 break;
 
             case Right:
                 entityRightCol = (entity.collisionArea.x + entity.collisionArea.width + entity.movementSpeed) / Parameters.tileSize;
-                tile1 = gamePanel.tileManager.world[entityRightCol][entityTopRow];
-                tile2 = gamePanel.tileManager.world[entityRightCol][entityBottomRow];
+                tile1 = gameCommons.tileManager.world[entityRightCol][entityTopRow];
+                tile2 = gameCommons.tileManager.world[entityRightCol][entityBottomRow];
                 break;
         }
 
@@ -59,7 +59,7 @@ public class CollisionChecker
 
     public BaseObject checkObject(Entity entity)
     {
-        return gamePanel.items
+        return gameCommons.items
             .stream()
             .filter(item -> entity.collisionArea.intersects(item.areaCollision))
             .findFirst()
@@ -80,7 +80,7 @@ public class CollisionChecker
     {
         Rectangle playerCollisionArea;
 
-        for (Entity entity: gamePanel.NPC)
+        for (Entity entity: gameCommons.NPC)
         {
             playerCollisionArea = new Rectangle(player.collisionArea);
 
@@ -119,6 +119,6 @@ public class CollisionChecker
         collisionArea.x -= 50;
         collisionArea.y -= 50;
 
-        return collisionArea.intersects(gamePanel.player.collisionArea);
+        return collisionArea.intersects(gameCommons.player.collisionArea);
     }
 }

@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable
     TileManager tileManager;
     public KeyHandler keyHandler = new KeyHandler();
     public static Sound sound = new Sound();
-    public CollisionChecker collisionChecker = new CollisionChecker(this);
+    public CollisionChecker collisionChecker;// = new CollisionChecker(this);
     public AssetSetter assetSetter;
     public UI ui = new UI(this);
     Thread gameThread;

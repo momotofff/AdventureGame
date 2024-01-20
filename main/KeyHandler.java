@@ -35,52 +35,6 @@ public class KeyHandler implements KeyListener
         if (listener != null)
             listener.run();
 /*
-        if (GamePanel.getState() == GameState.StartScreen)
-        {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_W:
-                    if (UI.commandMenu == UI.CommandsMenu.Start)
-                        UI.commandMenu = UI.CommandsMenu.Exit;
-                    else if (UI.commandMenu == UI.CommandsMenu.Exit)
-                        UI.commandMenu = UI.CommandsMenu.Load;
-                    else if (UI.commandMenu == UI.CommandsMenu.Load)
-                        UI.commandMenu = UI.CommandsMenu.Start;
-                    break;
-
-                case KeyEvent.VK_S:
-                    if (UI.commandMenu == UI.CommandsMenu.Start)
-                        UI.commandMenu = UI.CommandsMenu.Load;
-                    else if (UI.commandMenu == UI.CommandsMenu.Load)
-                        UI.commandMenu = UI.CommandsMenu.Exit;
-                    else if (UI.commandMenu == UI.CommandsMenu.Exit)
-                        UI.commandMenu = UI.CommandsMenu.Start;
-                    break;
-
-                case KeyEvent.VK_SPACE:
-                    if (UI.commandMenu == UI.CommandsMenu.Start) {
-                        GamePanel.state = GameState.Running;
-                        GamePanel.sound.play(Sounds.Theme);
-                        GamePanel.sound.loop();
-                    } else if (UI.commandMenu == UI.CommandsMenu.Load)
-                        UI.commandMenu = UI.CommandsMenu.Exit;
-                    else if (UI.commandMenu == UI.CommandsMenu.Exit)
-                        System.exit(1);
-                    break;
-            }
-        }
-
-        else if (GamePanel.getState() == GameState.Running)
-        {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_E:
-                    GamePanel.state = GameState.Inventory;
-                    break;
-                case KeyEvent.VK_SPACE:
-                    GamePanel.state = GameState.Paused;
-                    break;
-            }
-        }
-
         else if (GamePanel.getState() == GameState.Paused)
         {
             switch (e.getKeyCode())

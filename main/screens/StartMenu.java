@@ -68,38 +68,45 @@ public class StartMenu extends AbstractScreen
     {
         menuPosition = MenuItems.Start;
 
-        keyHandler.addListener(KeyEvent.VK_W, () -> {
-            switch (menuPosition)
-            {
-                case Start -> menuPosition = MenuItems.Exit;
-                case Load -> menuPosition = MenuItems.Start;
-                case Exit -> menuPosition = MenuItems.Load;
-            }
-        });
+        keyHandler.addListener(KeyEvent.VK_W, this::onKeyW);
+        keyHandler.addListener(KeyEvent.VK_S, this::onKeyS);
+        keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+    }
 
-        keyHandler.addListener(KeyEvent.VK_S, () -> {
-            switch (menuPosition)
-            {
-                case Start -> menuPosition = MenuItems.Load;
-                case Load -> menuPosition = MenuItems.Exit;
-                case Exit -> menuPosition = MenuItems.Start;
-            }
-        });
+    private void onKeyW()
+    {
+        switch (menuPosition)
+        {
+            case Start -> menuPosition = MenuItems.Exit;
+            case Load -> menuPosition = MenuItems.Start;
+            case Exit -> menuPosition = MenuItems.Load;
+        }
+    }
 
-        keyHandler.addListener(KeyEvent.VK_SPACE, () -> {
-            switch (menuPosition)
-            {
-                case Start:
-                    switcher.switchScreen(GameState.Running);
-                    break;
-                case Load:
-                    menuPosition = MenuItems.Exit;
-                    break;
-                case Exit:
-                    System.exit(0);
-                    break;
-            }
-        });
+    private void onKeyS()
+    {
+        switch (menuPosition)
+        {
+            case Start -> menuPosition = MenuItems.Load;
+            case Load -> menuPosition = MenuItems.Exit;
+            case Exit -> menuPosition = MenuItems.Start;
+        }
+    }
+
+    private void onKeySpace()
+    {
+        switch (menuPosition)
+        {
+            case Start:
+                switcher.switchScreen(GameState.Running);
+                break;
+            case Load:
+                menuPosition = MenuItems.Exit;
+                break;
+            case Exit:
+                System.exit(0);
+                break;
+        }
     }
 
     @Override
