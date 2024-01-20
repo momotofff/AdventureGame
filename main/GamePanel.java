@@ -127,14 +127,14 @@ public class GamePanel extends JPanel implements Runnable
 
             player.drawing(graphics2D, Parameters.tileSize);
 
-            ui.draw(graphics2D, state);
+            //ui.draw(graphics2D, state);
 
             graphics2D.dispose();
         }
 
         else
         {
-            ui.draw(graphics2D, state);
+            //ui.draw(graphics2D, state);
         }
     }
 

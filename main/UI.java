@@ -1,14 +1,17 @@
 package main;
 
+import entity.Entity;
 import main.screens.*;
+import objects.BaseObject;
 import objects.Key;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class UI implements IScreenSwitcher
+public class UI extends JPanel implements Runnable, IScreenSwitcher
 {
     GamePanel gamePanel;
     Graphics2D graphics2D;
@@ -23,6 +26,8 @@ public class UI implements IScreenSwitcher
     Color filling = new Color(150, 120, 50, 220);
 
     private AbstractScreen currentScreen;
+    Thread gameThread;
+    public KeyHandler keyHandler = new KeyHandler();
 
     @Override
     public void switchScreen(GameState newState)
@@ -40,10 +45,10 @@ public class UI implements IScreenSwitcher
 
         switch (newState)
         {
-            case StartScreen -> currentScreen = new StartMenu(this, gamePanel.keyHandler);
-            case Paused -> currentScreen = new Pause(this, gamePanel.keyHandler);
-            case Inventory -> currentScreen = new Inventory(this, gamePanel.keyHandler);
-            case Running -> currentScreen = new Running(this, gamePanel.keyHandler);
+            case StartScreen -> currentScreen = new StartMenu(this, keyHandler);
+            case Paused -> currentScreen = new Pause(this, keyHandler);
+            case Inventory -> currentScreen = new Inventory(this, keyHandler);
+            case Running -> currentScreen = new Running(this, keyHandler);
         }
 
         currentScreen.activate();
@@ -51,6 +56,12 @@ public class UI implements IScreenSwitcher
 
     public UI(GamePanel gamePanel)
     {
+        this.setPreferredSize(new Dimension(Parameters.screenSize.x, Parameters.screenSize.y));
+        this.setBackground(Color.black);
+        this.setDoubleBuffered(true);
+        this.addKeyListener(keyHandler);
+        this.setFocusable(true);
+
         this.gamePanel = gamePanel;
 
         InputStream inputStream = getClass().getResourceAsStream("/assets/Font/MaruMonica.ttf");
@@ -74,22 +85,6 @@ public class UI implements IScreenSwitcher
     public void showMessage(String text)
     {
         message = text;
-    }
-
-    public void draw(Graphics2D graphics2D, GameState state)
-    {
-        this.graphics2D = graphics2D;
-
-        if (state == GameState.Running)
-        {
-            drawInterface();
-            return;
-        }
-
-        if (currentScreen == null)
-            switchScreen(GameState.StartScreen);
-
-        currentScreen.draw(graphics2D, maruMonica);
     }
 
     public void drawInterface()
@@ -126,6 +121,54 @@ public class UI implements IScreenSwitcher
             graphics2D.drawString(line, window.x + Parameters.tileSize, window.y + Parameters.tileSize);
             window.y += Parameters.tileSize;
         }
+    }
+
+    @Override
+    public void run()
+    {
+        final int FPS = 60;
+        long drawInterval = 1000 / FPS;
+        long nextDrawTime = System.currentTimeMillis() + drawInterval;
+
+        while (gameThread != null)
+        {
+            //update();
+            repaint();
+
+            long remainingTime = nextDrawTime - System.currentTimeMillis();
+
+            try
+            {
+                if (remainingTime > 0)
+                    Thread.sleep(remainingTime);
+            }
+            catch (InterruptedException e)
+            {
+                throw new RuntimeException(e);
+            }
+
+            nextDrawTime += drawInterval;
+        }
+    }
+
+    public void startGame()
+    {
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+    @Override
+    public void paintComponent(Graphics graphics)
+    {
+        super.paintComponent(graphics);
+
+        Graphics2D graphics2D = (Graphics2D) graphics;
+
+        if (currentScreen == null)
+            switchScreen(GameState.StartScreen);
+
+        currentScreen.draw(graphics2D, maruMonica);
+        graphics2D.dispose();
     }
 }
 

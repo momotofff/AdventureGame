@@ -11,14 +11,15 @@ public class Main
         window.setTitle("AdventureGame");
 
         GamePanel gamePanel = new GamePanel();
-        window.add(gamePanel);
+        UI ui = new UI(gamePanel);
 
+        window.add(ui);
         window.pack();
-
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
-        gamePanel.setupGame();
-        gamePanel.startGameThread();
+        ui.startGame();
+//        gamePanel.setupGame();
+//        gamePanel.startGameThread();
     }
 }
