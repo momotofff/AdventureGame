@@ -3,21 +3,27 @@ package main;
 import main.screens.*;
 import main.screens.DialogScreen;
 import main.screens.interfaces.IDialogueStarter;
+import main.screens.interfaces.IScreenShotter;
 import main.screens.interfaces.IScreenSwitcher;
+import main.utils.ImageUtils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.Buffer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter
+public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter, IScreenShotter
 {
     Font maruMonica;
 
     private String message = null;
     int messageCounter = 180;
+
+    private final JFrame frame;
 
     private final Map<GameState, AbstractScreen> screens = new HashMap<>();
     private Thread gameThread;
@@ -47,12 +53,13 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
         switchScreen(GameState.Dialog);
     }
 
-    public UI()
+    public UI(JFrame frame)
     {
+        this.frame = frame;
         gameCommons = new GameCommons(keyHandler, this);
 
         screens.put(GameState.StartScreen, new StartMenu(this, keyHandler));
-        screens.put(GameState.Paused, new Pause(this, keyHandler));
+        screens.put(GameState.Paused, new Pause(this, keyHandler, this));
         screens.put(GameState.Inventory, new Inventory(this, keyHandler));
         screens.put(GameState.Running, new Running(this, keyHandler, gameCommons));
         screens.put(GameState.Dialog, new DialogScreen(this, keyHandler));
@@ -130,6 +137,24 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
         Graphics2D graphics2D = (Graphics2D) graphics;
         screen.draw(graphics2D, maruMonica);
         graphics2D.dispose();
+    }
+
+    @Override
+    public BufferedImage getScreenShot()
+    {
+        Point corner = frame.getRootPane().getLocationOnScreen();
+        BufferedImage image = null;
+
+        try
+        {
+            image = new Robot().createScreenCapture(new Rectangle(corner, frame.getSize()));
+        }
+        catch (AWTException e)
+        {
+            return null;
+        }
+
+        return ImageUtils.blur(image);
     }
 }
 
