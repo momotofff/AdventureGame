@@ -35,9 +35,7 @@ public class Pause extends AbstractScreen
     @Override
     public void draw(Graphics2D graphics2D, Font font)
     {
-        if (screenShot == null)
-            screenShot = screenShotter.getScreenShot();
-        else
+        if (screenShot != null)
             graphics2D.drawImage(screenShot, null, 0, 0);
 
         Rectangle window = new Rectangle(Parameters.tileSize * 6, Parameters.tileSize * 4, Parameters.screenSize.x - (Parameters.tileSize * 12), Parameters.tileSize * 9);
@@ -90,6 +88,8 @@ public class Pause extends AbstractScreen
         keyHandler.addListener(KeyEvent.VK_W, this::onKeyW);
         keyHandler.addListener(KeyEvent.VK_S, this::onKeyS);
         keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+
+        screenShot = screenShotter.getScreenShot();
     }
 
     private void onKeyW()

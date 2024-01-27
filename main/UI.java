@@ -24,9 +24,9 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
     int messageCounter = 180;
 
     private final JFrame frame;
+    private Thread gameThread;
 
     private final Map<GameState, AbstractScreen> screens = new HashMap<>();
-    private Thread gameThread;
     private final KeyHandler keyHandler = new KeyHandler();
     private final GameCommons gameCommons;
     private GameState gameState = GameState.StartScreen;
@@ -38,8 +38,8 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
         if (old != null)
             old.deactivate();
 
+        screens.get(newState).activate();
         gameState = newState;
-        screens.get(gameState).activate();
     }
 
     @Override
@@ -142,17 +142,12 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
     @Override
     public BufferedImage getScreenShot()
     {
-        Point corner = frame.getRootPane().getLocationOnScreen();
-        BufferedImage image = null;
-
-        try
-        {
-            image = new Robot().createScreenCapture(new Rectangle(corner, frame.getSize()));
-        }
-        catch (AWTException e)
-        {
-            return null;
-        }
+        JRootPane root = frame.getRootPane();
+        Dimension dimension = root.getSize();
+        BufferedImage image = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics2D = image.createGraphics();
+        root.print(graphics2D);
+        graphics2D.dispose();
 
         return ImageUtils.blur(image);
     }
