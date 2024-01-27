@@ -77,8 +77,7 @@ public class Running extends AbstractScreen
         keyHandler.addListener(KeyEvent.VK_E, this::onKeyE);
         keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
 
-        gameCommons.sound.play(Sounds.Theme);
-        gameCommons.sound.loop();
+        gameCommons.sound.playBacking(Sounds.Theme);
     }
 
     private void onKeyE()
@@ -97,6 +96,6 @@ public class Running extends AbstractScreen
         keyHandler.removeListener(KeyEvent.VK_E);
         keyHandler.removeListener(KeyEvent.VK_SPACE);
 
-        gameCommons.sound.stop();
+        gameCommons.sound.stopBacking();
     }
 }

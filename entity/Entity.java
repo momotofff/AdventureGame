@@ -103,7 +103,7 @@ public abstract class Entity
             spriteCounter = 0;
 
             if (playSound && spriteNumber % 2 != 0)
-                sound.play(Sounds.Step);
+                sound.playEffect(Sounds.Step);
         }
     }
 

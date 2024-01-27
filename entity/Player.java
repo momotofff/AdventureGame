@@ -67,7 +67,7 @@ public class Player extends Entity implements IScreenSwitcher
         if (item == null)
             return;
 
-        sound.play(item.soundEffect);
+        sound.playEffect(item.soundEffect);
 
         if (item instanceof Key)
         {
