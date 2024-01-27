@@ -2,6 +2,7 @@ package main.screens;
 
 import entity.Entity;
 import main.*;
+import main.screens.interfaces.IScreenSwitcher;
 import objects.BaseObject;
 import objects.Key;
 

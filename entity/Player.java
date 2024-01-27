@@ -1,8 +1,8 @@
 package entity;
 
-import assets.Strings.TextMessages;
 import main.*;
-import main.screens.IScreenSwitcher;
+import main.screens.interfaces.IDialogueStarter;
+import main.screens.interfaces.IScreenSwitcher;
 import objects.*;
 
 import java.awt.*;
@@ -11,16 +11,17 @@ public class Player extends Entity implements IScreenSwitcher
 {
     final private GameCommons gameCommons;
     final private KeyHandler keyHandler;
+    final private IDialogueStarter dialogueStarter;
 
     public int keysCount = 0;
-    int boostCoolDown;
-    TextMessages textMessages = new TextMessages();
+    int boostCoolDown = 0;
 
-    public Player(GameCommons gameCommons, KeyHandler keyHandler, Point defaultWorldPosition)
+    public Player(GameCommons gameCommons, KeyHandler keyHandler, IDialogueStarter dialogueStarter, Point defaultWorldPosition)
     {
         super(defaultWorldPosition);
         this.gameCommons = gameCommons;
         this.keyHandler = keyHandler;
+        this.dialogueStarter = dialogueStarter;
 
         screenCoordinates = new Point(Parameters.screenSize.x / 2 - Parameters.tileSize / 2, Parameters.screenSize.y / 2 - Parameters.tileSize / 2);
 
@@ -42,7 +43,7 @@ public class Player extends Entity implements IScreenSwitcher
             {
                 System.out.println("Встретился с " + magician.name);
                 magician.rotateToPlayer(direction);
-                gameCommons.startDialogue(new AbstractDialogue(magician.dialogues));
+                dialogueStarter.startDialogue(new AbstractDialogue(magician.dialogues));
             }
 
             if (entity == null)

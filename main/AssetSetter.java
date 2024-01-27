@@ -31,15 +31,15 @@ public class AssetSetter
         Magician magician1 = new Magician(new Point(15 * Parameters.tileSize, 15 * Parameters.tileSize));
         magician1.dialogues.add("Привет путешественник. ");
         magician1.dialogues.add("Могу помочь тебе с поиском сокровищ.");
-        magician1.dialogues.add("Заранее хочу тебя предупредить что тебя могут ждать /nтрудности.");
-        magician1.dialogues.add("Вот тебе первая подсказка для начала твоего путешествия. /nУдачи.");
+        magician1.dialogues.add("Заранее хочу тебя предупредить что тебя могут ждать \nтрудности.");
+        magician1.dialogues.add("Вот тебе первая подсказка для начала твоего путешествия. \nУдачи.");
         magician1.name = "Mag";
         NPC.add(magician1);
 
         Magician magician2 = new Magician(new Point(15 * Parameters.tileSize, 20 * Parameters.tileSize));
         magician2.dialogues.add("Салам братуха борцуха. ");
         magician2.dialogues.add("Ты уже отработал бархатные тяги?");
-        magician2.dialogues.add("Я в благородство играть не стану, /nчерез два моста найдешь приору посаженую.");
+        magician2.dialogues.add("Я в благородство играть не стану, \nчерез два моста найдешь приору посаженую.");
         magician2.dialogues.add("Вот тебе макасы, в них с толкача удобней заводить.");
         magician2.name = "Mag борэц";
         NPC.add(magician2);

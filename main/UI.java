@@ -1,18 +1,18 @@
 package main;
 
 import main.screens.*;
-import main.screens.Dialog;
-import objects.Key;
+import main.screens.DialogScreen;
+import main.screens.interfaces.IDialogueStarter;
+import main.screens.interfaces.IScreenSwitcher;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UI extends JPanel implements Runnable, IScreenSwitcher
+public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter
 {
     Font maruMonica;
 
@@ -36,15 +36,26 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
         screens.get(gameState).activate();
     }
 
+    @Override
+    public void startDialogue(AbstractDialogue dialogue)
+    {
+        DialogScreen dialogScreen = (DialogScreen) screens.get(GameState.Dialog);
+        if (dialogScreen == null)
+            return;
+
+        dialogScreen.setDialogue(dialogue);
+        switchScreen(GameState.Dialog);
+    }
+
     public UI()
     {
-        gameCommons = new GameCommons(keyHandler);
+        gameCommons = new GameCommons(keyHandler, this);
 
         screens.put(GameState.StartScreen, new StartMenu(this, keyHandler));
         screens.put(GameState.Paused, new Pause(this, keyHandler));
         screens.put(GameState.Inventory, new Inventory(this, keyHandler));
         screens.put(GameState.Running, new Running(this, keyHandler, gameCommons));
-        screens.put(GameState.Dialog, new Dialog(this, keyHandler, gameCommons));
+        screens.put(GameState.Dialog, new DialogScreen(this, keyHandler));
 
         this.setPreferredSize(new Dimension(Parameters.screenSize.x, Parameters.screenSize.y));
         this.setBackground(Color.black);

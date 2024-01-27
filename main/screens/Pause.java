@@ -3,10 +3,10 @@ package main.screens;
 import main.GameState;
 import main.KeyHandler;
 import main.Parameters;
+import main.screens.interfaces.IScreenSwitcher;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 
 public class Pause extends AbstractScreen
 {

@@ -54,12 +54,14 @@ public class Sound
 
     public void stopBacking()
     {
-        backing.close();
+        if (backing != null)
+            backing.close();
     }
 
     public void stopEffect()
     {
-        effect.close();
+        if (effect != null)
+            effect.close();
     }
 
     private Clip play(Sounds sound, boolean loop)
