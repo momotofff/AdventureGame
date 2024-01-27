@@ -21,6 +21,8 @@ public class GameCommons
     final public ArrayList<Magician> NPC = new ArrayList<>();
     final public ArrayList<Entity> animals = new ArrayList<>();
 
+    private String phrase;
+
     public GameCommons(KeyHandler keyHandler)
     {
         AssetSetter assetSetter = new AssetSetter();
@@ -28,5 +30,16 @@ public class GameCommons
         assetSetter.initEntity(tileManager.getFreePlaces(), NPC, animals);
 
         player = new Player(this, keyHandler, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize));
+    }
+
+    public void startDialogue(AbstractDialogue abstractDialogue)
+    {
+        phrase = abstractDialogue.getText();
+        abstractDialogue.onKeyPressed();
+    }
+
+    public String getPhrase()
+    {
+        return phrase;
     }
 }

@@ -1,6 +1,7 @@
 package main;
 
 import main.screens.*;
+import main.screens.Dialog;
 import objects.Key;
 
 import javax.swing.*;
@@ -13,14 +14,10 @@ import java.util.Map;
 
 public class UI extends JPanel implements Runnable, IScreenSwitcher
 {
-    Graphics2D graphics2D;
     Font maruMonica;
 
     private String message = null;
     int messageCounter = 180;
-
-    Color edging = new Color(100, 60, 20);
-    Color filling = new Color(150, 120, 50, 220);
 
     private final Map<GameState, AbstractScreen> screens = new HashMap<>();
     private Thread gameThread;
@@ -47,6 +44,7 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
         screens.put(GameState.Paused, new Pause(this, keyHandler));
         screens.put(GameState.Inventory, new Inventory(this, keyHandler));
         screens.put(GameState.Running, new Running(this, keyHandler, gameCommons));
+        screens.put(GameState.Dialog, new Dialog(this, keyHandler, gameCommons));
 
         this.setPreferredSize(new Dimension(Parameters.screenSize.x, Parameters.screenSize.y));
         this.setBackground(Color.black);
@@ -73,23 +71,6 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
     public void showMessage(String text)
     {
         message = text;
-    }
-
-    private void drawDialog()
-    {
-        Rectangle window = new Rectangle(Parameters.tileSize * 3, Parameters.tileSize, Parameters.screenSize.x - (Parameters.tileSize * 6), Parameters.tileSize * 4);
-        graphics2D.setColor(filling);
-        graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
-        graphics2D.setColor(edging);
-        graphics2D.setStroke(new BasicStroke(10));
-        graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
-        graphics2D.setFont(maruMonica.deriveFont(Font.PLAIN, 40));
-/*
-        for (String line : gamePanel.currentDialogue.getText().split("/n"))
-        {
-            graphics2D.drawString(line, window.x + Parameters.tileSize, window.y + Parameters.tileSize);
-            window.y += Parameters.tileSize;
-        }*/
     }
 
     @Override

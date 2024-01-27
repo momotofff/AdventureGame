@@ -2,11 +2,12 @@ package entity;
 
 import assets.Strings.TextMessages;
 import main.*;
+import main.screens.IScreenSwitcher;
 import objects.*;
 
 import java.awt.*;
 
-public class Player extends Entity
+public class Player extends Entity implements IScreenSwitcher
 {
     final private GameCommons gameCommons;
     final private KeyHandler keyHandler;
@@ -41,7 +42,7 @@ public class Player extends Entity
             {
                 System.out.println("Встретился с " + magician.name);
                 magician.rotateToPlayer(direction);
-                //gameCommons.startDialogue(new MagicianDialogue(magician.dialogues));
+                gameCommons.startDialogue(new AbstractDialogue(magician.dialogues));
             }
 
             if (entity == null)
@@ -112,5 +113,11 @@ public class Player extends Entity
         loadAnimation(Direction.Right, "/assets/Player/right2.png");
         loadAnimation(Direction.Right, "/assets/Player/right3.png");
         loadAnimation(Direction.Right, "/assets/Player/right4.png");
+    }
+
+    @Override
+    public void switchScreen(GameState newState)
+    {
+
     }
 }
