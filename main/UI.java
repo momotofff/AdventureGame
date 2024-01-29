@@ -1,29 +1,32 @@
 package main;
 
 import main.screens.*;
-import objects.Key;
+import main.screens.DialogScreen;
+import main.screens.interfaces.IDialogueStarter;
+import main.screens.interfaces.IScreenShotter;
+import main.screens.interfaces.IScreenSwitcher;
+import main.utils.ImageUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.Buffer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UI extends JPanel implements Runnable, IScreenSwitcher
+public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter, IScreenShotter
 {
-    Graphics2D graphics2D;
     Font maruMonica;
 
     private String message = null;
     int messageCounter = 180;
 
-    Color edging = new Color(100, 60, 20);
-    Color filling = new Color(150, 120, 50, 220);
+    private final JFrame frame;
+    private Thread gameThread;
 
     private final Map<GameState, AbstractScreen> screens = new HashMap<>();
-    private Thread gameThread;
     private final KeyHandler keyHandler = new KeyHandler();
     private final GameCommons gameCommons;
     private GameState gameState = GameState.StartScreen;
@@ -35,18 +38,31 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
         if (old != null)
             old.deactivate();
 
+        screens.get(newState).activate();
         gameState = newState;
-        screens.get(gameState).activate();
     }
 
-    public UI()
+    @Override
+    public void startDialogue(AbstractDialogue dialogue)
     {
-        gameCommons = new GameCommons(keyHandler);
+        DialogScreen dialogScreen = (DialogScreen) screens.get(GameState.Dialog);
+        if (dialogScreen == null)
+            return;
+
+        dialogScreen.setDialogue(dialogue);
+        switchScreen(GameState.Dialog);
+    }
+
+    public UI(JFrame frame)
+    {
+        this.frame = frame;
+        gameCommons = new GameCommons(keyHandler, this);
 
         screens.put(GameState.StartScreen, new StartMenu(this, keyHandler));
-        screens.put(GameState.Paused, new Pause(this, keyHandler));
+        screens.put(GameState.Paused, new Pause(this, keyHandler, this));
         screens.put(GameState.Inventory, new Inventory(this, keyHandler));
         screens.put(GameState.Running, new Running(this, keyHandler, gameCommons));
+        screens.put(GameState.Dialog, new DialogScreen(this, keyHandler));
 
         this.setPreferredSize(new Dimension(Parameters.screenSize.x, Parameters.screenSize.y));
         this.setBackground(Color.black);
@@ -73,23 +89,6 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
     public void showMessage(String text)
     {
         message = text;
-    }
-
-    private void drawDialog()
-    {
-        Rectangle window = new Rectangle(Parameters.tileSize * 3, Parameters.tileSize, Parameters.screenSize.x - (Parameters.tileSize * 6), Parameters.tileSize * 4);
-        graphics2D.setColor(filling);
-        graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
-        graphics2D.setColor(edging);
-        graphics2D.setStroke(new BasicStroke(10));
-        graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
-        graphics2D.setFont(maruMonica.deriveFont(Font.PLAIN, 40));
-/*
-        for (String line : gamePanel.currentDialogue.getText().split("/n"))
-        {
-            graphics2D.drawString(line, window.x + Parameters.tileSize, window.y + Parameters.tileSize);
-            window.y += Parameters.tileSize;
-        }*/
     }
 
     @Override
@@ -138,6 +137,19 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher
         Graphics2D graphics2D = (Graphics2D) graphics;
         screen.draw(graphics2D, maruMonica);
         graphics2D.dispose();
+    }
+
+    @Override
+    public BufferedImage getScreenShot()
+    {
+        JRootPane root = frame.getRootPane();
+        Dimension dimension = root.getSize();
+        BufferedImage image = new BufferedImage(dimension.width, dimension.height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics2D = image.createGraphics();
+        root.print(graphics2D);
+        graphics2D.dispose();
+
+        return ImageUtils.blur(image);
     }
 }
 

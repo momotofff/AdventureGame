@@ -11,7 +11,7 @@ public class Main
         window.setResizable(false);
         window.setTitle("AdventureGame");
 
-        UI ui = new UI();
+        UI ui = new UI(window);
         window.add(ui);
         window.pack();
         window.setLocationRelativeTo(null);

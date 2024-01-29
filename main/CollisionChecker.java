@@ -10,6 +10,7 @@ import java.awt.*;
 public class CollisionChecker
 {
     GameCommons gameCommons;
+
     public CollisionChecker(GameCommons gameCommons)
     {
         this.gameCommons = gameCommons;

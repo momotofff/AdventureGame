@@ -3,6 +3,8 @@ package main.screens;
 import main.GameState;
 import main.KeyHandler;
 import main.Parameters;
+import main.screens.interfaces.IScreenShotter;
+import main.screens.interfaces.IScreenSwitcher;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -20,16 +22,22 @@ public class Pause extends AbstractScreen
 
     private Items menuPosition = Items.Continue;
     private final KeyHandler keyHandler;
+    private final IScreenShotter screenShotter;
+    private BufferedImage screenShot;
 
-    public Pause(IScreenSwitcher switcher, KeyHandler keyHandler)
+    public Pause(IScreenSwitcher switcher, KeyHandler keyHandler, IScreenShotter screenShotter)
     {
         super(switcher);
         this.keyHandler = keyHandler;
+        this.screenShotter = screenShotter;
     }
 
     @Override
     public void draw(Graphics2D graphics2D, Font font)
     {
+        if (screenShot != null)
+            graphics2D.drawImage(screenShot, null, 0, 0);
+
         Rectangle window = new Rectangle(Parameters.tileSize * 6, Parameters.tileSize * 4, Parameters.screenSize.x - (Parameters.tileSize * 12), Parameters.tileSize * 9);
         graphics2D.setColor(filling);
         graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
@@ -80,6 +88,8 @@ public class Pause extends AbstractScreen
         keyHandler.addListener(KeyEvent.VK_W, this::onKeyW);
         keyHandler.addListener(KeyEvent.VK_S, this::onKeyS);
         keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+
+        screenShot = screenShotter.getScreenShot();
     }
 
     private void onKeyW()
@@ -129,5 +139,7 @@ public class Pause extends AbstractScreen
         keyHandler.removeListener(KeyEvent.VK_W);
         keyHandler.removeListener(KeyEvent.VK_S);
         keyHandler.removeListener(KeyEvent.VK_SPACE);
+
+        screenShot = null;
     }
 }

@@ -34,18 +34,7 @@ public class KeyHandler implements KeyListener
         Runnable listener = listeners.get(e.getKeyCode());
         if (listener != null)
             listener.run();
-/*
-        else if (GamePanel.getState() == GameState.Dialog)
-        {
-            if (e.getKeyCode() == KeyEvent.VK_SPACE)
-            {
-                GamePanel.currentDialogue.onKeyPressed();
 
-                if (GamePanel.currentDialogue.isFinished())
-                    GamePanel.state = GameState.Running;
-            }
-        }
-*/
         switch (e.getKeyCode())
         {
             case KeyEvent.VK_W : upPressed = true; break;

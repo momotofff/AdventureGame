@@ -3,6 +3,7 @@ package main;
 import entity.Entity;
 import entity.Magician;
 import entity.Player;
+import main.screens.interfaces.IDialogueStarter;
 import objects.BaseObject;
 import tile.TileManager;
 
@@ -21,12 +22,12 @@ public class GameCommons
     final public ArrayList<Magician> NPC = new ArrayList<>();
     final public ArrayList<Entity> animals = new ArrayList<>();
 
-    public GameCommons(KeyHandler keyHandler)
+    public GameCommons(KeyHandler keyHandler, IDialogueStarter dialogueStarter)
     {
         AssetSetter assetSetter = new AssetSetter();
         assetSetter.initObjects(tileManager.getFreePlaces(), items);
         assetSetter.initEntity(tileManager.getFreePlaces(), NPC, animals);
 
-        player = new Player(this, keyHandler, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize));
+        player = new Player(this, keyHandler, dialogueStarter, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize));
     }
 }

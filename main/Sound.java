@@ -10,7 +10,8 @@ import java.util.Map;
 
 public class Sound
 {
-    private Clip clip;
+    private Clip effect;
+    private Clip backing;
     private final Map<Sounds, AudioInputStream> sounds = new HashMap<>();
 
     public Sound()
@@ -41,31 +42,49 @@ public class Sound
         }
     }
 
-    public void play(Sounds sound)
+    public void playEffect(Sounds sound)
+    {
+        effect = play(sound, false);
+    }
+
+    public void playBacking(Sounds sound)
+    {
+        backing = play(sound, true);
+    }
+
+    public void stopBacking()
+    {
+        if (backing != null)
+            backing.close();
+    }
+
+    public void stopEffect()
+    {
+        if (effect != null)
+            effect.close();
+    }
+
+    private Clip play(Sounds sound, boolean loop)
     {
         AudioInputStream stream = sounds.get(sound);
         if (stream == null)
-            return;
+            return null;
 
         try
         {
-            clip = AudioSystem.getClip();
             stream.reset();
+
+            Clip clip = AudioSystem.getClip();
             clip.open(stream);
             clip.start();
+            if (loop)
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+            return clip;
         }
         catch (Exception e)
         {
+            return null;
         }
-    }
-
-    public void loop()
-    {
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-    }
-
-    public void stop()
-    {
-        clip.close();
     }
 }

@@ -1,5 +1,7 @@
 package main.screens;
 
+import main.screens.interfaces.IScreenSwitcher;
+
 import java.awt.*;
 
 public abstract class AbstractScreen

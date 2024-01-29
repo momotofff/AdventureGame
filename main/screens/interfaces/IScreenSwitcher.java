@@ -1,4 +1,4 @@
-package main.screens;
+package main.screens.interfaces;
 
 import main.GameState;
 
