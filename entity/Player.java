@@ -1,17 +1,21 @@
 package entity;
 
+import assets.Strings.TextMessages;
 import main.*;
 import main.screens.interfaces.IDialogueStarter;
+import main.screens.interfaces.IMessages;
 import main.screens.interfaces.IScreenSwitcher;
 import objects.*;
 
 import java.awt.*;
 
-public class Player extends Entity implements IScreenSwitcher
+
+public class Player extends Entity implements IScreenSwitcher, IMessages
 {
     final private GameCommons gameCommons;
     final private KeyHandler keyHandler;
     final private IDialogueStarter dialogueStarter;
+    final private TextMessages textMessages = new TextMessages();
 
     public int keysCount = 0;
     int boostCoolDown = 0;
@@ -73,7 +77,7 @@ public class Player extends Entity implements IScreenSwitcher
         if (item instanceof Key)
         {
             ++keysCount;
-            //gamePanel.ui.showMessage(textMessages.getKeyMessage());
+            startMessage(textMessages.getKeyMessage());
         }
         else if (item instanceof Box)
         {
@@ -117,8 +121,8 @@ public class Player extends Entity implements IScreenSwitcher
     }
 
     @Override
-    public void switchScreen(GameState newState)
-    {
+    public void switchScreen(GameState newState) {}
 
-    }
+    @Override
+    public void startMessage(String message) {}
 }

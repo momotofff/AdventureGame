@@ -3,6 +3,7 @@ package main;
 import main.screens.*;
 import main.screens.DialogScreen;
 import main.screens.interfaces.IDialogueStarter;
+import main.screens.interfaces.IMessages;
 import main.screens.interfaces.IScreenShotter;
 import main.screens.interfaces.IScreenSwitcher;
 import main.utils.ImageUtils;
@@ -16,7 +17,7 @@ import java.nio.Buffer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter, IScreenShotter
+public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter, IScreenShotter, IMessages
 {
     Font maruMonica;
 
@@ -150,6 +151,25 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
         graphics2D.dispose();
 
         return ImageUtils.blur(image);
+    }
+
+    @Override
+    public void startMessage(String message)
+    {
+        if (gameState == GameState.Running)
+        {
+            gameState.showMessage(message)
+            if (message != null)
+            {
+                graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
+
+                if (--messageCounter < 0)
+                {
+                    messageCounter = 180;
+                    message = null;
+                }
+            }
+        }
     }
 }
 

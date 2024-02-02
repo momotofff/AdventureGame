@@ -57,19 +57,6 @@ public class Running extends AbstractScreen
         graphics2D.setColor(new Color(230,200,170));
         graphics2D.drawImage(keyImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
         graphics2D.drawString(" x " + gameCommons.player.keysCount, 60, 60);
-
-/*
-        if (message != null)
-        {
-            graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
-
-            if (--messageCounter < 0)
-            {
-                messageCounter = 180;
-                message = null;
-            }
-        }
-*/
     }
 
     @Override
@@ -98,5 +85,11 @@ public class Running extends AbstractScreen
         keyHandler.removeListener(KeyEvent.VK_SPACE);
 
         gameCommons.sound.stopBacking();
+    }
+
+    @Override
+    public void startMessage(String text)
+    {
+
     }
 }

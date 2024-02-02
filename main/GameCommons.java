@@ -4,6 +4,7 @@ import entity.Entity;
 import entity.Magician;
 import entity.Player;
 import main.screens.interfaces.IDialogueStarter;
+import main.screens.interfaces.IMessages;
 import objects.BaseObject;
 import tile.TileManager;
 
