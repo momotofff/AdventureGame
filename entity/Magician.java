@@ -2,22 +2,26 @@ package entity;
 
 import main.CollisionChecker;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Magician extends Entity
 {
     int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
 
-    public Magician(Point defaultWorldPosition)
+    public Magician(Point defaultWorldPosition, String path)
     {
         super(defaultWorldPosition);
 
         collisionArea = new Rectangle(defaultWorldPosition.x + 12, defaultWorldPosition.y + 12, 24, 24);
         worldPosition = defaultWorldPosition;
         movementSpeed = 1;
-
         direction = getRandomDirection();
+        loadDialogs(path);
     }
 
     public void update(Player player, CollisionChecker collisionChecker)
@@ -74,6 +78,29 @@ public class Magician extends Entity
             case Right ->   direction = Direction.Left;
             case Up ->      direction = Direction.Down;
             case Down ->    direction = Direction.Up;
+        }
+    }
+
+    private void loadDialogs(String path)
+    {
+        try
+        {
+            File file = new File(path);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                dialogues.add(line);
+            }
+
+            bufferedReader.close();
+            fileReader.close();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
         }
     }
 }

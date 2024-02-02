@@ -3,6 +3,7 @@ package main;
 import main.screens.*;
 import main.screens.DialogScreen;
 import main.screens.interfaces.IDialogueStarter;
+import main.screens.interfaces.IMessages;
 import main.screens.interfaces.IScreenShotter;
 import main.screens.interfaces.IScreenSwitcher;
 import main.utils.ImageUtils;
@@ -12,16 +13,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.Buffer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter, IScreenShotter
+public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter, IScreenShotter, IMessages
 {
     Font maruMonica;
-
-    private String message = null;
-    int messageCounter = 180;
 
     private final JFrame frame;
     private Thread gameThread;
@@ -56,13 +53,13 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
     public UI(JFrame frame)
     {
         this.frame = frame;
-        gameCommons = new GameCommons(keyHandler, this);
+        gameCommons = new GameCommons(this, this);
 
         screens.put(GameState.StartScreen, new StartMenu(this, keyHandler));
         screens.put(GameState.Paused, new Pause(this, keyHandler, this));
         screens.put(GameState.Inventory, new Inventory(this, keyHandler));
-        screens.put(GameState.Running, new Running(this, keyHandler, gameCommons));
-        screens.put(GameState.Dialog, new DialogScreen(this, keyHandler));
+        screens.put(GameState.Running, new Running(this, gameCommons));
+        screens.put(GameState.Dialog, new DialogScreen(this));
 
         this.setPreferredSize(new Dimension(Parameters.screenSize.x, Parameters.screenSize.y));
         this.setBackground(Color.black);
@@ -84,11 +81,6 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
         {
             throw new RuntimeException(e);
         }
-    }
-
-    public void showMessage(String text)
-    {
-        message = text;
     }
 
     @Override
@@ -150,6 +142,12 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
         graphics2D.dispose();
 
         return ImageUtils.blur(image);
+    }
+
+    @Override
+    public void startMessage(String message)
+    {
+        screens.get(GameState.Running).setMessage(message) ;
     }
 }
 

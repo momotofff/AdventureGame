@@ -1,45 +1,54 @@
 package assets.Strings;
 
+import objects.AllBaseObject;
+
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TextMessages
 {
-    private List<String> keyMessages = new ArrayList<>();
-
-    private List<String> doorMessages = new ArrayList<>();
-
-    private List<String> boxMessages = new ArrayList<>();
-
-    private final String CONGRATULATION;
-    private final String FINISH;
+    Map<Enum, List<String>> listMessages = new HashMap<>();
 
     public TextMessages()
     {
-        CONGRATULATION = "Поздравляю!!! Ты стал ближе к мировому богатству.";
-        FINISH = "Конец";
-
-        keyMessages.add("Хмммм... Этот ключ может быть от чего-то важного.");
-        keyMessages.add("Этот ключ может тебе пригодиться.");
-        keyMessages.add("Этот ключ тебе поможет в будущем.");
-        keyMessages.add("Думаешь это последний ключ?");
-
-        doorMessages.add("Не факт что у тебя есть нужный ключ.");
-        doorMessages.add("У тебя нет подходящего ключа.");
-        doorMessages.add("Тебе нужен подходящий ключ.");
-        doorMessages.add("Ключ не подходит");
-
+        listMessages.put(AllBaseObject.Key,loadMessages("C:\\Users\\User\\IdeaProjects\\AdventureGame\\assets\\Strings\\Key.txt"));
+        listMessages.put(AllBaseObject.Boots, loadMessages("C:\\Users\\User\\IdeaProjects\\AdventureGame\\assets\\Strings\\Boots.txt"));
+        listMessages.put(AllBaseObject.Door, loadMessages("C:\\Users\\User\\IdeaProjects\\AdventureGame\\assets\\Strings\\Door.txt"));
+        listMessages.put(AllBaseObject.Box, new ArrayList<>());
     }
 
-    public String getKeyMessage()
+    public String getMessage(Enum e)
     {
-        return keyMessages.get((int) (Math.random() * keyMessages.size()));
+        return listMessages.get(e).get((int) (Math.random() * listMessages.get(e).size()));
     }
 
-    public String getBoxMessage()
+    private List<String> loadMessages( String path)
     {
-        return keyMessages.get((int) (Math.random() * keyMessages.size()));
+        List<String> list = new ArrayList<>();
+
+        try
+        {
+            File file = new File(path);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                list.add(line);
+            }
+
+            bufferedReader.close();
+            fileReader.close();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return list;
     }
-
-
 }
