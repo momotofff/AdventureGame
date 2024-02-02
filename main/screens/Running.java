@@ -12,14 +12,14 @@ import java.awt.image.BufferedImage;
 
 public class Running extends AbstractScreen
 {
-    private final KeyHandler keyHandler;
     private final GameCommons gameCommons;
     private final BufferedImage keyImage = new Key().image;
+    private String message = null;
+    int messageCounter = 180;
 
-    public Running(IScreenSwitcher switcher, KeyHandler keyHandler, GameCommons gameCommons)
+    public Running(IScreenSwitcher switcher, GameCommons gameCommons)
     {
         super(switcher);
-        this.keyHandler = keyHandler;
         this.gameCommons = gameCommons;
     }
 
@@ -57,13 +57,27 @@ public class Running extends AbstractScreen
         graphics2D.setColor(new Color(230,200,170));
         graphics2D.drawImage(keyImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
         graphics2D.drawString(" x " + gameCommons.player.keysCount, 60, 60);
+
+        if (message != null)
+        {
+            if (--messageCounter > 0)
+            {
+                graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
+                --messageCounter;
+            }
+            else
+            {
+                messageCounter = 180;
+                message = null;
+            }
+        }
     }
 
     @Override
     public void activate()
     {
-        keyHandler.addListener(KeyEvent.VK_E, this::onKeyE);
-        keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+        KeyHandler.addListener(KeyEvent.VK_E, this::onKeyE);
+        KeyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
 
         gameCommons.sound.playBacking(Sounds.Theme);
     }
@@ -81,15 +95,15 @@ public class Running extends AbstractScreen
     @Override
     public void deactivate()
     {
-        keyHandler.removeListener(KeyEvent.VK_E);
-        keyHandler.removeListener(KeyEvent.VK_SPACE);
+        KeyHandler.removeListener(KeyEvent.VK_E);
+        KeyHandler.removeListener(KeyEvent.VK_SPACE);
 
         gameCommons.sound.stopBacking();
     }
 
     @Override
-    public void startMessage(String text)
+    public void setMessage(String message)
     {
-
+        this.message = message;
     }
 }

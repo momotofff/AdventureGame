@@ -23,12 +23,12 @@ public class GameCommons
     final public ArrayList<Magician> NPC = new ArrayList<>();
     final public ArrayList<Entity> animals = new ArrayList<>();
 
-    public GameCommons(KeyHandler keyHandler, IDialogueStarter dialogueStarter)
+    public GameCommons( IDialogueStarter dialogueStarter, IMessages messages)
     {
         AssetSetter assetSetter = new AssetSetter();
         assetSetter.initObjects(tileManager.getFreePlaces(), items);
         assetSetter.initEntity(tileManager.getFreePlaces(), NPC, animals);
 
-        player = new Player(this, keyHandler, dialogueStarter, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize));
+        player = new Player(this, dialogueStarter, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize), messages);
     }
 }

@@ -20,4 +20,6 @@ public abstract class AbstractScreen
     public abstract void activate();
     public abstract void deactivate();
 
+    public void setMessage(String message) {
+    }
 }

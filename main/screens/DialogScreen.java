@@ -8,13 +8,11 @@ import java.awt.event.KeyEvent;
 
 public class DialogScreen extends AbstractScreen
 {
-    private final KeyHandler keyHandler;
     private AbstractDialogue dialogue;
 
-    public DialogScreen(IScreenSwitcher switcher, KeyHandler keyHandler)
+    public DialogScreen(IScreenSwitcher switcher)
     {
         super(switcher);
-        this.keyHandler = keyHandler;
     }
 
     public void setDialogue(AbstractDialogue dialogue)
@@ -36,7 +34,7 @@ public class DialogScreen extends AbstractScreen
         if (dialogue == null)
             return;
 
-        for (String line: dialogue.getText().split("\n"))
+        for (String line: dialogue.getText().split("%"))
         {
             graphics2D.drawString(line, window.x + Parameters.tileSize, window.y + Parameters.tileSize);
             window.y += Parameters.tileSize;
@@ -46,7 +44,7 @@ public class DialogScreen extends AbstractScreen
     @Override
     public void activate()
     {
-        keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+        KeyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
     }
 
     private void onKeySpace()
@@ -63,7 +61,7 @@ public class DialogScreen extends AbstractScreen
     @Override
     public void deactivate()
     {
-        keyHandler.removeListener(KeyEvent.VK_SPACE);
+        KeyHandler.removeListener(KeyEvent.VK_SPACE);
         dialogue = null;
     }
 }

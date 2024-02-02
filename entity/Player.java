@@ -13,19 +13,19 @@ import java.awt.*;
 public class Player extends Entity implements IScreenSwitcher, IMessages
 {
     final private GameCommons gameCommons;
-    final private KeyHandler keyHandler;
     final private IDialogueStarter dialogueStarter;
     final private TextMessages textMessages = new TextMessages();
+    IMessages messages;
 
     public int keysCount = 0;
     int boostCoolDown = 0;
 
-    public Player(GameCommons gameCommons, KeyHandler keyHandler, IDialogueStarter dialogueStarter, Point defaultWorldPosition)
+    public Player(GameCommons gameCommons,  IDialogueStarter dialogueStarter, Point defaultWorldPosition, IMessages messages)
     {
         super(defaultWorldPosition);
         this.gameCommons = gameCommons;
-        this.keyHandler = keyHandler;
         this.dialogueStarter = dialogueStarter;
+        this.messages = messages;
 
         screenCoordinates = new Point(Parameters.screenSize.x / 2 - Parameters.tileSize / 2, Parameters.screenSize.y / 2 - Parameters.tileSize / 2);
 
@@ -35,7 +35,7 @@ public class Player extends Entity implements IScreenSwitcher, IMessages
 
     public void update(Sound sound)
     {
-        keyHandler.getPressedDirection().ifPresent(value ->
+        KeyHandler.getPressedDirection().ifPresent(value ->
         {
             this.direction = value;
 
@@ -57,7 +57,7 @@ public class Player extends Entity implements IScreenSwitcher, IMessages
             }
         });
 
-        if (keyHandler.getPressedDirection().isEmpty())
+        if (KeyHandler.getPressedDirection().isEmpty())
             resetAnimation();
 
         if (--boostCoolDown < 0)
@@ -77,20 +77,20 @@ public class Player extends Entity implements IScreenSwitcher, IMessages
         if (item instanceof Key)
         {
             ++keysCount;
-            startMessage(textMessages.getKeyMessage());
+            messages.startMessage(textMessages.getMessage(AllBaseObject.Key));
         }
         else if (item instanceof Box)
         {
             System.out.println("Ваш инвентарь");
         }
         else if (item instanceof Door)
-            System.out.println("Не факт что у тебя есть нужный ключ.");
+            startMessage(textMessages.getMessage(AllBaseObject.Door));
         else if (item instanceof Boots)
         {
             movementSpeed += 2;
             animationSpeed /= 2;
             boostCoolDown = 1000;
-            //gamePanel.ui.showMessage("Ля какие шикарные бархатные тяги");
+            messages.startMessage(textMessages.getMessage(AllBaseObject.Boots));
         }
 
         gameCommons.items.remove(item);
