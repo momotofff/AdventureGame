@@ -14,9 +14,9 @@ public class TextMessages
 
     public TextMessages()
     {
-        listMessages.put(AllBaseObject.Key,loadMessages("C:\\Users\\User\\IdeaProjects\\AdventureGame\\assets\\Strings\\Key.txt"));
-        listMessages.put(AllBaseObject.Boots, loadMessages("C:\\Users\\User\\IdeaProjects\\AdventureGame\\assets\\Strings\\Boots.txt"));
-        listMessages.put(AllBaseObject.Door, loadMessages("C:\\Users\\User\\IdeaProjects\\AdventureGame\\assets\\Strings\\Door.txt"));
+        listMessages.put(AllBaseObject.Key,loadMessages("./assets/Strings/Key.txt"));
+        listMessages.put(AllBaseObject.Boots, loadMessages("./assets/Strings/Boots.txt"));
+        listMessages.put(AllBaseObject.Door, loadMessages("./assets/Strings/Door.txt"));
         listMessages.put(AllBaseObject.Box, new ArrayList<>());
     }
 

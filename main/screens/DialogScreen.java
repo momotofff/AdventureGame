@@ -10,9 +10,9 @@ public class DialogScreen extends AbstractScreen
 {
     private AbstractDialogue dialogue;
 
-    public DialogScreen(IScreenSwitcher switcher)
+    public DialogScreen(IScreenSwitcher switcher, KeyHandler keyHandler)
     {
-        super(switcher);
+        super(switcher, keyHandler);
     }
 
     public void setDialogue(AbstractDialogue dialogue)
@@ -44,7 +44,7 @@ public class DialogScreen extends AbstractScreen
     @Override
     public void activate()
     {
-        KeyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+        keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
     }
 
     private void onKeySpace()
@@ -61,7 +61,7 @@ public class DialogScreen extends AbstractScreen
     @Override
     public void deactivate()
     {
-        KeyHandler.removeListener(KeyEvent.VK_SPACE);
+        keyHandler.removeListeners();
         dialogue = null;
     }
 }

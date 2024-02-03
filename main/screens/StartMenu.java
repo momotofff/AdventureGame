@@ -3,7 +3,6 @@ package main.screens;
 import main.GameState;
 import main.KeyHandler;
 import main.Parameters;
-import main.screens.interfaces.IScreenShotter;
 import main.screens.interfaces.IScreenSwitcher;
 
 import java.awt.*;
@@ -19,12 +18,10 @@ public class StartMenu extends AbstractScreen
     }
 
     private MenuItems menuPosition = MenuItems.Start;
-    private final KeyHandler keyHandler;
 
     public StartMenu(IScreenSwitcher switcher, KeyHandler keyHandler)
     {
-        super(switcher);
-        this.keyHandler = keyHandler;
+        super(switcher, keyHandler);
     }
 
     @Override
@@ -114,8 +111,6 @@ public class StartMenu extends AbstractScreen
     @Override
     public void deactivate()
     {
-        keyHandler.removeListener(KeyEvent.VK_W);
-        keyHandler.removeListener(KeyEvent.VK_S);
-        keyHandler.removeListener(KeyEvent.VK_SPACE);
+        keyHandler.removeListeners();
     }
 }

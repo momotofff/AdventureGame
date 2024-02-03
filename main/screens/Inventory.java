@@ -12,15 +12,13 @@ import java.awt.image.BufferedImage;
 
 public class Inventory extends AbstractScreen
 {
-    private final KeyHandler keyHandler;
     private String message = null;
     int messageCounter = 180;
     BufferedImage bufferedImage = new Key().image;
 
     public Inventory(IScreenSwitcher switcher, KeyHandler keyHandler)
     {
-        super(switcher);
-        this.keyHandler = keyHandler;
+        super(switcher, keyHandler);
     }
 
     @Override
@@ -62,7 +60,6 @@ public class Inventory extends AbstractScreen
     @Override
     public void deactivate()
     {
-        keyHandler.removeListener(KeyEvent.VK_E);
-        keyHandler.removeListener(KeyEvent.VK_SPACE);
+        keyHandler.removeListeners();
     }
 }

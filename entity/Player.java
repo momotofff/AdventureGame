@@ -3,29 +3,31 @@ package entity;
 import assets.Strings.TextMessages;
 import main.*;
 import main.screens.interfaces.IDialogueStarter;
-import main.screens.interfaces.IMessages;
-import main.screens.interfaces.IScreenSwitcher;
+import main.screens.interfaces.IMessageShower;
 import objects.*;
 
 import java.awt.*;
 
 
-public class Player extends Entity implements IScreenSwitcher, IMessages
+public class Player extends Entity
 {
     final private GameCommons gameCommons;
+    final private KeyHandler keyHandler;
     final private IDialogueStarter dialogueStarter;
     final private TextMessages textMessages = new TextMessages();
-    IMessages messages;
+    final private IMessageShower messageShower;
 
     public int keysCount = 0;
     int boostCoolDown = 0;
 
-    public Player(GameCommons gameCommons,  IDialogueStarter dialogueStarter, Point defaultWorldPosition, IMessages messages)
+    public Player(GameCommons gameCommons, KeyHandler keyHandler, IDialogueStarter dialogueStarter, Point defaultWorldPosition, IMessageShower messageShower)
     {
         super(defaultWorldPosition);
+
         this.gameCommons = gameCommons;
+        this.keyHandler = keyHandler;
         this.dialogueStarter = dialogueStarter;
-        this.messages = messages;
+        this.messageShower = messageShower;
 
         screenCoordinates = new Point(Parameters.screenSize.x / 2 - Parameters.tileSize / 2, Parameters.screenSize.y / 2 - Parameters.tileSize / 2);
 
@@ -35,7 +37,7 @@ public class Player extends Entity implements IScreenSwitcher, IMessages
 
     public void update(Sound sound)
     {
-        KeyHandler.getPressedDirection().ifPresent(value ->
+        keyHandler.getPressedDirection().ifPresent(value ->
         {
             this.direction = value;
 
@@ -57,7 +59,7 @@ public class Player extends Entity implements IScreenSwitcher, IMessages
             }
         });
 
-        if (KeyHandler.getPressedDirection().isEmpty())
+        if (keyHandler.getPressedDirection().isEmpty())
             resetAnimation();
 
         if (--boostCoolDown < 0)
@@ -77,20 +79,20 @@ public class Player extends Entity implements IScreenSwitcher, IMessages
         if (item instanceof Key)
         {
             ++keysCount;
-            messages.startMessage(textMessages.getMessage(AllBaseObject.Key));
+            messageShower.showMessage(textMessages.getMessage(AllBaseObject.Key));
         }
         else if (item instanceof Box)
         {
             System.out.println("Ваш инвентарь");
         }
         else if (item instanceof Door)
-            startMessage(textMessages.getMessage(AllBaseObject.Door));
+            messageShower.showMessage(textMessages.getMessage(AllBaseObject.Door));
         else if (item instanceof Boots)
         {
             movementSpeed += 2;
             animationSpeed /= 2;
             boostCoolDown = 1000;
-            messages.startMessage(textMessages.getMessage(AllBaseObject.Boots));
+            messageShower.showMessage(textMessages.getMessage(AllBaseObject.Boots));
         }
 
         gameCommons.items.remove(item);
@@ -119,10 +121,4 @@ public class Player extends Entity implements IScreenSwitcher, IMessages
         loadAnimation(Direction.Right, "/assets/Player/right3.png");
         loadAnimation(Direction.Right, "/assets/Player/right4.png");
     }
-
-    @Override
-    public void switchScreen(GameState newState) {}
-
-    @Override
-    public void startMessage(String message) {}
 }

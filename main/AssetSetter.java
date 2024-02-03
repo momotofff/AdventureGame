@@ -28,11 +28,11 @@ public class AssetSetter
 
     public void initEntity(ArrayList<Point> freePlaces, ArrayList<Magician> NPC, ArrayList<Entity> animals)
     {
-        Magician magician1 = new Magician(new Point(15 * Parameters.tileSize, 15 * Parameters.tileSize), "C:\\Users\\User\\IdeaProjects\\AdventureGame\\assets\\Strings\\Magician1.txt");
+        Magician magician1 = new Magician(new Point(15 * Parameters.tileSize, 15 * Parameters.tileSize), "./assets/Strings/Magician1.txt");
         magician1.name = "Mag";
         NPC.add(magician1);
 
-        Magician magician2 = new Magician(new Point(15 * Parameters.tileSize, 20 * Parameters.tileSize), "C:\\Users\\User\\IdeaProjects\\AdventureGame\\assets\\Strings\\Magician2.txt");
+        Magician magician2 = new Magician(new Point(15 * Parameters.tileSize, 20 * Parameters.tileSize), "./assets/Strings/Magician2.txt");
         magician2.name = "Mag борэц";
         NPC.add(magician2);
 

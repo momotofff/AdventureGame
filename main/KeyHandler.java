@@ -8,21 +8,21 @@ import java.util.Optional;
 
 public class KeyHandler implements KeyListener
 {
-    private static final HashMap<Integer, Runnable> listeners = new HashMap<>();
+    private final HashMap<Integer, Runnable> listeners = new HashMap<>();
 
-    private static boolean upPressed;
-    private static boolean downPressed;
-    private static boolean leftPressed;
-    private static boolean rightPressed;
+    private boolean upPressed;
+    private boolean downPressed;
+    private boolean leftPressed;
+    private boolean rightPressed;
 
-    public static void addListener(Integer key, Runnable listener)
+    public void addListener(Integer key, Runnable listener)
     {
         listeners.put(key, listener);
     }
 
-    public static void removeListener(Integer key)
+    public void removeListeners()
     {
-        listeners.remove(key);
+        listeners.clear();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class KeyHandler implements KeyListener
         }
     }
 
-    public static Optional<Direction> getPressedDirection()
+    public Optional<Direction> getPressedDirection()
     {
         if (upPressed)
             return Optional.of(Direction.Up);
