@@ -85,6 +85,7 @@ public class Running extends AbstractScreen
 
     public void setMessage(String message)
     {
+        // TODO: Maybe support several messages at time?
         messageCounter = 180;
         this.message = message;
     }
