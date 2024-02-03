@@ -3,7 +3,7 @@ package main;
 import main.screens.*;
 import main.screens.DialogScreen;
 import main.screens.interfaces.IDialogueStarter;
-import main.screens.interfaces.IMessages;
+import main.screens.interfaces.IMessageShower;
 import main.screens.interfaces.IScreenShotter;
 import main.screens.interfaces.IScreenSwitcher;
 import main.utils.ImageUtils;
@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter, IScreenShotter, IMessages
+public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter, IScreenShotter, IMessageShower
 {
     Font maruMonica;
 
@@ -50,16 +50,26 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
         switchScreen(GameState.Dialog);
     }
 
+    @Override
+    public void showMessage(String message)
+    {
+        Running runningScreen = (Running) screens.get(GameState.Running);
+        if (runningScreen == null)
+            return;
+
+        runningScreen.setMessage(message);
+    }
+
     public UI(JFrame frame)
     {
         this.frame = frame;
-        gameCommons = new GameCommons(this, this);
+        gameCommons = new GameCommons(this, keyHandler, this);
 
         screens.put(GameState.StartScreen, new StartMenu(this, keyHandler));
         screens.put(GameState.Paused, new Pause(this, keyHandler, this));
         screens.put(GameState.Inventory, new Inventory(this, keyHandler));
-        screens.put(GameState.Running, new Running(this, gameCommons));
-        screens.put(GameState.Dialog, new DialogScreen(this));
+        screens.put(GameState.Running, new Running(this, keyHandler, gameCommons));
+        screens.put(GameState.Dialog, new DialogScreen(this, keyHandler));
 
         this.setPreferredSize(new Dimension(Parameters.screenSize.x, Parameters.screenSize.y));
         this.setBackground(Color.black);
@@ -141,13 +151,7 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
         root.print(graphics2D);
         graphics2D.dispose();
 
-        return ImageUtils.blur(image);
-    }
-
-    @Override
-    public void startMessage(String message)
-    {
-        screens.get(GameState.Running).setMessage(message) ;
+        return ImageUtils.darker(ImageUtils.blur(image));
     }
 }
 

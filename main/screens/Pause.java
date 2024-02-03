@@ -21,14 +21,12 @@ public class Pause extends AbstractScreen
     }
 
     private Items menuPosition = Items.Continue;
-    private final KeyHandler keyHandler;
     private final IScreenShotter screenShotter;
     private BufferedImage screenShot;
 
     public Pause(IScreenSwitcher switcher, KeyHandler keyHandler, IScreenShotter screenShotter)
     {
-        super(switcher);
-        this.keyHandler = keyHandler;
+        super(switcher, keyHandler);
         this.screenShotter = screenShotter;
     }
 
@@ -136,10 +134,7 @@ public class Pause extends AbstractScreen
     @Override
     public void deactivate()
     {
-        keyHandler.removeListener(KeyEvent.VK_W);
-        keyHandler.removeListener(KeyEvent.VK_S);
-        keyHandler.removeListener(KeyEvent.VK_SPACE);
-
+        keyHandler.removeListeners();
         screenShot = null;
     }
 }

@@ -15,11 +15,11 @@ public class Running extends AbstractScreen
     private final GameCommons gameCommons;
     private final BufferedImage keyImage = new Key().image;
     private String message = null;
-    int messageCounter = 180;
+    private int messageCounter = 0;
 
-    public Running(IScreenSwitcher switcher, GameCommons gameCommons)
+    public Running(IScreenSwitcher switcher, KeyHandler keyHandler, GameCommons gameCommons)
     {
-        super(switcher);
+        super(switcher, keyHandler);
         this.gameCommons = gameCommons;
     }
 
@@ -58,52 +58,34 @@ public class Running extends AbstractScreen
         graphics2D.drawImage(keyImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
         graphics2D.drawString(" x " + gameCommons.player.keysCount, 60, 60);
 
-        if (message != null)
-        {
-            if (--messageCounter > 0)
-            {
-                graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
-                --messageCounter;
-            }
-            else
-            {
-                messageCounter = 180;
-                message = null;
-            }
-        }
+        if (message == null)
+            return;
+
+        if (--messageCounter > 0)
+            graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
+        else
+            message = null;
     }
 
     @Override
     public void activate()
     {
-        KeyHandler.addListener(KeyEvent.VK_E, this::onKeyE);
-        KeyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+        keyHandler.addListener(KeyEvent.VK_E, () -> switcher.switchScreen(GameState.Inventory));
+        keyHandler.addListener(KeyEvent.VK_SPACE, () -> switcher.switchScreen(GameState.Paused));
 
         gameCommons.sound.playBacking(Sounds.Theme);
-    }
-
-    private void onKeyE()
-    {
-        switcher.switchScreen(GameState.Inventory);
-    }
-
-    private void onKeySpace()
-    {
-        switcher.switchScreen(GameState.Paused);
     }
 
     @Override
     public void deactivate()
     {
-        KeyHandler.removeListener(KeyEvent.VK_E);
-        KeyHandler.removeListener(KeyEvent.VK_SPACE);
-
+        keyHandler.removeListeners();
         gameCommons.sound.stopBacking();
     }
 
-    @Override
     public void setMessage(String message)
     {
+        messageCounter = 180;
         this.message = message;
     }
 }
