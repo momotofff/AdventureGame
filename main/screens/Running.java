@@ -31,15 +31,15 @@ public class Running extends AbstractScreen
         gameCommons.player.update(gameCommons.sound);
 
         for (Entity entity : gameCommons.NPC)
-            entity.update(gameCommons.player, gameCommons.collisionChecker);
+            entity.update(gameCommons.player);
 
-        for (BaseObject item : gameCommons.items)
+        for (BaseObject item : gameCommons.objectInteractive)
             item.update(gameCommons.player);
 
         for (Entity entity : gameCommons.animals)
-            entity.update(gameCommons.player, gameCommons.collisionChecker);
+            entity.update(gameCommons.player);
 
-        for (BaseObject item: gameCommons.items)
+        for (BaseObject item: gameCommons.objectInteractive)
         {
             if (item != null)
                 item.drawing(graphics2D, Parameters.tileSize);

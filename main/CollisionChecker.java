@@ -1,22 +1,17 @@
 package main;
 
 import entity.Entity;
+import entity.Magician;
 import objects.BaseObject;
 import tile.Tile;
-import tile.TileManager;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class CollisionChecker
 {
-    GameCommons gameCommons;
-
-    public CollisionChecker(GameCommons gameCommons)
-    {
-        this.gameCommons = gameCommons;
-    }
-
-    public boolean checkTile(Entity entity)
+    public static boolean checkTile(Entity entity, Tile[][] world)
     {
         int entityLeftCol = entity.collisionArea.x / Parameters.tileSize;
         int entityTopRow = entity.collisionArea.y / Parameters.tileSize;
@@ -29,26 +24,26 @@ public class CollisionChecker
         {
             case Up:
                 entityTopRow = (entity.collisionArea.y - entity.movementSpeed) / Parameters.tileSize;
-                tile1 = gameCommons.tileManager.world[entityLeftCol][entityTopRow];
-                tile2 = gameCommons.tileManager.world[entityRightCol][entityTopRow];
+                tile1 = world[entityLeftCol][entityTopRow];
+                tile2 = world[entityRightCol][entityTopRow];
                 break;
 
             case Down:
                 entityBottomRow = (entity.collisionArea.y + entity.collisionArea.height + entity.movementSpeed) / Parameters.tileSize;
-                tile1 = gameCommons.tileManager.world[entityLeftCol][entityBottomRow];
-                tile2 = gameCommons.tileManager.world[entityRightCol][entityBottomRow];
+                tile1 = world[entityLeftCol][entityBottomRow];
+                tile2 = world[entityRightCol][entityBottomRow];
                 break;
 
             case Left:
                 entityLeftCol = (entity.collisionArea.x - entity.movementSpeed) / Parameters.tileSize;
-                tile1 = gameCommons.tileManager.world[entityLeftCol][entityTopRow];
-                tile2 = gameCommons.tileManager.world[entityLeftCol][entityBottomRow];
+                tile1 = world[entityLeftCol][entityTopRow];
+                tile2 = world[entityLeftCol][entityBottomRow];
                 break;
 
             case Right:
                 entityRightCol = (entity.collisionArea.x + entity.collisionArea.width + entity.movementSpeed) / Parameters.tileSize;
-                tile1 = gameCommons.tileManager.world[entityRightCol][entityTopRow];
-                tile2 = gameCommons.tileManager.world[entityRightCol][entityBottomRow];
+                tile1 = world[entityRightCol][entityTopRow];
+                tile2 = world[entityRightCol][entityBottomRow];
                 break;
         }
 
@@ -58,11 +53,11 @@ public class CollisionChecker
         return tile1.collision || tile2.collision ;
     }
 
-    public BaseObject checkObject(Entity entity)
+    public static BaseObject checkObject(Entity player, HashSet<BaseObject> objectInteractive)
     {
-        return gameCommons.items
+        return objectInteractive
             .stream()
-            .filter(item -> entity.collisionArea.intersects(item.areaCollision))
+            .filter(item -> player.collisionArea.intersects(item.areaCollision))
             .findFirst()
             .orElse(null);
 
@@ -77,11 +72,11 @@ public class CollisionChecker
         }
 */
     }
-    public Entity checkEntity(Entity player)
+    public static Entity checkEntity(Entity player, ArrayList<Magician> NPC)
     {
         Rectangle playerCollisionArea;
 
-        for (Entity entity: gameCommons.NPC)
+        for (Entity entity: NPC)
         {
             playerCollisionArea = new Rectangle(player.collisionArea);
 
@@ -111,15 +106,15 @@ public class CollisionChecker
         return null;
     }
 
-    public boolean checkPlayer(Entity entity)
+    public static boolean checkPlayer(Entity character, Entity player)
     {
-        Rectangle collisionArea = new Rectangle(entity.collisionArea);
+        Rectangle collisionArea = new Rectangle(character.collisionArea);
 
         collisionArea.width += 100;
         collisionArea.height += 100;
         collisionArea.x -= 50;
         collisionArea.y -= 50;
 
-        return collisionArea.intersects(gameCommons.player.collisionArea);
+        return collisionArea.intersects(player.collisionArea);
     }
 }

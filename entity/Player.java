@@ -2,8 +2,7 @@ package entity;
 
 import assets.Strings.TextMessages;
 import main.*;
-import main.screens.interfaces.IDialogueStarter;
-import main.screens.interfaces.IMessageShower;
+import main.screens.interfaces.*;
 import objects.*;
 
 import java.awt.*;
@@ -16,18 +15,22 @@ public class Player extends Entity
     final private IDialogueStarter dialogueStarter;
     final private TextMessages textMessages = new TextMessages();
     final private IMessageShower messageShower;
+    final private IEntityCollisionChecker entityCollisionChecker;
+    final private IObjectCollisionChecker objectCollisionChecker;
 
     public int keysCount = 0;
     int boostCoolDown = 0;
 
-    public Player(GameCommons gameCommons, KeyHandler keyHandler, IDialogueStarter dialogueStarter, Point defaultWorldPosition, IMessageShower messageShower)
+    public Player(GameCommons gameCommons, KeyHandler keyHandler, IDialogueStarter dialogueStarter, Point defaultWorldPosition, IMessageShower messageShower, ITileCollisionChecker tileCollisionChecker, IEntityCollisionChecker entityCollisionChecker, IObjectCollisionChecker objectCollisionChecker)
     {
-        super(defaultWorldPosition);
+        super(defaultWorldPosition, tileCollisionChecker);
 
         this.gameCommons = gameCommons;
         this.keyHandler = keyHandler;
         this.dialogueStarter = dialogueStarter;
         this.messageShower = messageShower;
+        this.entityCollisionChecker = entityCollisionChecker;
+        this.objectCollisionChecker = objectCollisionChecker;
 
         screenCoordinates = new Point(Parameters.screenSize.x / 2 - Parameters.tileSize / 2, Parameters.screenSize.y / 2 - Parameters.tileSize / 2);
 
@@ -41,9 +44,9 @@ public class Player extends Entity
         {
             this.direction = value;
 
-            pickUpObject(gameCommons.collisionChecker.checkObject(this), sound);
+            pickUpObject(objectCollisionChecker.checkObject(this), sound);
 
-            Entity entity = gameCommons.collisionChecker.checkEntity(this);
+            Entity entity = entityCollisionChecker.checkEntity(this);
 
             if (entity instanceof Magician magician)
             {
@@ -54,7 +57,7 @@ public class Player extends Entity
 
             if (entity == null)
             {
-                if (!gameCommons.collisionChecker.checkTile(this))
+                if (!tileCollisionChecker.checkTile(this))
                     makeStep(true, sound);
             }
         });
@@ -95,7 +98,7 @@ public class Player extends Entity
             messageShower.showMessage(textMessages.getMessage(AllBaseObject.Boots));
         }
 
-        gameCommons.items.remove(item);
+        gameCommons.objectInteractive.remove(item);
     }
 
     @Override
