@@ -14,9 +14,6 @@ import java.util.HashSet;
 public class GameCommons implements ITileCollisionChecker, IEntityCollisionChecker, IObjectCollisionChecker, IPlayerCollisionChecker
 {
     final public TileManager tileManager = new TileManager();
-    // TODO: make static and move out
-    final public Sound sound = new Sound();
-
     final public Player player;
     final public HashSet<BaseObject> objectInteractive = new HashSet<>();
     final public ArrayList<Magician> NPC = new ArrayList<>();

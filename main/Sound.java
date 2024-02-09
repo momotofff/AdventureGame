@@ -13,6 +13,7 @@ public class Sound
     private Clip effect;
     private Clip backing;
     private final Map<Sounds, AudioInputStream> sounds = new HashMap<>();
+    public static Sound sound = new Sound();
 
     public Sound()
     {

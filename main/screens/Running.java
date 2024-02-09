@@ -28,7 +28,7 @@ public class Running extends AbstractScreen
     {
         gameCommons.tileManager.drawing(graphics2D, gameCommons.player);
 
-        gameCommons.player.update(gameCommons.sound);
+        gameCommons.player.update(Sound.sound);
 
         for (Entity entity : gameCommons.NPC)
             entity.update(gameCommons.player);
@@ -73,14 +73,14 @@ public class Running extends AbstractScreen
         keyHandler.addListener(KeyEvent.VK_E, () -> switcher.switchScreen(GameState.Inventory));
         keyHandler.addListener(KeyEvent.VK_SPACE, () -> switcher.switchScreen(GameState.Paused));
 
-        gameCommons.sound.playBacking(Sounds.Theme);
+        Sound.sound.playBacking(Sounds.Theme);
     }
 
     @Override
     public void deactivate()
     {
         keyHandler.removeListeners();
-        gameCommons.sound.stopBacking();
+        Sound.sound.stopBacking();
     }
 
     public void setMessage(String message)
