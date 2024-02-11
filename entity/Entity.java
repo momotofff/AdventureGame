@@ -3,6 +3,7 @@ package entity;
 import main.CollisionChecker;
 import main.Sound;
 import main.Sounds;
+import main.screens.interfaces.ITileCollisionChecker;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -28,8 +29,11 @@ public abstract class Entity
 
     private final Map<Direction, ArrayList<BufferedImage>> animations = new HashMap<>();
 
-    Entity(Point defaultWorldPosition)
+    ITileCollisionChecker tileCollisionChecker;
+
+    Entity(Point defaultWorldPosition, ITileCollisionChecker tileCollisionChecker)
     {
+        this.tileCollisionChecker = tileCollisionChecker;
         collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 24, 24, 24);
         worldPosition = defaultWorldPosition;
         screenCoordinates = defaultWorldPosition;
@@ -128,9 +132,8 @@ public abstract class Entity
         spriteNumber = 0;
     }
 
-    public void update(Player player, CollisionChecker collisionChecker) {
+    public void update(Player player) {
     }
-
     public BufferedImage getTile()
     {
         return animations.get(Direction.Down).get(0);

@@ -1,6 +1,7 @@
 package entity;
 
 import main.CollisionChecker;
+import main.screens.interfaces.ITileCollisionChecker;
 
 import java.awt.*;
 
@@ -9,9 +10,9 @@ public class Rabbit extends Entity
 {
     int animationsTimeout = 0;
 
-    public Rabbit(Point defaultWorldPosition)
+    public Rabbit(Point defaultWorldPosition, ITileCollisionChecker tileCollisionChecker)
     {
-        super(defaultWorldPosition);
+        super(defaultWorldPosition, tileCollisionChecker);
 
         collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
         worldPosition = defaultWorldPosition;
@@ -20,7 +21,7 @@ public class Rabbit extends Entity
         direction = getRandomDirection();
     }
 
-    public void update(Player player, CollisionChecker collisionChecker)
+    public void update(Player player)
     {
         if (--animationsTimeout < 0)
         {
@@ -33,7 +34,7 @@ public class Rabbit extends Entity
                 worldPosition.y - player.worldPosition.y + player.screenCoordinates.y
         );
 
-        if (!collisionChecker.checkTile(this))
+        if (!tileCollisionChecker.checkTile(this))
             makeStep(false, null);
         else
             changeDirection();

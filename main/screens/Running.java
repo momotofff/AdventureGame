@@ -28,24 +28,13 @@ public class Running extends AbstractScreen
     {
         gameCommons.tileManager.drawing(graphics2D, gameCommons.player);
 
-        gameCommons.player.update(gameCommons.sound);
-
-        for (Entity entity : gameCommons.NPC)
-            entity.update(gameCommons.player, gameCommons.collisionChecker);
-
-        for (BaseObject item : gameCommons.items)
-            item.update(gameCommons.player);
-
-        for (Entity entity : gameCommons.animals)
-            entity.update(gameCommons.player, gameCommons.collisionChecker);
-
-        for (BaseObject item: gameCommons.items)
+        for (BaseObject item: gameCommons.interactiveObjects)
         {
             if (item != null)
                 item.drawing(graphics2D, Parameters.tileSize);
         }
 
-        for (Entity entity : gameCommons.NPC)
+        for (Entity entity : gameCommons.npc)
             entity.drawing(graphics2D, Parameters.tileSize);
 
         for (Entity entity : gameCommons.animals)
@@ -68,19 +57,37 @@ public class Running extends AbstractScreen
     }
 
     @Override
+    public void update()
+    {
+        gameCommons.player.update(Sound.sound);
+
+        for (Entity entity : gameCommons.npc)
+            entity.update(gameCommons.player);
+
+        for (BaseObject item : gameCommons.interactiveObjects)
+            item.update(gameCommons.player);
+
+        for (Entity entity : gameCommons.animals)
+            entity.update(gameCommons.player);
+
+        super.update();
+    }
+
+    @Override
     public void activate()
     {
         keyHandler.addListener(KeyEvent.VK_E, () -> switcher.switchScreen(GameState.Inventory));
         keyHandler.addListener(KeyEvent.VK_SPACE, () -> switcher.switchScreen(GameState.Paused));
+        keyHandler.addListener(KeyEvent.VK_ESCAPE, () -> switcher.switchScreen(GameState.Paused));
 
-        gameCommons.sound.playBacking(Sounds.Theme);
+        Sound.sound.playBacking(Sounds.Theme);
     }
 
     @Override
     public void deactivate()
     {
         keyHandler.removeListeners();
-        gameCommons.sound.stopBacking();
+        Sound.sound.stopBacking();
     }
 
     public void setMessage(String message)

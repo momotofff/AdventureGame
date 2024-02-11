@@ -1,6 +1,9 @@
 package entity;
 
 import main.CollisionChecker;
+import main.screens.interfaces.IPlayerCollisionChecker;
+import main.screens.interfaces.ITileCollisionChecker;
+
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,11 +15,13 @@ public class Magician extends Entity
 {
     int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
+    private final IPlayerCollisionChecker playerCollisionChecker;
 
-    public Magician(Point defaultWorldPosition, String path)
+    public Magician(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
-        super(defaultWorldPosition);
+        super(defaultWorldPosition, tileCollisionChecker);
 
+        this.playerCollisionChecker = playerCollisionChecker;
         collisionArea = new Rectangle(defaultWorldPosition.x + 12, defaultWorldPosition.y + 12, 24, 24);
         worldPosition = defaultWorldPosition;
         movementSpeed = 1;
@@ -24,14 +29,14 @@ public class Magician extends Entity
         loadDialogs(path);
     }
 
-    public void update(Player player, CollisionChecker collisionChecker)
+    public void update(Player player)
     {
         screenCoordinates = new Point(
                 worldPosition.x - player.worldPosition.x + player.screenCoordinates.x,
                 worldPosition.y - player.worldPosition.y + player.screenCoordinates.y
         );
 
-        if (!collisionChecker.checkPlayer(this))
+        if (!playerCollisionChecker.checkPlayer(this))
         {
             if (--animationsTimeout < 0)
             {
@@ -39,7 +44,7 @@ public class Magician extends Entity
                 animationsTimeout = 300;
             }
 
-            if (!collisionChecker.checkTile(this))
+            if (!tileCollisionChecker.checkTile(this))
                 makeStep(false, null);
             else
                 changeDirection();

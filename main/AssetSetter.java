@@ -3,6 +3,8 @@ package main;
 import entity.Entity;
 import entity.Magician;
 import entity.Rabbit;
+import main.screens.interfaces.IPlayerCollisionChecker;
+import main.screens.interfaces.ITileCollisionChecker;
 import objects.BaseObject;
 import objects.Boots;
 import objects.Box;
@@ -26,34 +28,25 @@ public class AssetSetter
         items.add(new Boots(new Point(19, 19)));
     }
 
-    public void initEntity(ArrayList<Point> freePlaces, ArrayList<Magician> NPC, ArrayList<Entity> animals)
+    public void initNPC(ArrayList<Point> freePlaces, ArrayList<Magician> NPC, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
-        Magician magician1 = new Magician(new Point(15 * Parameters.tileSize, 15 * Parameters.tileSize), "./assets/Strings/Magician1.txt");
+        Magician magician1 = new Magician(new Point(15 * Parameters.tileSize, 15 * Parameters.tileSize), "./assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
         magician1.name = "Mag";
         NPC.add(magician1);
 
-        Magician magician2 = new Magician(new Point(15 * Parameters.tileSize, 20 * Parameters.tileSize), "./assets/Strings/Magician2.txt");
+        Magician magician2 = new Magician(new Point(15 * Parameters.tileSize, 20 * Parameters.tileSize), "./assets/Strings/Magician2.txt", tileCollisionChecker, playerCollisionChecker);
         magician2.name = "Mag борэц";
         NPC.add(magician2);
-
-        for (int i = 0; i < 20; ++i)
-            animals.add(createEntity(Rabbit.class, freePlaces));
     }
 
-    private Entity createEntity(Class<? extends Entity> cls, ArrayList<Point> freePlaces)
+    public void initAnimals(ArrayList<Point> freePlaces, ArrayList<Entity> animals, ITileCollisionChecker tileCollisionChecker)
     {
-        Point position = new Point(freePlaces.get((int) (Math.random() * freePlaces.size())));
-        position.x *= Parameters.tileSize;
-        position.y *= Parameters.tileSize;
-
-        try
+        for (int i = 0; i < 20; ++i)
         {
-            Constructor<? extends Entity> constructor = cls.getConstructor(Point.class);
-            return constructor.newInstance(position);
-        }
-        catch (Exception e)
-        {
-            return null;
+            Point position = new Point(freePlaces.get((int) (Math.random() * freePlaces.size())));
+            position.x *= Parameters.tileSize;
+            position.y *= Parameters.tileSize;
+            animals.add(new Rabbit(position, tileCollisionChecker));
         }
     }
 }
