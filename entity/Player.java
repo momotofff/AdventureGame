@@ -6,11 +6,12 @@ import main.screens.interfaces.*;
 import objects.*;
 
 import java.awt.*;
+import java.util.HashSet;
 
 
 public class Player extends Entity
 {
-    final private GameCommons gameCommons;
+    final private HashSet<BaseObject> interactiveObjects;
     final private KeyHandler keyHandler;
     final private IDialogueStarter dialogueStarter;
     final private TextMessages textMessages = new TextMessages();
@@ -21,11 +22,11 @@ public class Player extends Entity
     public int keysCount = 0;
     int boostCoolDown = 0;
 
-    public Player(GameCommons gameCommons, KeyHandler keyHandler, IDialogueStarter dialogueStarter, Point defaultWorldPosition, IMessageShower messageShower, ITileCollisionChecker tileCollisionChecker, IEntityCollisionChecker entityCollisionChecker, IObjectCollisionChecker objectCollisionChecker)
+    public Player(HashSet<BaseObject> interactiveObjects, KeyHandler keyHandler, IDialogueStarter dialogueStarter, Point defaultWorldPosition, IMessageShower messageShower, ITileCollisionChecker tileCollisionChecker, IEntityCollisionChecker entityCollisionChecker, IObjectCollisionChecker objectCollisionChecker)
     {
         super(defaultWorldPosition, tileCollisionChecker);
 
-        this.gameCommons = gameCommons;
+        this.interactiveObjects = interactiveObjects;
         this.keyHandler = keyHandler;
         this.dialogueStarter = dialogueStarter;
         this.messageShower = messageShower;
@@ -98,7 +99,7 @@ public class Player extends Entity
             messageShower.showMessage(textMessages.getMessage(AllBaseObject.Boots));
         }
 
-        gameCommons.objectInteractive.remove(item);
+        interactiveObjects.remove(item);
     }
 
     @Override

@@ -69,7 +69,7 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
         screens.put(GameState.Paused, new Pause(this, keyHandler, this));
         screens.put(GameState.Inventory, new Inventory(this, keyHandler));
         screens.put(GameState.Running, new Running(this, keyHandler, gameCommons));
-        screens.put(GameState.Dialog, new DialogScreen(this, keyHandler));
+        screens.put(GameState.Dialog, new DialogScreen(this, keyHandler, this));
 
         this.setPreferredSize(new Dimension(Parameters.screenSize.x, Parameters.screenSize.y));
         this.setBackground(Color.black);
@@ -102,6 +102,10 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
 
         while (gameThread != null)
         {
+            AbstractScreen screen = screens.get(gameState);
+            if (screen != null)
+                screen.update();
+
             repaint();
 
             long remainingTime = nextDrawTime - System.currentTimeMillis();

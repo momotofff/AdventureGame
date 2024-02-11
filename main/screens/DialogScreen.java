@@ -1,18 +1,23 @@
 package main.screens;
 
 import main.*;
+import main.screens.interfaces.IScreenShotter;
 import main.screens.interfaces.IScreenSwitcher;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 public class DialogScreen extends AbstractScreen
 {
     private AbstractDialogue dialogue;
+    private final IScreenShotter screenShotter;
+    private BufferedImage screenShot;
 
-    public DialogScreen(IScreenSwitcher switcher, KeyHandler keyHandler)
+    public DialogScreen(IScreenSwitcher switcher, KeyHandler keyHandler, IScreenShotter screenShotter)
     {
         super(switcher, keyHandler);
+        this.screenShotter = screenShotter;
     }
 
     public void setDialogue(AbstractDialogue dialogue)
@@ -23,6 +28,9 @@ public class DialogScreen extends AbstractScreen
     @Override
     public void draw(Graphics2D graphics2D, Font font)
     {
+        if (screenShot != null)
+            graphics2D.drawImage(screenShot, null, 0, 0);
+
         Rectangle window = new Rectangle(Parameters.tileSize * 3, Parameters.tileSize, Parameters.screenSize.x - (Parameters.tileSize * 6), Parameters.tileSize * 4);
         graphics2D.setColor(filling);
         graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
@@ -45,6 +53,7 @@ public class DialogScreen extends AbstractScreen
     public void activate()
     {
         keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+        screenShot = screenShotter.getScreenShot();
     }
 
     private void onKeySpace()
@@ -63,5 +72,6 @@ public class DialogScreen extends AbstractScreen
     {
         keyHandler.removeListeners();
         dialogue = null;
+        screenShot = null;
     }
 }

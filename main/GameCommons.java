@@ -15,18 +15,18 @@ public class GameCommons implements ITileCollisionChecker, IEntityCollisionCheck
 {
     final public TileManager tileManager = new TileManager();
     final public Player player;
-    final public HashSet<BaseObject> objectInteractive = new HashSet<>();
-    final public ArrayList<Magician> NPC = new ArrayList<>();
+    final public HashSet<BaseObject> interactiveObjects = new HashSet<>();
+    final public ArrayList<Magician> npc = new ArrayList<>();
     final public ArrayList<Entity> animals = new ArrayList<>();
 
     public GameCommons(IDialogueStarter dialogueStarter, KeyHandler keyHandler, IMessageShower messages)
     {
         AssetSetter assetSetter = new AssetSetter();
-        assetSetter.initObjects(tileManager.getFreePlaces(), objectInteractive);
-        assetSetter.initNPC(tileManager.getFreePlaces(), NPC, this, this);
+        assetSetter.initObjects(tileManager.getFreePlaces(), interactiveObjects);
+        assetSetter.initNPC(tileManager.getFreePlaces(), npc, this, this);
         assetSetter.initAnimals(tileManager.getFreePlaces(), animals, this);
 
-        player = new Player(this, keyHandler, dialogueStarter, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize), messages, this, this, this);
+        player = new Player(interactiveObjects, keyHandler, dialogueStarter, new Point(20 * Parameters.tileSize, 20 * Parameters.tileSize), messages, this, this, this);
     }
 
     @Override
@@ -37,12 +37,12 @@ public class GameCommons implements ITileCollisionChecker, IEntityCollisionCheck
 
     @Override
     public Entity checkEntity(Entity player) {
-        return CollisionChecker.checkEntity(player, NPC);
+        return CollisionChecker.checkEntity(player, npc);
     }
 
     @Override
     public BaseObject checkObject(Entity player) {
-        return CollisionChecker.checkObject(player, objectInteractive);
+        return CollisionChecker.checkObject(player, interactiveObjects);
     }
 
     @Override

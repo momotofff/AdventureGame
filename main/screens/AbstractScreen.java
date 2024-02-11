@@ -20,6 +20,7 @@ public abstract class AbstractScreen
     }
 
     public abstract void draw(Graphics2D graphics2D, Font font);
+    public void update() {};
     public abstract void activate();
     public abstract void deactivate();
 }
