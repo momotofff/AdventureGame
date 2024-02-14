@@ -67,7 +67,7 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
 
         screens.put(GameState.StartScreen, new StartMenu(this, keyHandler));
         screens.put(GameState.Paused, new Pause(this, keyHandler, this));
-        screens.put(GameState.Inventory, new Inventory(this, keyHandler));
+        screens.put(GameState.Inventory, new Inventory(this, keyHandler, this));
         screens.put(GameState.Running, new Running(this, keyHandler, gameCommons));
         screens.put(GameState.Dialog, new DialogScreen(this, keyHandler, this));
 
