@@ -19,10 +19,13 @@ public class GameCommons implements ITileCollisionChecker, IEntityCollisionCheck
     final public ArrayList<Magician> npc = new ArrayList<>();
     final public ArrayList<Entity> animals = new ArrayList<>();
 
+
+
     public GameCommons(IDialogueStarter dialogueStarter, KeyHandler keyHandler, IMessageShower messages)
     {
         AssetSetter assetSetter = new AssetSetter();
         assetSetter.initObjects(tileManager.getFreePlaces(), interactiveObjects);
+
         assetSetter.initNPC(tileManager.getFreePlaces(), npc, this, this);
         assetSetter.initAnimals(tileManager.getFreePlaces(), animals, this);
 

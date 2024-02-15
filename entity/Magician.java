@@ -1,6 +1,5 @@
 package entity;
 
-import main.CollisionChecker;
 import main.screens.interfaces.IPlayerCollisionChecker;
 import main.screens.interfaces.ITileCollisionChecker;
 
@@ -9,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Magician extends Entity
 {
@@ -108,5 +107,6 @@ public class Magician extends Entity
             ex.printStackTrace();
         }
     }
+
 }
 

@@ -1,6 +1,5 @@
 package entity;
 
-import main.CollisionChecker;
 import main.Sound;
 import main.Sounds;
 import main.screens.interfaces.ITileCollisionChecker;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
 
 public abstract class Entity
 {
@@ -138,4 +138,10 @@ public abstract class Entity
     {
         return animations.get(Direction.Down).get(0);
     }
+
+    Entity()
+    {
+
+    }
+
 }
