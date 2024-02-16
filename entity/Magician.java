@@ -9,23 +9,27 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
-
 public class Magician extends Entity
 {
     int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
-    private final IPlayerCollisionChecker playerCollisionChecker;
+
+
+    private IPlayerCollisionChecker playerCollisionChecker;
 
     public Magician(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
         super(defaultWorldPosition, tileCollisionChecker);
 
         this.playerCollisionChecker = playerCollisionChecker;
-        collisionArea = new Rectangle(defaultWorldPosition.x + 12, defaultWorldPosition.y + 12, 24, 24);
-        worldPosition = defaultWorldPosition;
         movementSpeed = 1;
         direction = getRandomDirection();
         loadDialogs(path);
+    }
+
+    public Magician()
+    {
+        super();
     }
 
     public void update(Player player)

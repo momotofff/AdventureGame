@@ -1,5 +1,6 @@
 package entity;
 
+import main.Parameters;
 import main.Sound;
 import main.Sounds;
 import main.screens.interfaces.ITileCollisionChecker;
@@ -13,16 +14,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-
 public abstract class Entity
 {
-    public int movementSpeed;
+    public int movementSpeed = 0;
     public int animationSpeed = 10;
-    public Point worldPosition;
+    public Point worldPosition = new Point();
     public Direction direction;
     public Rectangle collisionArea;
-    public Point screenCoordinates;
-    public String name;
+    public Point screenCoordinates = new Point();
+    public String name = null;
 
     private int spriteCounter = 0;
     private int spriteNumber = 1;
@@ -31,17 +31,32 @@ public abstract class Entity
 
     ITileCollisionChecker tileCollisionChecker;
 
+    public void setWorldPosition(Point defaultWorldPosition) {
+        this.worldPosition.x = defaultWorldPosition.x * Parameters.tileSize;
+        this.worldPosition.y = defaultWorldPosition.y * Parameters.tileSize;
+    }
+
+    public void setScreenCoordinates(Point defaultWorldPosition) {
+        this.screenCoordinates.x = defaultWorldPosition.x * Parameters.tileSize;
+        this.screenCoordinates.y = defaultWorldPosition.y * Parameters.tileSize;
+    }
+
     Entity(Point defaultWorldPosition, ITileCollisionChecker tileCollisionChecker)
     {
         this.tileCollisionChecker = tileCollisionChecker;
-        collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 24, 24, 24);
-        worldPosition = defaultWorldPosition;
-        screenCoordinates = defaultWorldPosition;
+
+        setScreenCoordinates(defaultWorldPosition);
+        setWorldPosition(defaultWorldPosition);
+        collisionArea = new Rectangle(worldPosition.x + 24, worldPosition.y + 24, 24, 24);
 
         for (Direction direction: Direction.values())
             animations.put(direction, new ArrayList<>());
 
         loadImages();
+    }
+
+    public Entity()
+    {
     }
 
     protected void loadAnimation(Direction direction, String path)
@@ -138,10 +153,4 @@ public abstract class Entity
     {
         return animations.get(Direction.Down).get(0);
     }
-
-    Entity()
-    {
-
-    }
-
 }

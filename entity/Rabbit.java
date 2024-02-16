@@ -1,6 +1,5 @@
 package entity;
 
-import main.CollisionChecker;
 import main.screens.interfaces.ITileCollisionChecker;
 
 import java.awt.*;
@@ -14,10 +13,7 @@ public class Rabbit extends Entity
     {
         super(defaultWorldPosition, tileCollisionChecker);
 
-        collisionArea = new Rectangle(defaultWorldPosition.x + 24, defaultWorldPosition.y + 36, 12, 12);
-        worldPosition = defaultWorldPosition;
         movementSpeed = 1;
-
         direction = getRandomDirection();
     }
 

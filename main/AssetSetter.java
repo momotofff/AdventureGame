@@ -1,5 +1,6 @@
 package main;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Entity;
 import entity.Magician;
 import entity.Rabbit;
@@ -11,6 +12,8 @@ import objects.Box;
 import objects.Key;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -29,22 +32,35 @@ public class AssetSetter
 
     public void initNPC(ArrayList<Point> freePlaces, ArrayList<Magician> NPC, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
-        Magician magician1 = new Magician(new Point(15 * Parameters.tileSize, 15 * Parameters.tileSize), "./assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
+        Magician magician1 = new Magician(new Point(15, 15), "./assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
         magician1.name = "Mag";
         NPC.add(magician1);
 
-        Magician magician2 = new Magician(new Point(15 * Parameters.tileSize, 20 * Parameters.tileSize), "./assets/Strings/Magician2.txt", tileCollisionChecker, playerCollisionChecker);
+        Magician magician2 = new Magician(new Point(15, 20), "./assets/Strings/Magician2.txt", tileCollisionChecker, playerCollisionChecker);
         magician2.name = "Mag борэц";
         NPC.add(magician2);
+
+
+        Magician npc;
+        File file = new File("target/nps.json");
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            npc = objectMapper.readValue(file, Magician.class);
+            System.out.println(npc.name);
+            System.out.println(npc.worldPosition);
+            System.out.println(npc.dialogues);
+            System.out.println(npc.movementSpeed);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void initAnimals(ArrayList<Point> freePlaces, ArrayList<Entity> animals, ITileCollisionChecker tileCollisionChecker)
     {
-        for (int i = 0; i < 20; ++i)
+        for (int i = 0; i < 100; ++i)
         {
             Point position = new Point(freePlaces.get((int) (Math.random() * freePlaces.size())));
-            position.x *= Parameters.tileSize;
-            position.y *= Parameters.tileSize;
+
             animals.add(new Rabbit(position, tileCollisionChecker));
         }
     }
