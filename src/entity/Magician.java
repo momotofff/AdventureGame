@@ -1,16 +1,34 @@
 package entity;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import main.screens.interfaces.IPlayerCollisionChecker;
 import main.screens.interfaces.ITileCollisionChecker;
 
 import java.awt.*;
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Magician extends Entity
 {
-    int animationsTimeout = 0;
+    private static class Data
+    {
+        public int movementSpeed;
+        public int animationSpeed;
+        public Point worldPosition;
+        public String direction;
+        public int collisionArea;
+        public Point screenCoordinates;
+        public String name;
+        public ArrayList<String> dialogues;
+
+        Data() {};
+    };
+
+    private int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
 
     private IPlayerCollisionChecker playerCollisionChecker;
@@ -23,6 +41,15 @@ public class Magician extends Entity
         movementSpeed = 1;
         direction = getRandomDirection();
         loadDialogs(path);
+    }
+
+    public Magician(Point defaultWorldPosition, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
+    {
+        super(defaultWorldPosition, tileCollisionChecker);
+
+        this.playerCollisionChecker = playerCollisionChecker;
+        movementSpeed = 1;
+        direction = getRandomDirection();
     }
 
     public Magician()
@@ -95,6 +122,31 @@ public class Magician extends Entity
         {
             e.printStackTrace();
         }
+    }
+
+    public static Magician fromJson(String pathToJson, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
+    {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Data data;
+
+        try
+        {
+            data = objectMapper.readValue(Magician.class.getResource(pathToJson), Data.class);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+
+        Magician magician = new Magician(data.worldPosition, tileCollisionChecker, playerCollisionChecker);
+        magician.movementSpeed = data.movementSpeed;
+        magician.animationSpeed = data.animationSpeed;
+        magician.direction = Direction.valueOf(data.direction);
+        magician.screenCoordinates = data.screenCoordinates;
+        magician.name = data.name;
+        magician.dialogues = data.dialogues;
+
+        return magician;
     }
 }
 

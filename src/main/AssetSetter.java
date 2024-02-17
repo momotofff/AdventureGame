@@ -35,24 +35,12 @@ public class AssetSetter
         Magician magician1 = new Magician(new Point(15, 15), "/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
         magician1.name = "Mag";
         NPC.add(magician1);
-
+/*
         Magician magician2 = new Magician(new Point(15, 20), "/assets/Strings/Magician2.txt", tileCollisionChecker, playerCollisionChecker);
         magician2.name = "Mag борэц";
+*/
+        Magician magician2 = Magician.fromJson("/assets/json/magician2.json", tileCollisionChecker, playerCollisionChecker);
         NPC.add(magician2);
-
-/*
-        Magician npc;
-        File file = new File("target/nps.json");
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            npc = objectMapper.readValue(file, Magician.class);
-            System.out.println(npc.name);
-            System.out.println(npc.worldPosition);
-            System.out.println(npc.dialogues);
-            System.out.println(npc.movementSpeed);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
     }
 
     public void initAnimals(ArrayList<Point> freePlaces, ArrayList<Entity> animals, ITileCollisionChecker tileCollisionChecker)
