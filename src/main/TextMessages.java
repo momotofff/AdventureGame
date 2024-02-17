@@ -1,4 +1,4 @@
-package assets.Strings;
+package main;
 
 import objects.AllBaseObject;
 
@@ -14,9 +14,9 @@ public class TextMessages
 
     public TextMessages()
     {
-        listMessages.put(AllBaseObject.Key,loadMessages("./assets/Strings/Key.txt"));
-        listMessages.put(AllBaseObject.Boots, loadMessages("./assets/Strings/Boots.txt"));
-        listMessages.put(AllBaseObject.Door, loadMessages("./assets/Strings/Door.txt"));
+        listMessages.put(AllBaseObject.Key,loadMessages("./resources/assets/Strings/Key.txt"));
+        listMessages.put(AllBaseObject.Boots, loadMessages("./resources/assets/Strings/Boots.txt"));
+        listMessages.put(AllBaseObject.Door, loadMessages("./resources/assets/Strings/Door.txt"));
         listMessages.put(AllBaseObject.Box, new ArrayList<>());
     }
 
