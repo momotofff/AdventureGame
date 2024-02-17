@@ -13,7 +13,6 @@ public class Magician extends Entity
     int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
 
-
     private IPlayerCollisionChecker playerCollisionChecker;
 
     public Magician(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
@@ -79,13 +78,7 @@ public class Magician extends Entity
 
     public void rotateToPlayer(Direction playerDirection)
     {
-        switch (playerDirection)
-        {
-            case Left ->    direction = Direction.Right;
-            case Right ->   direction = Direction.Left;
-            case Up ->      direction = Direction.Down;
-            case Down ->    direction = Direction.Up;
-        }
+        direction = Direction.invert(playerDirection);
     }
 
     private void loadDialogs(String path)
