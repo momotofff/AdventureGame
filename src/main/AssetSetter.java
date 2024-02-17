@@ -32,15 +32,15 @@ public class AssetSetter
 
     public void initNPC(ArrayList<Point> freePlaces, ArrayList<Magician> NPC, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
-        Magician magician1 = new Magician(new Point(15, 15), "./assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
+        Magician magician1 = new Magician(new Point(15, 15), "/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
         magician1.name = "Mag";
         NPC.add(magician1);
 
-        Magician magician2 = new Magician(new Point(15, 20), "./assets/Strings/Magician2.txt", tileCollisionChecker, playerCollisionChecker);
+        Magician magician2 = new Magician(new Point(15, 20), "/assets/Strings/Magician2.txt", tileCollisionChecker, playerCollisionChecker);
         magician2.name = "Mag борэц";
         NPC.add(magician2);
 
-
+/*
         Magician npc;
         File file = new File("target/nps.json");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -52,7 +52,7 @@ public class AssetSetter
             System.out.println(npc.movementSpeed);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 
     public void initAnimals(ArrayList<Point> freePlaces, ArrayList<Entity> animals, ITileCollisionChecker tileCollisionChecker)

@@ -4,10 +4,9 @@ import main.screens.interfaces.IPlayerCollisionChecker;
 import main.screens.interfaces.ITileCollisionChecker;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Magician extends Entity
 {
@@ -91,26 +90,18 @@ public class Magician extends Entity
 
     private void loadDialogs(String path)
     {
-        try
-        {
-            File file = new File(path);
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
+        InputStream stream = Objects.requireNonNull(getClass().getResourceAsStream(path));
+        String line;
 
-            while ((line = bufferedReader.readLine()) != null)
-            {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream)))
+        {
+            while ((line = reader.readLine()) != null)
                 dialogues.add(line);
-            }
-
-            bufferedReader.close();
-            fileReader.close();
         }
-        catch (Exception ex)
+        catch (IOException e)
         {
-            ex.printStackTrace();
+            e.printStackTrace();
         }
     }
-
 }
 

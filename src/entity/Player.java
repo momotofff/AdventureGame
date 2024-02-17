@@ -1,6 +1,5 @@
 package entity;
 
-import assets.Strings.TextMessages;
 import main.*;
 import main.screens.interfaces.*;
 import objects.*;
