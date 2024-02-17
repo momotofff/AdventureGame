@@ -32,11 +32,11 @@ public class AssetSetter
 
     public void initNPC(ArrayList<Point> freePlaces, ArrayList<Magician> NPC, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
-        Magician magician1 = new Magician(new Point(15, 15), "./resources/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
+        Magician magician1 = new Magician(new Point(15, 15), "/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
         magician1.name = "Mag";
         NPC.add(magician1);
 
-        Magician magician2 = new Magician(new Point(15, 20), "./resources/assets/Strings/Magician2.txt", tileCollisionChecker, playerCollisionChecker);
+        Magician magician2 = new Magician(new Point(15, 20), "/assets/Strings/Magician2.txt", tileCollisionChecker, playerCollisionChecker);
         magician2.name = "Mag борэц";
         NPC.add(magician2);
 

@@ -3,10 +3,7 @@ package main;
 import objects.AllBaseObject;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TextMessages
 {
@@ -14,9 +11,9 @@ public class TextMessages
 
     public TextMessages()
     {
-        listMessages.put(AllBaseObject.Key,loadMessages("./resources/assets/Strings/Key.txt"));
-        listMessages.put(AllBaseObject.Boots, loadMessages("./resources/assets/Strings/Boots.txt"));
-        listMessages.put(AllBaseObject.Door, loadMessages("./resources/assets/Strings/Door.txt"));
+        listMessages.put(AllBaseObject.Key, loadMessages("/assets/Strings/Key.txt"));
+        listMessages.put(AllBaseObject.Boots, loadMessages("/assets/Strings/Boots.txt"));
+        listMessages.put(AllBaseObject.Door, loadMessages("/assets/Strings/Door.txt"));
         listMessages.put(AllBaseObject.Box, new ArrayList<>());
     }
 
@@ -28,25 +25,17 @@ public class TextMessages
     private List<String> loadMessages( String path)
     {
         List<String> list = new ArrayList<>();
+        InputStream stream = Objects.requireNonNull(getClass().getResourceAsStream(path));
+        String line;
 
-        try
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream)))
         {
-            File file = new File(path);
-            FileReader fileReader = new FileReader(file);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null)
-            {
+            while ((line = reader.readLine()) != null)
                 list.add(line);
-            }
-
-            bufferedReader.close();
-            fileReader.close();
         }
-        catch (Exception ex)
+        catch (IOException e)
         {
-            ex.printStackTrace();
+            e.printStackTrace();
         }
 
         return list;
