@@ -9,6 +9,7 @@ import objects.Key;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.Queue;
 
 public class Running extends AbstractScreen
 {
@@ -19,7 +20,7 @@ public class Running extends AbstractScreen
 
     public Running(IScreenSwitcher switcher, KeyHandler keyHandler, GameCommons gameCommons)
     {
-        super(switcher, keyHandler);
+        super(switcher, keyHandler, 2);
         this.gameCommons = gameCommons;
     }
 

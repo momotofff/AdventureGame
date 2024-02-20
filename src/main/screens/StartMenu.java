@@ -21,7 +21,7 @@ public class StartMenu extends AbstractScreen
 
     public StartMenu(IScreenSwitcher switcher, KeyHandler keyHandler)
     {
-        super(switcher, keyHandler);
+        super(switcher, keyHandler, 2);
     }
 
     @Override

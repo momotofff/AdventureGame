@@ -16,7 +16,7 @@ public class DialogScreen extends AbstractScreen
 
     public DialogScreen(IScreenSwitcher switcher, KeyHandler keyHandler, IScreenShotter screenShotter)
     {
-        super(switcher, keyHandler);
+        super(switcher, keyHandler, 4);
         this.screenShotter = screenShotter;
     }
 
@@ -31,22 +31,23 @@ public class DialogScreen extends AbstractScreen
         if (screenShot != null)
             graphics2D.drawImage(screenShot, null, 0, 0);
 
-        Rectangle window = new Rectangle(Parameters.tileSize * 3, Parameters.tileSize, Parameters.screenSize.x - (Parameters.tileSize * 6), Parameters.tileSize * 4);
-        graphics2D.setColor(filling);
-        graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
-        graphics2D.setColor(edging);
-        graphics2D.setStroke(new BasicStroke(10));
-        graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
-        graphics2D.setFont(font.deriveFont(Font.PLAIN, 40));
+        startAnimation(graphics2D);
 
-        if (dialogue == null)
-            return;
-
-        for (String line: dialogue.getText().split("%"))
+        if (isFinishAnimation)
         {
-            graphics2D.drawString(line, window.x + Parameters.tileSize, window.y + Parameters.tileSize);
-            window.y += Parameters.tileSize;
+            Point window = new Point(startSizeWindow.x, startSizeWindow.y);
+            graphics2D.setFont(font.deriveFont(Font.PLAIN, 40));
+
+            if (dialogue == null)
+                return;
+
+            for (String line: dialogue.getText().split("%"))
+            {
+                graphics2D.drawString(line, window.x + Parameters.tileSize, window.y + Parameters.tileSize);
+                window.y += Parameters.tileSize;
+            }
         }
+
     }
 
     @Override
@@ -73,5 +74,7 @@ public class DialogScreen extends AbstractScreen
         keyHandler.removeListeners();
         dialogue = null;
         screenShot = null;
+        scaleCountWindow = (Point) startSizeWindow.clone();
+        isFinishAnimation = false;
     }
 }

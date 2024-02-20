@@ -26,7 +26,7 @@ public class Pause extends AbstractScreen
 
     public Pause(IScreenSwitcher switcher, KeyHandler keyHandler, IScreenShotter screenShotter)
     {
-        super(switcher, keyHandler);
+        super(switcher, keyHandler, 2);
         this.screenShotter = screenShotter;
     }
 
@@ -36,45 +36,49 @@ public class Pause extends AbstractScreen
         if (screenShot != null)
             graphics2D.drawImage(screenShot, null, 0, 0);
 
-        Rectangle window = new Rectangle(Parameters.tileSize * 6, Parameters.tileSize * 4, Parameters.screenSize.x - (Parameters.tileSize * 12), Parameters.tileSize * 9);
-        graphics2D.setColor(filling);
-        graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
-        graphics2D.setColor(edging);
-        graphics2D.setStroke(new BasicStroke(10));
-        graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
+        startAnimation(graphics2D);
 
-        graphics2D.setFont(font.deriveFont(Font.PLAIN, 100));
-        graphics2D.setColor(edging);
+        if (isFinishAnimation) {
+            graphics2D.setFont(font.deriveFont(Font.PLAIN, 100));
+            graphics2D.setColor(edging);
 
-        String paused = "PAUSED";
-        int length = (int) graphics2D.getFontMetrics().getStringBounds(paused, graphics2D).getWidth();
-        int x = Parameters.screenSize.x / 2 - length / 2;
-        int y = Parameters.screenSize.y / 2 - 30;
+            String paused = "PAUSED";
+            int length = (int) graphics2D.getFontMetrics().getStringBounds(paused, graphics2D).getWidth();
+            int x = Parameters.screenSize.x / 2 - length / 2;
+            int y = Parameters.screenSize.y / 2 - Parameters.tileSize * 2 ;
 
-        graphics2D.drawString(paused, x, y);
+            graphics2D.drawString(paused, x, y);
 
-        graphics2D.setColor(edging);
-        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Continue", x, y + Parameters.tileSize * 2);
+            graphics2D.setColor(edging);
+            graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
+            graphics2D.drawString("Continue", x, y + Parameters.tileSize);
 
-        graphics2D.setColor(edging);
-        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Load", x, y + Parameters.tileSize * 3);
+            graphics2D.setColor(edging);
+            graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
+            graphics2D.drawString("Load", x, y + Parameters.tileSize * 2);
 
-        graphics2D.setColor(edging);
-        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Save", x, y + Parameters.tileSize * 4);
+            graphics2D.setColor(edging);
+            graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
+            graphics2D.drawString("Save", x, y + Parameters.tileSize * 3);
 
-        graphics2D.setColor(edging);
-        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
-        graphics2D.drawString("Exit", x, y + Parameters.tileSize * 5);
+            graphics2D.setColor(edging);
+            graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
+            graphics2D.drawString("Exit", x, y + Parameters.tileSize * 4);
 
-        switch (menuPosition)
-        {
-            case Continue: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2); break;
-            case Load: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);break;
-            case Save: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);break;
-            case Exit: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 5);break;
+            switch (menuPosition) {
+                case Continue:
+                    graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize);
+                    break;
+                case Load:
+                    graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2);
+                    break;
+                case Save:
+                    graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);
+                    break;
+                case Exit:
+                    graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);
+                    break;
+            }
         }
     }
 
@@ -136,5 +140,7 @@ public class Pause extends AbstractScreen
     {
         keyHandler.removeListeners();
         screenShot = null;
+        scaleCountWindow = (Point) startSizeWindow.clone();
+        isFinishAnimation = false;
     }
 }
