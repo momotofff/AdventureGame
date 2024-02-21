@@ -32,7 +32,7 @@ public abstract class AbstractScreen
     public abstract void activate();
     public abstract void deactivate();
 
-    protected void startAnimation(Graphics2D graphics2D)
+    protected void drawWindow(Graphics2D graphics2D)
     {
         if (!isFinishAnimation)
             if (scaleCountWindow.x <= endSizeWindow.x)

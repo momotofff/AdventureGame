@@ -36,7 +36,7 @@ public class Pause extends AbstractScreen
         if (screenShot != null)
             graphics2D.drawImage(screenShot, null, 0, 0);
 
-        startAnimation(graphics2D);
+        drawWindow(graphics2D);
 
         if (isFinishAnimation) {
             graphics2D.setFont(font.deriveFont(Font.PLAIN, 100));

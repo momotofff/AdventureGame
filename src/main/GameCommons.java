@@ -23,7 +23,7 @@ public class GameCommons implements ITileCollisionChecker, IEntityCollisionCheck
     {
         AssetSetter assetSetter = new AssetSetter();
         assetSetter.initObjects(tileManager.getFreePlaces(), interactiveObjects);
-        assetSetter.initNPC(tileManager.getFreePlaces(), npc, this, this);
+        //assetSetter.initNPC(tileManager.getFreePlaces(), npc, this, this);
         assetSetter.initAnimals(tileManager.getFreePlaces(), animals, this);
 
         player = new Player(interactiveObjects, keyHandler, dialogueStarter, new Point(20, 20), messages, this, this, this);
