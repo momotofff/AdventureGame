@@ -28,7 +28,7 @@ public class Inventory extends AbstractScreen
         if (screenShot != null)
             graphics2D.drawImage(screenShot, null, 0, 0);
 
-        startAnimation(graphics2D);
+        drawWindow(graphics2D);
 
         if (isFinishAnimation)
         {
