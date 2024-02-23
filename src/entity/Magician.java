@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import main.screens.interfaces.IPlayerCollisionChecker;
 import main.screens.interfaces.ITileCollisionChecker;
 
@@ -10,11 +11,24 @@ import java.util.Objects;
 
 public class Magician extends Entity
 {
-    int animationsTimeout = 0;
+    private static class Data
+    {
+        public int movementSpeed;
+        public int animationSpeed;
+        public Point worldPosition;
+        public String direction;
+        public int collisionArea;
+        public Point screenCoordinates;
+        public String name;
+        public ArrayList<String> dialogues;
+
+        Data() {}
+    }
+
+    private int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
 
-
-    private IPlayerCollisionChecker playerCollisionChecker;
+    private final IPlayerCollisionChecker playerCollisionChecker;
 
     public Magician(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
@@ -26,9 +40,13 @@ public class Magician extends Entity
         loadDialogs(path);
     }
 
-    public Magician()
+    public Magician(Point defaultWorldPosition, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
-        super();
+        super(defaultWorldPosition, tileCollisionChecker);
+
+        this.playerCollisionChecker = playerCollisionChecker;
+        movementSpeed = 1;
+        direction = getRandomDirection();
     }
 
     public void update(Player player)
@@ -79,13 +97,7 @@ public class Magician extends Entity
 
     public void rotateToPlayer(Direction playerDirection)
     {
-        switch (playerDirection)
-        {
-            case Left ->    direction = Direction.Right;
-            case Right ->   direction = Direction.Left;
-            case Up ->      direction = Direction.Down;
-            case Down ->    direction = Direction.Up;
-        }
+        direction = Direction.invert(playerDirection);
     }
 
     private void loadDialogs(String path)
@@ -102,6 +114,31 @@ public class Magician extends Entity
         {
             e.printStackTrace();
         }
+    }
+
+    public static Magician fromJson(String pathToJson, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
+    {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Data data;
+
+        try
+        {
+            data = objectMapper.readValue(Magician.class.getResource(pathToJson), Data.class);
+        }
+        catch (Exception e)
+        {                                                                                                                                                                                       
+            return null;
+        }
+
+        Magician magician = new Magician(data.worldPosition, tileCollisionChecker, playerCollisionChecker);
+        magician.movementSpeed = data.movementSpeed;
+        magician.animationSpeed = data.animationSpeed;
+        magician.direction = Direction.valueOf(data.direction);
+        magician.screenCoordinates = data.screenCoordinates;
+        magician.name = data.name;
+        magician.dialogues = data.dialogues;
+
+        return magician;
     }
 }
 
