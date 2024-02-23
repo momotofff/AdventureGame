@@ -134,7 +134,7 @@ public class Magician extends Entity
             data = objectMapper.readValue(Magician.class.getResource(pathToJson), Data.class);
         }
         catch (Exception e)
-        {
+        {                                                                                                                                                                                       
             return null;
         }
 
