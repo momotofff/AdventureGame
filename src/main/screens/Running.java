@@ -22,7 +22,7 @@ public class Running extends AbstractScreen
 
     public Running(IScreenSwitcher switcher, KeyHandler keyHandler, GameCommons gameCommons)
     {
-        super(switcher, keyHandler, 2);
+        super(switcher, keyHandler);
         this.gameCommons = gameCommons;
     }
 
@@ -50,7 +50,7 @@ public class Running extends AbstractScreen
         graphics2D.drawImage(keyImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
         graphics2D.drawString(" x " + gameCommons.player.keysCount, 60, 60);
 
-        if(allMessages.size() != 0)
+        if (!allMessages.isEmpty())
             drawMessage(graphics2D, allMessages);
     }
 

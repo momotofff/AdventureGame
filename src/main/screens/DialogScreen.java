@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class DialogScreen extends AbstractScreen
+public class DialogScreen extends AbstractAnimatedDialog
 {
     private AbstractDialogue dialogue;
     private final IScreenShotter screenShotter;
@@ -16,7 +16,7 @@ public class DialogScreen extends AbstractScreen
 
     public DialogScreen(IScreenSwitcher switcher, KeyHandler keyHandler, IScreenShotter screenShotter)
     {
-        super(switcher, keyHandler, 4);
+        super(switcher, keyHandler, new Point(Parameters.screenSize.x / 2, Parameters.screenSize.y / 4));
         this.screenShotter = screenShotter;
     }
 
@@ -31,28 +31,27 @@ public class DialogScreen extends AbstractScreen
         if (screenShot != null)
             graphics2D.drawImage(screenShot, null, 0, 0);
 
-        drawWindow(graphics2D);
+        drawAnimation(graphics2D);
+        if (!isAnimationFinished())
+            return;
 
-        if (isFinishAnimation)
+        Point window = (Point) getWindowPosition().clone();
+        graphics2D.setFont(font.deriveFont(Font.PLAIN, 40));
+
+        if (dialogue == null)
+            return;
+
+        for (String line: dialogue.getText().split("%"))
         {
-            Point window = new Point(startSizeWindow.x, startSizeWindow.y);
-            graphics2D.setFont(font.deriveFont(Font.PLAIN, 40));
-
-            if (dialogue == null)
-                return;
-
-            for (String line: dialogue.getText().split("%"))
-            {
-                graphics2D.drawString(line, window.x + Parameters.tileSize, window.y + Parameters.tileSize);
-                window.y += Parameters.tileSize;
-            }
+            graphics2D.drawString(line, window.x + Parameters.tileSize, window.y + Parameters.tileSize);
+            window.y += Parameters.tileSize;
         }
-
     }
 
     @Override
     public void activate()
     {
+        super.activate();
         keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
         screenShot = screenShotter.getScreenShot();
     }
@@ -74,7 +73,5 @@ public class DialogScreen extends AbstractScreen
         keyHandler.removeListeners();
         dialogue = null;
         screenShot = null;
-        scaleCountWindow = (Point) startSizeWindow.clone();
-        isFinishAnimation = false;
     }
 }
