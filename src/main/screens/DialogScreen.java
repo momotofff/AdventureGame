@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class DialogScreen extends AbstractScreen
+public class DialogScreen extends AbstractAnimatedDialog
 {
     private AbstractDialogue dialogue;
     private final IScreenShotter screenShotter;
@@ -16,7 +16,7 @@ public class DialogScreen extends AbstractScreen
 
     public DialogScreen(IScreenSwitcher switcher, KeyHandler keyHandler, IScreenShotter screenShotter)
     {
-        super(switcher, keyHandler);
+        super(switcher, keyHandler, new Point(Parameters.screenSize.x / 2, Parameters.screenSize.y / 4));
         this.screenShotter = screenShotter;
     }
 
@@ -31,12 +31,11 @@ public class DialogScreen extends AbstractScreen
         if (screenShot != null)
             graphics2D.drawImage(screenShot, null, 0, 0);
 
-        Rectangle window = new Rectangle(Parameters.tileSize * 3, Parameters.tileSize, Parameters.screenSize.x - (Parameters.tileSize * 6), Parameters.tileSize * 4);
-        graphics2D.setColor(filling);
-        graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
-        graphics2D.setColor(edging);
-        graphics2D.setStroke(new BasicStroke(10));
-        graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
+        drawAnimation(graphics2D);
+        if (!isAnimationFinished())
+            return;
+
+        Point window = (Point) getWindowPosition().clone();
         graphics2D.setFont(font.deriveFont(Font.PLAIN, 40));
 
         if (dialogue == null)
@@ -52,6 +51,7 @@ public class DialogScreen extends AbstractScreen
     @Override
     public void activate()
     {
+        super.activate();
         keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
         screenShot = screenShotter.getScreenShot();
     }

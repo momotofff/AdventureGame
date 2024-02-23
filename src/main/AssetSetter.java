@@ -21,9 +21,11 @@ public class AssetSetter
 {
     public void initObjects(ArrayList<Point> freePlaces, HashSet<BaseObject> items)
     {
-        items.add(new Key(new Point(19, 14)));
+        items.add(new Key(new Point(19, 15)));
         items.add(new Key(new Point(39, 16)));
-        items.add(new Key(new Point(15, 13)));
+        items.add(new Key(new Point(15, 15)));
+        items.add(new Key(new Point(18, 15)));
+        items.add(new Key(new Point(17, 15)));
         items.add(new Key(new Point(29, 20)));
         items.add(new Box(new Point(15, 25)));
         items.add(new Box(new Point(50, 32)));

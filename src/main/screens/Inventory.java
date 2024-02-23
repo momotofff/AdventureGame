@@ -5,23 +5,20 @@ import main.KeyHandler;
 import main.Parameters;
 import main.screens.interfaces.IScreenShotter;
 import main.screens.interfaces.IScreenSwitcher;
-import objects.Key;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class Inventory extends AbstractScreen
+public class Inventory extends AbstractAnimatedDialog
 {
-    private String message = null;
-    int messageCounter = 180;
-    BufferedImage bufferedImage = new Key().image;
     private final IScreenShotter screenShotter;
     private BufferedImage screenShot;
+    private int scale = 2;
 
     public Inventory(IScreenSwitcher switcher, KeyHandler keyHandler, IScreenShotter screenShotter)
     {
-        super(switcher, keyHandler);
+        super(switcher, keyHandler, new Point(Parameters.screenSize.x / 2, Parameters.screenSize.y / 2));
         this.screenShotter = screenShotter;
     }
 
@@ -31,38 +28,20 @@ public class Inventory extends AbstractScreen
         if (screenShot != null)
             graphics2D.drawImage(screenShot, null, 0, 0);
 
-        Rectangle window = new Rectangle(Parameters.tileSize * 3, Parameters.tileSize, Parameters.screenSize.x - (Parameters.tileSize * 6), Parameters.tileSize * 4);
-        graphics2D.setColor(filling);
-        graphics2D.fillRoundRect(window.x, window.y, window.width, window.height, 50, 50);
-        graphics2D.setColor(edging);
-        graphics2D.setStroke(new BasicStroke(10));
-        graphics2D.drawRoundRect(window.x, window.y, window.width, window.height, 50, 50 );
+        drawAnimation(graphics2D);
+        if (!isAnimationFinished())
+            return;
 
         graphics2D.setFont(font.deriveFont(30f));
-        graphics2D.setColor(edging);
-        graphics2D.drawImage(bufferedImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
-
-        graphics2D.drawString("Тут будет отображаться инвентарь", 210, 100);
-
-        if (message != null)
-        {
-            graphics2D.setFont(font.deriveFont(30f));
-            graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
-
-            if (--messageCounter < 0)
-            {
-                messageCounter = 180;
-                message = null;
-            }
-        }
+        graphics2D.drawString("Тут будет отображаться инвентарь", getWindowPosition().x + Parameters.tileSize,  getWindowPosition().y + Parameters.tileSize);
     }
 
     @Override
     public void activate()
     {
+        super.activate();
         keyHandler.addListener(KeyEvent.VK_E, () -> switcher.switchScreen(GameState.Running));
         keyHandler.addListener(KeyEvent.VK_SPACE, () -> switcher.switchScreen(GameState.Running));
-
         screenShot = screenShotter.getScreenShot();
     }
 

@@ -56,9 +56,9 @@ public class StartMenu extends AbstractScreen
 
         switch (menuPosition)
         {
-            case Start: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2); break;
-            case Load: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);break;
-            case Exit: graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);break;
+            case Start -> graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2);
+            case Load -> graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);
+            case Exit -> graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);
         }
     }
 
@@ -96,15 +96,9 @@ public class StartMenu extends AbstractScreen
     {
         switch (menuPosition)
         {
-            case Start:
-                switcher.switchScreen(GameState.Running);
-                break;
-            case Load:
-                menuPosition = MenuItems.Exit;
-                break;
-            case Exit:
-                System.exit(0);
-                break;
+            case Start -> switcher.switchScreen(GameState.Running);
+            case Load -> menuPosition = MenuItems.Exit;
+            case Exit -> System.exit(0);
         }
     }
 

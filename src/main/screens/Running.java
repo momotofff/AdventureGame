@@ -9,13 +9,15 @@ import objects.Key;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Running extends AbstractScreen
 {
     private final GameCommons gameCommons;
     private final BufferedImage keyImage = new Key().image;
-    private String message = null;
-    private int messageCounter = 0;
+    private final Map<Long, String> messages = new TreeMap<>();
+    private long frameCounter = 0;
 
     public Running(IScreenSwitcher switcher, KeyHandler keyHandler, GameCommons gameCommons)
     {
@@ -26,6 +28,7 @@ public class Running extends AbstractScreen
     @Override
     public void draw(Graphics2D graphics2D, Font font)
     {
+        ++frameCounter;
         gameCommons.tileManager.drawing(graphics2D, gameCommons.player);
 
         for (BaseObject item: gameCommons.interactiveObjects)
@@ -47,13 +50,7 @@ public class Running extends AbstractScreen
         graphics2D.drawImage(keyImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
         graphics2D.drawString(" x " + gameCommons.player.keysCount, 60, 60);
 
-        if (message == null)
-            return;
-
-        if (--messageCounter > 0)
-            graphics2D.drawString(message, Parameters.tileSize / 2, Parameters.tileSize * 2);
-        else
-            message = null;
+        drawMessages(graphics2D);
     }
 
     @Override
@@ -90,10 +87,22 @@ public class Running extends AbstractScreen
         Sound.sound.stopBacking();
     }
 
-    public void setMessage(String message)
+    public void addMessage(String message)
     {
-        // TODO: Maybe support several messages at time?
-        messageCounter = 180;
-        this.message = message;
+        // TODO: Move timeout here and adjust it according to message length
+        messages.put(frameCounter, message);
+    }
+
+    private void drawMessages(Graphics2D graphics2D)
+    {
+        Point position = new Point(Parameters.tileSize / 2, Parameters.tileSize * 2);
+        final int Timeout = 200;
+
+        messages.forEach((key, value) -> {
+            graphics2D.drawString(value, position.x, position.y);
+            position.y += 50;
+        });
+
+        messages.entrySet().removeIf(entry -> frameCounter > entry.getKey() + Timeout);
     }
 }
