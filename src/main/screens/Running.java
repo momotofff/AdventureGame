@@ -89,6 +89,7 @@ public class Running extends AbstractScreen
 
     public void addMessage(String message)
     {
+        // TODO: Move timeout here and adjust it according to message length
         messages.put(frameCounter, message);
     }
 
