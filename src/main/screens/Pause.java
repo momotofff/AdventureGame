@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-public class Pause extends AbstractScreen
+public class Pause extends AbstractAnimatedDialog
 {
     private enum Items
     {
@@ -26,7 +26,7 @@ public class Pause extends AbstractScreen
 
     public Pause(IScreenSwitcher switcher, KeyHandler keyHandler, IScreenShotter screenShotter)
     {
-        super(switcher, keyHandler, 2);
+        super(switcher, keyHandler, new Point(Parameters.screenSize.x / 2, Parameters.screenSize.y / 2));
         this.screenShotter = screenShotter;
     }
 
@@ -36,60 +36,55 @@ public class Pause extends AbstractScreen
         if (screenShot != null)
             graphics2D.drawImage(screenShot, null, 0, 0);
 
-        drawWindow(graphics2D);
+        drawAnimation(graphics2D);
+        if (!isAnimationFinished())
+            return;
 
-        if (isFinishAnimation) {
-            graphics2D.setFont(font.deriveFont(Font.PLAIN, 100));
-            graphics2D.setColor(edging);
+        graphics2D.setFont(font.deriveFont(Font.PLAIN, 100));
+        graphics2D.setColor(edging);
 
-            String paused = "PAUSED";
-            int length = (int) graphics2D.getFontMetrics().getStringBounds(paused, graphics2D).getWidth();
-            int x = Parameters.screenSize.x / 2 - length / 2;
-            int y = Parameters.screenSize.y / 2 - Parameters.tileSize * 2 ;
+        String paused = "PAUSED";
+        int length = (int) graphics2D.getFontMetrics().getStringBounds(paused, graphics2D).getWidth();
+        int x = Parameters.screenSize.x / 2 - length / 2;
+        int y = Parameters.screenSize.y / 2 - Parameters.tileSize * 2 ;
 
-            graphics2D.drawString(paused, x, y);
+        graphics2D.drawString(paused, x, y);
 
-            graphics2D.setColor(edging);
-            graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
-            graphics2D.drawString("Continue", x, y + Parameters.tileSize);
+        graphics2D.setColor(edging);
+        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
+        graphics2D.drawString("Continue", x, y + Parameters.tileSize);
 
-            graphics2D.setColor(edging);
-            graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
-            graphics2D.drawString("Load", x, y + Parameters.tileSize * 2);
+        graphics2D.setColor(edging);
+        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
+        graphics2D.drawString("Load", x, y + Parameters.tileSize * 2);
 
-            graphics2D.setColor(edging);
-            graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
-            graphics2D.drawString("Save", x, y + Parameters.tileSize * 3);
+        graphics2D.setColor(edging);
+        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
+        graphics2D.drawString("Save", x, y + Parameters.tileSize * 3);
 
-            graphics2D.setColor(edging);
-            graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
-            graphics2D.drawString("Exit", x, y + Parameters.tileSize * 4);
+        graphics2D.setColor(edging);
+        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
+        graphics2D.drawString("Exit", x, y + Parameters.tileSize * 4);
 
-            switch (menuPosition) {
-                case Continue:
-                    graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize);
-                    break;
-                case Load:
-                    graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2);
-                    break;
-                case Save:
-                    graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);
-                    break;
-                case Exit:
-                    graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);
-                    break;
-            }
+        switch (menuPosition)
+        {
+            case Continue -> graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize);
+            case Load -> graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 2);
+            case Save -> graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 3);
+            case Exit -> graphics2D.drawString(">", x - Parameters.tileSize, y + Parameters.tileSize * 4);
         }
     }
 
     @Override
     public void activate()
     {
+        super.activate();
         menuPosition = Items.Continue;
 
         keyHandler.addListener(KeyEvent.VK_W, this::onKeyW);
         keyHandler.addListener(KeyEvent.VK_S, this::onKeyS);
         keyHandler.addListener(KeyEvent.VK_SPACE, this::onKeySpace);
+        keyHandler.addListener(KeyEvent.VK_ESCAPE, () -> switcher.switchScreen(GameState.Running));
 
         screenShot = screenShotter.getScreenShot();
     }
@@ -120,18 +115,10 @@ public class Pause extends AbstractScreen
     {
         switch (menuPosition)
         {
-            case Continue:
-                switcher.switchScreen(GameState.Running);
-                break;
-            case Load:
-                menuPosition = Items.Exit;
-                break;
-            case Save:
-                menuPosition = Items.Exit;
-                break;
-            case Exit:
-                switcher.switchScreen(GameState.StartScreen);
-                break;
+            case Continue -> switcher.switchScreen(GameState.Running);
+            case Load -> menuPosition = Items.Exit;
+            case Save -> menuPosition = Items.Exit;
+            case Exit -> switcher.switchScreen(GameState.StartScreen);
         }
     }
 
@@ -140,7 +127,5 @@ public class Pause extends AbstractScreen
     {
         keyHandler.removeListeners();
         screenShot = null;
-        scaleCountWindow = (Point) startSizeWindow.clone();
-        isFinishAnimation = false;
     }
 }

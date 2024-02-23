@@ -57,7 +57,7 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
         if (runningScreen == null)
             return;
 
-        runningScreen.setMessage(message);
+        runningScreen.addMessage(message);
     }
 
     public UI(JFrame frame)
