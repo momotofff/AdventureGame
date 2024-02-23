@@ -1,14 +1,11 @@
 package entity;
 
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import main.screens.interfaces.IPlayerCollisionChecker;
 import main.screens.interfaces.ITileCollisionChecker;
 
 import java.awt.*;
 import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -25,13 +22,13 @@ public class Magician extends Entity
         public String name;
         public ArrayList<String> dialogues;
 
-        Data() {};
-    };
+        Data() {}
+    }
 
     private int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
 
-    private IPlayerCollisionChecker playerCollisionChecker;
+    private final IPlayerCollisionChecker playerCollisionChecker;
 
     public Magician(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
@@ -50,11 +47,6 @@ public class Magician extends Entity
         this.playerCollisionChecker = playerCollisionChecker;
         movementSpeed = 1;
         direction = getRandomDirection();
-    }
-
-    public Magician()
-    {
-        super();
     }
 
     public void update(Player player)

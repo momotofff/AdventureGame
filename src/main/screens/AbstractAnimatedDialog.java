@@ -8,6 +8,7 @@ import java.awt.*;
 
 public abstract class AbstractAnimatedDialog extends AbstractScreen
 {
+    // TODO: Adjust initial window position according to content
     private final Point windowPosition = new Point(Parameters.screenSize.x / 2 - (Parameters.tileSize * 6), Parameters.screenSize.y / 2 - (Parameters.tileSize * 4));
     private final Point endWindowSize;
     private Point currentWindowSize = (Point) windowPosition.clone();

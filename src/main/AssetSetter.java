@@ -37,10 +37,7 @@ public class AssetSetter
         Magician magician1 = new Magician(new Point(15, 15), "/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
         magician1.name = "Mag";
         NPC.add(magician1);
-/*
-        Magician magician2 = new Magician(new Point(15, 20), "/assets/Strings/Magician2.txt", tileCollisionChecker, playerCollisionChecker);
-        magician2.name = "Mag борэц";
-*/
+
         Magician magician2 = Magician.fromJson("/assets/json/magician2.json", tileCollisionChecker, playerCollisionChecker);
         NPC.add(magician2);
     }
@@ -50,7 +47,6 @@ public class AssetSetter
         for (int i = 0; i < 100; ++i)
         {
             Point position = new Point(freePlaces.get((int) (Math.random() * freePlaces.size())));
-
             animals.add(new Rabbit(position, tileCollisionChecker));
         }
     }
