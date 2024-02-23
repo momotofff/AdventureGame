@@ -3,22 +3,21 @@ package main.screens;
 import entity.Entity;
 import main.*;
 import main.screens.interfaces.IScreenSwitcher;
-import main.utils.AbstractMessage;
 import objects.BaseObject;
 import objects.Key;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Running extends AbstractScreen
 {
     private final GameCommons gameCommons;
     private final BufferedImage keyImage = new Key().image;
-    private ArrayList<AbstractMessage> allMessages = new ArrayList<>();
-    private int timeOut = 200;
+    private final Map<Long, String> messages = new TreeMap<>();
+    private long frameCounter = 0;
 
     public Running(IScreenSwitcher switcher, KeyHandler keyHandler, GameCommons gameCommons)
     {
@@ -29,6 +28,7 @@ public class Running extends AbstractScreen
     @Override
     public void draw(Graphics2D graphics2D, Font font)
     {
+        ++frameCounter;
         gameCommons.tileManager.drawing(graphics2D, gameCommons.player);
 
         for (BaseObject item: gameCommons.interactiveObjects)
@@ -50,8 +50,7 @@ public class Running extends AbstractScreen
         graphics2D.drawImage(keyImage, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, Parameters.tileSize / 2, null);
         graphics2D.drawString(" x " + gameCommons.player.keysCount, 60, 60);
 
-        if (!allMessages.isEmpty())
-            drawMessage(graphics2D, allMessages);
+        drawMessages(graphics2D);
     }
 
     @Override
@@ -88,56 +87,21 @@ public class Running extends AbstractScreen
         Sound.sound.stopBacking();
     }
 
-    public void setMessage(String message)
+    public void addMessage(String message)
     {
-        this.allMessages.add(new AbstractMessage(message));
+        messages.put(frameCounter, message);
     }
 
-    private void drawMessage(Graphics2D graphics2D, ArrayList<AbstractMessage> allMessages)
+    private void drawMessages(Graphics2D graphics2D)
     {
-        AbstractMessage mes0 = allMessages.get(0);
+        Point position = new Point(Parameters.tileSize / 2, Parameters.tileSize * 2);
+        final int Timeout = 200;
 
-        if(allMessages.size() < 2)
-        {
-            if (++mes0.startTime < mes0.timeOut)
-            {
-                graphics2D.drawString(mes0.message, mes0.startPosition.x, mes0.startPosition.y);
-                return;
-            }
-            else
-                this.allMessages = new ArrayList<>();
-        }
+        messages.forEach((key, value) -> {
+            graphics2D.drawString(value, position.x, position.y);
+            position.y += 50;
+        });
 
-        if (allMessages.size() == 2)
-        {
-            AbstractMessage mes1 = allMessages.get(1);
-
-            if (mes1.startTime < mes1.timeOut)
-            {
-                if (mes0.startStep < mes0.maxStep)
-                {
-                    ++mes0.startStep;
-                    ++mes0.startPosition.y;
-                    graphics2D.drawString(mes0.message, mes0.startPosition.x, mes0.startPosition.y);
-                }
-
-                else
-                {
-                    ++mes1.startTime;
-
-                    if (++mes0.startTime < mes0.timeOut)
-                        graphics2D.drawString(mes0.message, mes0.startPosition.x, mes0.startPosition.y);
-
-                    else
-                    {
-                        this.allMessages = new ArrayList<>();
-                        this.allMessages.add(mes1);
-                        return;
-                    }
-
-                    graphics2D.drawString(mes1.message, mes1.startPosition.x, mes1.startPosition.y);
-                }
-            }
-        }
+        messages.entrySet().removeIf(entry -> frameCounter > entry.getKey() + Timeout);
     }
 }
