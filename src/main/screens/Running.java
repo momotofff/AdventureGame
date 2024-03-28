@@ -99,6 +99,9 @@ public class Running extends AbstractScreen
         final int Timeout = 200;
 
         messages.forEach((key, value) -> {
+            graphics2D.setColor(new Color(0, 0, 0, 70));
+            graphics2D.drawString(value, position.x + 2, position.y + 2);
+            graphics2D.setColor(Color.white);
             graphics2D.drawString(value, position.x, position.y);
             position.y += 50;
         });
