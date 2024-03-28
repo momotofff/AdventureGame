@@ -41,29 +41,38 @@ public class Pause extends AbstractAnimatedDialog
             return;
 
         graphics2D.setFont(font.deriveFont(Font.PLAIN, 100));
-        graphics2D.setColor(edging);
+
 
         String paused = "PAUSED";
         int length = (int) graphics2D.getFontMetrics().getStringBounds(paused, graphics2D).getWidth();
         int x = Parameters.screenSize.x / 2 - length / 2;
         int y = Parameters.screenSize.y / 2 - Parameters.tileSize * 2 ;
 
+        graphics2D.setColor(new Color(0, 0, 0, 70));
+        graphics2D.drawString(paused, x + 3, y + 3);
+        graphics2D.setColor(edging);
         graphics2D.drawString(paused, x, y);
 
-        graphics2D.setColor(edging);
         graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
+
+        graphics2D.setColor(new Color(0, 0, 0, 70));
+        graphics2D.drawString("Continue", x + 2, y + Parameters.tileSize + 2);
+        graphics2D.setColor(edging);
         graphics2D.drawString("Continue", x, y + Parameters.tileSize);
 
+        graphics2D.setColor(new Color(0, 0, 0, 70));
+        graphics2D.drawString("Load", x + 2, y + Parameters.tileSize * 2 + 2);
         graphics2D.setColor(edging);
-        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
         graphics2D.drawString("Load", x, y + Parameters.tileSize * 2);
 
+        graphics2D.setColor(new Color(0, 0, 0, 70));
+        graphics2D.drawString("Save", x + 2, y + Parameters.tileSize * 3 + 2);
         graphics2D.setColor(edging);
-        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
         graphics2D.drawString("Save", x, y + Parameters.tileSize * 3);
 
+        graphics2D.setColor(new Color(0, 0, 0, 70));
+        graphics2D.drawString("Exit", x + 2, y + Parameters.tileSize * 4 + 2);
         graphics2D.setColor(edging);
-        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
         graphics2D.drawString("Exit", x, y + Parameters.tileSize * 4);
 
         switch (menuPosition)

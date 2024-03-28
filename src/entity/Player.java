@@ -17,6 +17,7 @@ public class Player extends Entity
     final private IMessageShower messageShower;
     final private IEntityCollisionChecker entityCollisionChecker;
     final private IObjectCollisionChecker objectCollisionChecker;
+    private int hitPoint = 100;
 
     public int keysCount = 0;
     int boostCoolDown = 0;

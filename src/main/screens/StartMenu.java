@@ -36,22 +36,26 @@ public class StartMenu extends AbstractScreen
         int x = Parameters.screenSize.x / 2 - length / 2;
         int y = Parameters.screenSize.y / 4;
 
-        graphics2D.setColor(Color.black);
-        graphics2D.drawString(nameGame, x, y);
-
+        graphics2D.setColor(new Color(0, 0, 0, 70));
+        graphics2D.drawString(nameGame, x + 5, y + 5);
         graphics2D.setColor(edging);
         graphics2D.drawString(nameGame, x, y);
 
-        graphics2D.setColor(edging);
         graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
+
+        graphics2D.setColor(new Color(0, 0, 0, 70));
+        graphics2D.drawString("New Game", x + 2, y + Parameters.tileSize * 2 + 2);
+        graphics2D.setColor(edging);
         graphics2D.drawString("New Game", x, y + Parameters.tileSize * 2);
 
+        graphics2D.setColor(new Color(0, 0, 0, 70));
+        graphics2D.drawString("Load Game", x + 2, y + Parameters.tileSize * 3 + 2);
         graphics2D.setColor(edging);
-        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
         graphics2D.drawString("Load Game", x, y + Parameters.tileSize * 3);
 
+        graphics2D.setColor(new Color(0, 0, 0, 70));
+        graphics2D.drawString("Exit", x + 2, y + Parameters.tileSize * 4 + 2);
         graphics2D.setColor(edging);
-        graphics2D.setFont(font.deriveFont(Font.BOLD, 50f));
         graphics2D.drawString("Exit", x, y + Parameters.tileSize * 4);
 
         switch (menuPosition)
