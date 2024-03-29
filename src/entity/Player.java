@@ -7,7 +7,6 @@ import objects.*;
 import java.awt.*;
 import java.util.HashSet;
 
-
 public class Player extends Entity
 {
     final private HashSet<BaseObject> interactiveObjects;
@@ -17,7 +16,7 @@ public class Player extends Entity
     final private IMessageShower messageShower;
     final private IEntityCollisionChecker entityCollisionChecker;
     final private IObjectCollisionChecker objectCollisionChecker;
-    private int hitPoint = 100;
+    public int hitPoint = 5;
 
     public int keysCount = 0;
     int boostCoolDown = 0;
@@ -56,6 +55,17 @@ public class Player extends Entity
                 dialogueStarter.startDialogue(new AbstractDialogue(magician.dialogues));
             }
 
+    /*        if (entity instanceof Враг враг)
+            {
+                System.out.println("Встретился с " + враг.name);
+                враг.rotateToPlayer(direction);
+                hitPoint = correctHitPoints.correct(сила удара врага, hitPoint);
+                if(поинты <= 0)
+                    sout("конец игры");
+                else
+                    редактируем хитпойнты
+            }
+*/
             if (entity == null)
             {
                 if (!tileCollisionChecker.checkTile(this))
@@ -83,6 +93,7 @@ public class Player extends Entity
         if (item instanceof Key)
         {
             ++keysCount;
+            ++hitPoint;
             messageShower.showMessage(textMessages.getMessage(AllBaseObject.Key));
         }
         else if (item instanceof Box)
