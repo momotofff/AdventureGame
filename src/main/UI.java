@@ -2,10 +2,7 @@ package main;
 
 import main.screens.*;
 import main.screens.DialogScreen;
-import main.screens.interfaces.IDialogueStarter;
-import main.screens.interfaces.IMessageShower;
-import main.screens.interfaces.IScreenShotter;
-import main.screens.interfaces.IScreenSwitcher;
+import main.screens.interfaces.*;
 import main.utils.ImageUtils;
 
 import javax.swing.*;
@@ -16,7 +13,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter, IScreenShotter, IMessageShower
+public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueStarter, IScreenShotter, IMessageShower, ICorrectHitPoints
 {
     Font maruMonica;
 
@@ -27,6 +24,13 @@ public class UI extends JPanel implements Runnable, IScreenSwitcher, IDialogueSt
     private final KeyHandler keyHandler = new KeyHandler();
     private final GameCommons gameCommons;
     private GameState gameState = GameState.StartScreen;
+
+
+    @Override
+    public int correct(int attackPower, int hitPoints)
+    {
+        return hitPoints - attackPower;
+    }
 
     @Override
     public void switchScreen(GameState newState)
