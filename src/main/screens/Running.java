@@ -4,7 +4,7 @@ import entity.Entity;
 import main.*;
 import main.screens.interfaces.IScreenSwitcher;
 import objects.BaseObject;
-import objects.Healthbar;
+import objects.HealthBar;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,7 +15,7 @@ public class Running extends AbstractScreen
 {
     private final GameCommons gameCommons;
     private final Map<Long, String> messages = new TreeMap<>();
-    private Healthbar healthbar = new Healthbar();
+    private HealthBar healthbar = new HealthBar();
     private long frameCounter = 0;
 
     public Running(IScreenSwitcher switcher, KeyHandler keyHandler, GameCommons gameCommons)
