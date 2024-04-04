@@ -1,8 +1,8 @@
 package main;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.BaseMagician;
 import entity.Entity;
-import entity.Magician;
+import entity.MagicianBlue;
 import entity.Rabbit;
 import main.screens.interfaces.IPlayerCollisionChecker;
 import main.screens.interfaces.ITileCollisionChecker;
@@ -12,8 +12,6 @@ import objects.Box;
 import objects.Key;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -32,14 +30,14 @@ public class AssetSetter
         items.add(new Boots(new Point(19, 19)));
     }
 
-    public void initNPC(ArrayList<Point> freePlaces, ArrayList<Magician> NPC, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
+    public void initNPC(ArrayList<Point> freePlaces, ArrayList<BaseMagician> NPC, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
-        Magician magician1 = new Magician(new Point(15, 15), "/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
-        magician1.name = "Mag";
-        NPC.add(magician1);
+        MagicianBlue magicianBlue1 = new MagicianBlue(new Point(15, 15), "/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
+        magicianBlue1.name = "Mag";
+        NPC.add(magicianBlue1);
 
-        Magician magician2 = Magician.fromJson("/assets/json/magician2.json", tileCollisionChecker, playerCollisionChecker);
-        NPC.add(magician2);
+        BaseMagician magicianBlue2 = MagicianBlue.fromJson("/assets/json/magician2.json", tileCollisionChecker, playerCollisionChecker);
+        NPC.add(magicianBlue2);
     }
 
     public void initAnimals(ArrayList<Point> freePlaces, ArrayList<Entity> animals, ITileCollisionChecker tileCollisionChecker)

@@ -1,7 +1,7 @@
 package main;
 
+import entity.BaseMagician;
 import entity.Entity;
-import entity.Magician;
 import entity.Player;
 import main.screens.interfaces.*;
 import objects.BaseObject;
@@ -16,7 +16,7 @@ public class GameCommons implements ITileCollisionChecker, IEntityCollisionCheck
     final public TileManager tileManager = new TileManager();
     final public Player player;
     final public HashSet<BaseObject> interactiveObjects = new HashSet<>();
-    final public ArrayList<Magician> npc = new ArrayList<>();
+    final public ArrayList<BaseMagician> npc = new ArrayList<>();
     final public ArrayList<Entity> animals = new ArrayList<>();
 
     public GameCommons(IDialogueStarter dialogueStarter, KeyHandler keyHandler, IMessageShower messages)
