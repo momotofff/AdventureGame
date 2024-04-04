@@ -48,11 +48,11 @@ public class Player extends Entity
 
             Entity entity = entityCollisionChecker.checkEntity(this);
 
-            if (entity instanceof Magician magician)
+            if (entity instanceof MagicianBlue magicianBlue)
             {
-                System.out.println("Встретился с " + magician.name);
-                magician.rotateToPlayer(direction);
-                dialogueStarter.startDialogue(new AbstractDialogue(magician.dialogues));
+                System.out.println("Встретился с " + magicianBlue.name);
+                magicianBlue.rotateToPlayer(direction);
+                dialogueStarter.startDialogue(new AbstractDialogue(magicianBlue.dialogues));
             }
 
     /*        if (entity instanceof Враг враг)

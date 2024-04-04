@@ -5,11 +5,14 @@ import main.screens.interfaces.IPlayerCollisionChecker;
 import main.screens.interfaces.ITileCollisionChecker;
 
 import java.awt.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Magician extends Entity
+public class BaseMagician extends Entity
 {
     private static class Data
     {
@@ -30,7 +33,7 @@ public class Magician extends Entity
 
     private final IPlayerCollisionChecker playerCollisionChecker;
 
-    public Magician(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
+    public BaseMagician(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
         super(defaultWorldPosition, tileCollisionChecker);
 
@@ -40,7 +43,7 @@ public class Magician extends Entity
         loadDialogs(path);
     }
 
-    public Magician(Point defaultWorldPosition, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
+    public BaseMagician(Point defaultWorldPosition, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
         super(defaultWorldPosition, tileCollisionChecker);
 
@@ -74,25 +77,25 @@ public class Magician extends Entity
     @Override
     public void loadImages()
     {
-        loadAnimation(Direction.Up, "/assets/Magician/up1.png");
-        loadAnimation(Direction.Up, "/assets/Magician/up2.png");
-        loadAnimation(Direction.Up, "/assets/Magician/up3.png");
-        loadAnimation(Direction.Up, "/assets/Magician/up4.png");
+        loadAnimation(Direction.Up, "/assets/MagicianBlue/up1.png");
+        loadAnimation(Direction.Up, "/assets/MagicianBlue/up2.png");
+        loadAnimation(Direction.Up, "/assets/MagicianBlue/up3.png");
+        loadAnimation(Direction.Up, "/assets/MagicianBlue/up4.png");
 
-        loadAnimation(Direction.Left, "/assets/Magician/left1.png");
-        loadAnimation(Direction.Left, "/assets/Magician/left2.png");
-        loadAnimation(Direction.Left, "/assets/Magician/left3.png");
-        loadAnimation(Direction.Left, "/assets/Magician/left4.png");
+        loadAnimation(Direction.Left, "/assets/MagicianBlue/left1.png");
+        loadAnimation(Direction.Left, "/assets/MagicianBlue/left2.png");
+        loadAnimation(Direction.Left, "/assets/MagicianBlue/left3.png");
+        loadAnimation(Direction.Left, "/assets/MagicianBlue/left4.png");
 
-        loadAnimation(Direction.Down, "/assets/Magician/down1.png");
-        loadAnimation(Direction.Down, "/assets/Magician/down2.png");
-        loadAnimation(Direction.Down, "/assets/Magician/down3.png");
-        loadAnimation(Direction.Down, "/assets/Magician/down4.png");
+        loadAnimation(Direction.Down, "/assets/MagicianBlue/down1.png");
+        loadAnimation(Direction.Down, "/assets/MagicianBlue/down2.png");
+        loadAnimation(Direction.Down, "/assets/MagicianBlue/down3.png");
+        loadAnimation(Direction.Down, "/assets/MagicianBlue/down4.png");
 
-        loadAnimation(Direction.Right, "/assets/Magician/right1.png");
-        loadAnimation(Direction.Right, "/assets/Magician/right2.png");
-        loadAnimation(Direction.Right, "/assets/Magician/right3.png");
-        loadAnimation(Direction.Right, "/assets/Magician/right4.png");
+        loadAnimation(Direction.Right, "/assets/MagicianBlue/right1.png");
+        loadAnimation(Direction.Right, "/assets/MagicianBlue/right2.png");
+        loadAnimation(Direction.Right, "/assets/MagicianBlue/right3.png");
+        loadAnimation(Direction.Right, "/assets/MagicianBlue/right4.png");
     }
 
     public void rotateToPlayer(Direction playerDirection)
@@ -116,29 +119,28 @@ public class Magician extends Entity
         }
     }
 
-    public static Magician fromJson(String pathToJson, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
+    public static BaseMagician fromJson(String pathToJson, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
         ObjectMapper objectMapper = new ObjectMapper();
         Data data;
 
         try
         {
-            data = objectMapper.readValue(Magician.class.getResource(pathToJson), Data.class);
+            data = objectMapper.readValue(BaseMagician.class.getResource(pathToJson), Data.class);
         }
         catch (Exception e)
-        {                                                                                                                                                                                       
+        {
             return null;
         }
 
-        Magician magician = new Magician(data.worldPosition, tileCollisionChecker, playerCollisionChecker);
-        magician.movementSpeed = data.movementSpeed;
-        magician.animationSpeed = data.animationSpeed;
-        magician.direction = Direction.valueOf(data.direction);
-        magician.screenCoordinates = data.screenCoordinates;
-        magician.name = data.name;
-        magician.dialogues = data.dialogues;
+        BaseMagician baseMagician = new BaseMagician(data.worldPosition, tileCollisionChecker, playerCollisionChecker);
+        baseMagician.movementSpeed = data.movementSpeed;
+        baseMagician.animationSpeed = data.animationSpeed;
+        baseMagician.direction = Direction.valueOf(data.direction);
+        baseMagician.screenCoordinates = data.screenCoordinates;
+        baseMagician.name = data.name;
+        baseMagician.dialogues = data.dialogues;
 
-        return magician;
+        return baseMagician;
     }
 }
-

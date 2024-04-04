@@ -1,5 +1,6 @@
 package main.screens;
 
+import entity.BaseMagician;
 import entity.Entity;
 import main.*;
 import main.screens.interfaces.IScreenSwitcher;
@@ -36,8 +37,8 @@ public class Running extends AbstractScreen
                 item.drawing(graphics2D, Parameters.tileSize);
         }
 
-        for (Entity entity : gameCommons.npc)
-            entity.drawing(graphics2D, Parameters.tileSize);
+        for (BaseMagician baseMagician : gameCommons.npc)
+            baseMagician.drawing(graphics2D, Parameters.tileSize);
 
         for (Entity entity : gameCommons.animals)
             entity.drawing(graphics2D, Parameters.tileSize);
@@ -55,8 +56,8 @@ public class Running extends AbstractScreen
     {
         gameCommons.player.update(Sound.sound);
 
-        for (Entity entity : gameCommons.npc)
-            entity.update(gameCommons.player);
+        for (BaseMagician baseMagician : gameCommons.npc)
+            baseMagician.update(gameCommons.player);
 
         for (BaseObject item : gameCommons.interactiveObjects)
             item.update(gameCommons.player);
