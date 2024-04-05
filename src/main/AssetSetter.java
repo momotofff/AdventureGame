@@ -27,14 +27,17 @@ public class AssetSetter
         items.add(new Boots(new Point(19, 19)));
     }
 
-    public void initNPC(ArrayList<Point> freePlaces, ArrayList<BaseMagician> NPC, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
+    public void initNPC(ArrayList<Point> freePlaces, ArrayList<BaseNpc> NPC, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
-        BaseMagician magician = new Magician(new Point(15, 15), "/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
+        BaseNpc magician = new Magician(new Point(15, 15), "/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
         magician.name = "Mag";
         NPC.add(magician);
 
-        BaseMagician magicianBlue2 = MagicianJson.fromJson("/assets/json/magician2.json", tileCollisionChecker, playerCollisionChecker);
-        NPC.add(magicianBlue2);
+        BaseNpc magician2 = MagicianJson.fromJson("/assets/json/magician2.json", tileCollisionChecker, playerCollisionChecker);
+        NPC.add(magician2);
+
+        BaseNpc ghost = new Ghost(new Point(18, 18), tileCollisionChecker, playerCollisionChecker);
+        NPC.add(ghost);
     }
 
     public void initAnimals(ArrayList<Point> freePlaces, ArrayList<Entity> animals, ITileCollisionChecker tileCollisionChecker)
