@@ -1,6 +1,6 @@
 package main;
 
-import entity.BaseMagician;
+import entity.BaseNpc;
 import entity.Entity;
 import objects.BaseObject;
 import tile.Tile;
@@ -72,7 +72,7 @@ public class CollisionChecker
         }
 */
     }
-    public static Entity checkEntity(Entity player, ArrayList<BaseMagician> NPC)
+    public static Entity checkEntity(Entity player, ArrayList<BaseNpc> NPC)
     {
         Rectangle playerCollisionArea;
 

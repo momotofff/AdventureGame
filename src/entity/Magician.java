@@ -5,7 +5,7 @@ import main.screens.interfaces.ITileCollisionChecker;
 
 import java.awt.*;
 
-public class Magician extends BaseMagician
+public class Magician extends BaseNpc
 {
     public Magician(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker) {
         super(defaultWorldPosition, path, tileCollisionChecker, playerCollisionChecker);

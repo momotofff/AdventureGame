@@ -1,6 +1,5 @@
 package entity;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import main.screens.interfaces.IPlayerCollisionChecker;
 import main.screens.interfaces.ITileCollisionChecker;
 
@@ -12,14 +11,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class BaseMagician extends Entity
+public class BaseNpc extends Entity
 {
     private int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
 
-    private final IPlayerCollisionChecker playerCollisionChecker;
+    private IPlayerCollisionChecker playerCollisionChecker;
 
-    public BaseMagician(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
+    public BaseNpc(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
         super(defaultWorldPosition, tileCollisionChecker);
 
@@ -28,8 +27,16 @@ public class BaseMagician extends Entity
         direction = getRandomDirection();
         loadDialogs(path);
     }
+    public BaseNpc(Point defaultWorldPosition, String path, ITileCollisionChecker tileCollisionChecker)
+    {
+        super(defaultWorldPosition, tileCollisionChecker);
 
-    public BaseMagician(Point defaultWorldPosition, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
+        movementSpeed = 1;
+        direction = getRandomDirection();
+        loadDialogs(path);
+    }
+
+    public BaseNpc(Point defaultWorldPosition, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
         super(defaultWorldPosition, tileCollisionChecker);
 

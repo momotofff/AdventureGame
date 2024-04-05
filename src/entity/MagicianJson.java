@@ -7,7 +7,7 @@ import main.screens.interfaces.ITileCollisionChecker;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MagicianJson extends BaseMagician
+public class MagicianJson extends BaseNpc
 {
 
     private static class Data
@@ -36,7 +36,7 @@ public class MagicianJson extends BaseMagician
 
         try
         {
-            data = objectMapper.readValue(BaseMagician.class.getResource(pathToJson), Data.class);
+            data = objectMapper.readValue(BaseNpc.class.getResource(pathToJson), Data.class);
         }
         catch (Exception e)
         {
