@@ -14,20 +14,6 @@ import java.util.Objects;
 
 public class BaseMagician extends Entity
 {
-    private static class Data
-    {
-        public int movementSpeed;
-        public int animationSpeed;
-        public Point worldPosition;
-        public String direction;
-        public int collisionArea;
-        public Point screenCoordinates;
-        public String name;
-        public ArrayList<String> dialogues;
-
-        Data() {}
-    }
-
     private int animationsTimeout = 0;
     public ArrayList<String> dialogues = new ArrayList<>();
 
@@ -52,6 +38,11 @@ public class BaseMagician extends Entity
         direction = getRandomDirection();
     }
 
+    @Override
+    public void loadImages() {
+
+    }
+
     public void update(Player player)
     {
         screenCoordinates = new Point(
@@ -74,30 +65,6 @@ public class BaseMagician extends Entity
         }
     }
 
-    @Override
-    public void loadImages()
-    {
-        loadAnimation(Direction.Up, "/assets/MagicianBlue/up1.png");
-        loadAnimation(Direction.Up, "/assets/MagicianBlue/up2.png");
-        loadAnimation(Direction.Up, "/assets/MagicianBlue/up3.png");
-        loadAnimation(Direction.Up, "/assets/MagicianBlue/up4.png");
-
-        loadAnimation(Direction.Left, "/assets/MagicianBlue/left1.png");
-        loadAnimation(Direction.Left, "/assets/MagicianBlue/left2.png");
-        loadAnimation(Direction.Left, "/assets/MagicianBlue/left3.png");
-        loadAnimation(Direction.Left, "/assets/MagicianBlue/left4.png");
-
-        loadAnimation(Direction.Down, "/assets/MagicianBlue/down1.png");
-        loadAnimation(Direction.Down, "/assets/MagicianBlue/down2.png");
-        loadAnimation(Direction.Down, "/assets/MagicianBlue/down3.png");
-        loadAnimation(Direction.Down, "/assets/MagicianBlue/down4.png");
-
-        loadAnimation(Direction.Right, "/assets/MagicianBlue/right1.png");
-        loadAnimation(Direction.Right, "/assets/MagicianBlue/right2.png");
-        loadAnimation(Direction.Right, "/assets/MagicianBlue/right3.png");
-        loadAnimation(Direction.Right, "/assets/MagicianBlue/right4.png");
-    }
-
     public void rotateToPlayer(Direction playerDirection)
     {
         direction = Direction.invert(playerDirection);
@@ -117,30 +84,5 @@ public class BaseMagician extends Entity
         {
             e.printStackTrace();
         }
-    }
-
-    public static BaseMagician fromJson(String pathToJson, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
-    {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Data data;
-
-        try
-        {
-            data = objectMapper.readValue(BaseMagician.class.getResource(pathToJson), Data.class);
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
-
-        BaseMagician baseMagician = new BaseMagician(data.worldPosition, tileCollisionChecker, playerCollisionChecker);
-        baseMagician.movementSpeed = data.movementSpeed;
-        baseMagician.animationSpeed = data.animationSpeed;
-        baseMagician.direction = Direction.valueOf(data.direction);
-        baseMagician.screenCoordinates = data.screenCoordinates;
-        baseMagician.name = data.name;
-        baseMagician.dialogues = data.dialogues;
-
-        return baseMagician;
     }
 }

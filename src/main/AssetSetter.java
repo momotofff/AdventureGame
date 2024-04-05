@@ -1,9 +1,6 @@
 package main;
 
-import entity.BaseMagician;
-import entity.Entity;
-import entity.MagicianBlue;
-import entity.Rabbit;
+import entity.*;
 import main.screens.interfaces.IPlayerCollisionChecker;
 import main.screens.interfaces.ITileCollisionChecker;
 import objects.BaseObject;
@@ -32,11 +29,11 @@ public class AssetSetter
 
     public void initNPC(ArrayList<Point> freePlaces, ArrayList<BaseMagician> NPC, ITileCollisionChecker tileCollisionChecker, IPlayerCollisionChecker playerCollisionChecker)
     {
-        MagicianBlue magicianBlue1 = new MagicianBlue(new Point(15, 15), "/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
-        magicianBlue1.name = "Mag";
-        NPC.add(magicianBlue1);
+        BaseMagician magician = new Magician(new Point(15, 15), "/assets/Strings/Magician1.txt", tileCollisionChecker, playerCollisionChecker);
+        magician.name = "Mag";
+        NPC.add(magician);
 
-        BaseMagician magicianBlue2 = MagicianBlue.fromJson("/assets/json/magician2.json", tileCollisionChecker, playerCollisionChecker);
+        BaseMagician magicianBlue2 = MagicianJson.fromJson("/assets/json/magician2.json", tileCollisionChecker, playerCollisionChecker);
         NPC.add(magicianBlue2);
     }
 
